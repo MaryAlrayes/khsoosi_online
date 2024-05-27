@@ -7,24 +7,33 @@ class TeacherPortofolioModel extends TeacherPortofolioEntity {
       {required super.id,
       required super.title,
       required super.image,
-      required super.categories});
+      required super.categories,
+      required super.description,
+      required super.videoLink,
+      required super.date,
+      required super.likes,
+      required super.dislikes});
 
   factory TeacherPortofolioModel.fromJson(Map<String, dynamic> map, int index) {
     dynamic info = map['portfolio_info $index'];
     dynamic categories = map['portfolio_categories $index'];
     return TeacherPortofolioModel(
-      id: info['Id'] ??'',
-      title: info['Title'] ??'',
-      image: info['Image_link'] == null || (info['Image_link'] as String).isEmpty
-          ? EndPointsManager.portofolioDefaultImageBaseUrl
-          : EndPointsManager.portofolioImageBaseUrl + info['Image_link'],
-          categories:
-            (categories as List<dynamic>)
-                .map(
-                  (e) => TeacherPortofolioCategoryModel.fromJson(e),
-                )
-                .toList(),
-
+      id: info['Id'] ?? '',
+      title: info['Title'] ?? '',
+      date: info['creation_datetime']??'',
+      description: info['Description']??'',
+      videoLink: info['video_link']??'',
+      dislikes:  int.tryParse(info['dislikes_count']) ??0,
+      likes: int.tryParse(info['likes_count']) ??0 ,
+      image:
+          info['Image_link'] == null || (info['Image_link'] as String).isEmpty
+              ? EndPointsManager.portofolioDefaultImageBaseUrl
+              : EndPointsManager.portofolioImageBaseUrl + info['Image_link'],
+      categories: (categories as List<dynamic>)
+          .map(
+            (e) => TeacherPortofolioCategoryModel.fromJson(e),
+          )
+          .toList(),
     );
   }
 }

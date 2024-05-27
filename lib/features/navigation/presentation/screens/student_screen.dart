@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/features/assistence/presentation/pages/assistence_screen.dart';
 import 'package:khosousi_online/features/messages/presentation/pages/inbox_messages_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/widgets/navigation_tab.dart';
 import 'package:khosousi_online/features/notification/presentation/pages/notification_screen.dart';
-import 'package:khosousi_online/features/search/presentation/my%20search/screens/my_search_screen.dart';
+import 'package:khosousi_online/features/search/presentation/search/screens/search_screen.dart';
+import 'package:khosousi_online/features/student_account/presentation/pages/student_account.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class StudentScreen extends StatelessWidget {
@@ -16,11 +18,11 @@ class StudentScreen extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      Container(),
+      AssistenceScreen(),
       InboxMessagesScreen(),
-      MySearchScreen(),
+      SearchScreen(),
       NotificationScreen(),
-      Container(),
+      StudentAccount(),
     ];
   }
 
@@ -40,6 +42,7 @@ class StudentScreen extends StatelessWidget {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
+
     );
   }
 }

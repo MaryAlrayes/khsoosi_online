@@ -21,7 +21,7 @@ import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/locaion_nearest.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_choose_countries.dart';
-import 'package:khosousi_online/features/search/presentation/filter/widgets/location_coords.dart';
+import 'package:khosousi_online/features/search/presentation/filter/widgets/location_coords_dialog_content.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_type_selection.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';

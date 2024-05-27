@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 
 class CustomExpansionTile extends StatelessWidget {
-  final Icon icon;
+  final Icon? icon;
   final String title;
   final List<Widget> children;
   const CustomExpansionTile({
     Key? key,
-    required this.icon,
+     this.icon,
     required this.title,
     required this.children,
   }) : super(key: key);
@@ -26,7 +26,9 @@ class CustomExpansionTile extends StatelessWidget {
           iconColor: ColorManager.black,
           tilePadding: EdgeInsets.symmetric(horizontal: 4),
           childrenPadding: EdgeInsets.symmetric(vertical: 2),
-          title: Text(title,  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          title: Text(title,  style: TextStyle(fontSize: 14,
+          fontWeight: FontWeight.bold
+          ),
        ),
           children: children),
     );

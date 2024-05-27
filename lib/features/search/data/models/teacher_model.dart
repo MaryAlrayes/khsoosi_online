@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
-import 'package:khosousi_online/features/search/data/models/teacher_speciality_model.dart';
+import 'package:khosousi_online/features/search/data/models/teacher_category_model.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
 
 class TeacherModel extends TeacherEntity {
@@ -62,7 +62,7 @@ class TeacherModel extends TeacherEntity {
         teacherSpecialityEntity:
             (categories as List<dynamic>)
                 .map(
-                  (e) => TeacherSpecialityModel.fromJson(e),
+                  (e) => TeacherCategoryModel.fromJson(e),
                 )
                 .toList()
         );

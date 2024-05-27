@@ -39,7 +39,7 @@ class CustomeFooter extends StatelessWidget {
         Text(
           'privateteacher.com',
           style: TextStyle(
-            fontSize: 14.sp,
+            fontSize: 14,
             color: ColorManager.gray1,
             fontWeight: FontWeight.bold,
           ),
@@ -48,13 +48,5 @@ class CustomeFooter extends StatelessWidget {
     );
   }
 
-  // Container _buildAppImage() {
-  //   return Container(
-  //     height: 43.h,
-  //     width: 35.w,
-  //     child: Image.asset(
-  //       AssetsManager.logo_image,
-  //     ),
-  //   );
-  // }
+ 
 }

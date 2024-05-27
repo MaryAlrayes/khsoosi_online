@@ -12,19 +12,24 @@ class SocialMedia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Ink(
-      child: InkWell(
-        onTap:onPressed,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(width: 1, color: Colors.grey.withOpacity(0.4)),
-          color: Colors.white
-          ),
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 30,
-            child: icon,
+    return Material(
+      shadowColor: Colors.black,
+      shape:StadiumBorder(),
+      child: Ink(
+        child: InkWell(
+          radius: 30,
+               customBorder: const CircleBorder(),
+          onTap: onPressed,
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 1, color: Colors.grey.withOpacity(0.4)),
+                color: Colors.white),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 30,
+              child: icon,
+            ),
           ),
         ),
       ),

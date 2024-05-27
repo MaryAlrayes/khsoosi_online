@@ -7,7 +7,7 @@ import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/login_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/signup_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/pages/signup_screen.dart';
-import 'package:khosousi_online/features/search/presentation/my%20search/screens/my_search_screen.dart';
+import 'package:khosousi_online/features/search/presentation/search/screens/search_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class ChooseStateScreen extends StatelessWidget {
@@ -91,7 +91,7 @@ class ChooseStateScreen extends StatelessWidget {
       backgroundColor: ColorManager.black,
       padding: EdgeInsets.symmetric(vertical: 12),
       onPressed: () {
-        Navigator.pushNamed(context, MySearchScreen.routeName);
+        Navigator.pushNamed(context, SearchScreen.routeName);
       },
       icon: Icon(Icons.search),
     );

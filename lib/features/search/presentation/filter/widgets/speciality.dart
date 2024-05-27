@@ -127,6 +127,7 @@ class _SpecialityFilterState extends State<SpecialityFilter> {
                   ? searchTeacherState.filter.speciality!.name_ar
                   : searchTeacherState.filter.speciality!.name_en
               : ''),
+              optionsViewOpenDirection: OptionsViewOpenDirection.up,
       displayStringForOption: (data) =>
           data.name_ar.isNotEmpty ? data.name_ar : data.name_en,
       fieldViewBuilder:
@@ -135,9 +136,48 @@ class _SpecialityFilterState extends State<SpecialityFilter> {
         specialityFocusNode = focusNode;
 
         return searchTeacherState.filter.speciality == null
-            ? _buildCategoriesSearchTextField(
-                textEditingController, focusNode)
+            ? _buildCategoriesSearchTextField(textEditingController, focusNode)
             : _buildCategoriesChip(searchTeacherState, context);
+      },
+      optionsViewBuilder: (context, onSelected, options) {
+        List<CategoryEntity> _items = options.toList();
+        return Align(
+            alignment: Alignment.topLeft,
+            child: Material(
+              color: Colors.white,
+              elevation: 4.0,
+              child: Container(
+                  width: MediaQuery.of(context).size.width - 90,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: _items.length,
+                    separatorBuilder: (context, i) {
+                      return Divider();
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      String label = '';
+                      if (_items[index].name_ar.isNotEmpty) {
+                        label += _items[index].name_ar;
+                      }
+                      if (_items[index].name_en.isNotEmpty) {
+                        if (label.isNotEmpty) label += ' | ';
+                        label += _items[index].name_en;
+                      }
+                      return InkWell(
+                        onTap: () {
+                          onSelected(_items[index]);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            label,
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+            ));
       },
       optionsBuilder: (textEditingValue) {
         if (textEditingValue.text.isEmpty) {

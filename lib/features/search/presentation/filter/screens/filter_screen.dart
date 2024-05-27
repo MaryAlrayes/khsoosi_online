@@ -14,6 +14,8 @@ import 'package:khosousi_online/features/search/presentation/filter/widgets/keyw
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/speciality.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/teaching_method.dart';
+import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
+import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/widgets/next_previous_btn.dart';
 
@@ -32,6 +34,7 @@ class FilterScreen extends StatelessWidget {
       create: (context) => locator<FilterStepperCubit>(),
       child: Builder(builder: (context) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text('فلاتر البحث'),
             actions: [_buildCancelBtn(context)],
@@ -83,9 +86,19 @@ class FilterScreen extends StatelessWidget {
         );
         Navigator.pop(context);
       case SearchType.courses:
-      // TODO: Handle this case.
+        BlocProvider.of<GetCoursesBloc>(context).add(
+          LoadCoursesEvent(
+            refresh: true,
+            filter: context.read<FilterSearchCubit>().state.filter,
+          ),
+        );
       case SearchType.institutes:
-      // TODO: Handle this case.
+        BlocProvider.of<GetServicesBloc>(context).add(
+          LoadServicesEvent(
+            refresh: true,
+            filter: context.read<FilterSearchCubit>().state.filter,
+          ),
+        );
       case SearchType.services:
       // TODO: Handle this case.
     }

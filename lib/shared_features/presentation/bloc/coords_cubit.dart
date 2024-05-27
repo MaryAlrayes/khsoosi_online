@@ -13,7 +13,6 @@ class CoordsCubit extends Cubit<CoordsState> {
 
   void fetchLocation() async {
     emit(CoordsLoading());
-    print('hi from cubit');
     final res = await locationRepo.getCoords();
     res.fold((l) {
       emit(CoordsError());

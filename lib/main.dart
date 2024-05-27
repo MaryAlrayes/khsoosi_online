@@ -9,7 +9,7 @@ import 'core/managers/theme_manager.dart';
 import 'core/utils/services/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'features/localization/cubit/lacalization_cubit.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyHttpOverrides extends HttpOverrides {
@@ -25,8 +25,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
+  //initializing shared preference
   await PreferenceUtils.init();
+
+  //initializing sedrvice locator from get_it
   await sl.setupLocator();
+
+  await dotenv.load(fileName: "assets/config/.env");
 
   runApp(
     MyApp(
@@ -44,9 +49,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('w = ${MediaQuery.of(context).size.width}');
-    print('h = ${MediaQuery.of(context).size.height}');
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<LacalizationCubit, LacalizationState>(
         builder: (context, state) {
           return ScreenUtilInit(
-            //my emulator Nexus 6
+            //my emulator Nexus 6 width and height
             designSize: const Size(411.42857142857144, 683.4285714285714),
             builder: (_, child) => MaterialApp(
               debugShowCheckedModeBanner: false,

@@ -31,8 +31,7 @@ class CustomDataTable extends StatelessWidget {
             ),
             headingTextStyle: TextStyle(color: Colors.white),
             columnSpacing: 30,
-
-            // dataRowHeight: 60,
+            dataRowMaxHeight: double.infinity,
             columns: getColums(),
             rows: rows,
           ),
@@ -45,14 +44,13 @@ class CustomDataTable extends StatelessWidget {
     return columns
         .map(
           (e) => DataColumn(
-            label: Expanded(
-              child: Text(
+            label:  Text(
                 e,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                 ),
-              ),
+
             ),
           ),
         )

@@ -8,29 +8,39 @@ class TeacherDetailsReviewModel extends TeacherDetailsReviewEntity {
       required super.date,
       required super.image,
       required super.comment,
-      required super.reply,
+      required super.teacherReply,
+      required super.teacherImage,
+      required super.teacherName,
       required super.rate,
       required super.voice});
 
-
-
-  factory TeacherDetailsReviewModel.fromJson(Map<String, dynamic> map,int index) {
-     dynamic info = map['review_info $index'];
+  factory TeacherDetailsReviewModel.fromJson(
+      {required Map<String, dynamic> map,
+      required int index,
+      required String teacherName,
+      required String teacherImage}) {
+    dynamic info = map['review_info $index'];
 
     return TeacherDetailsReviewModel(
-      id: info['Id'] ??'',
-      userName: info['Name']??'',
-      date: info['Review_datetime']??'',
-      image: info['Image_path'] == null || (info['Image_path'] as String).isEmpty
-          ? info['Jender'] == '0' ?  EndPointsManager.maleUserDefaultImageBaseUrl: EndPointsManager.femaleUserDefaultImageBaseUrl
-          : EndPointsManager.reviewUserImageBaseUrl + map['Image_path'],
-      comment: info['Comment'] ??'',
-      reply: info['reply']??'',
-      rate:  info['Review_stars'] == null
+        id: info['Id'] ?? '',
+        userName: info['Name'] ?? '',
+        date: info['Review_datetime'] ?? '',
+        image:
+            info['Image_path'] == null || (info['Image_path'] as String).isEmpty
+                ? info['Jender'] == '0'
+                    ? EndPointsManager.maleUserDefaultImageBaseUrl
+                    : EndPointsManager.femaleUserDefaultImageBaseUrl
+                : EndPointsManager.reviewUserImageBaseUrl + info['Image_path'],
+        comment: info['Comment'] ?? '',
+        rate: info['Review_stars'] == null
             ? null
             : double.tryParse(info['Review_stars'] as String),
-      voice: info['voice_record_file']==null || info['voice_record_file'].isEmpty ?null: EndPointsManager.voiceBaseUrl+info['voice_record_file'],
-    );
+        voice: info['voice_record_file'] == null ||
+                info['voice_record_file'].isEmpty
+            ? null
+            : EndPointsManager.voiceBaseUrl + info['voice_record_file'],
+        teacherReply: info['reply'] ?? '',
+        teacherImage:teacherImage ,
+        teacherName:teacherName );
   }
-
 }

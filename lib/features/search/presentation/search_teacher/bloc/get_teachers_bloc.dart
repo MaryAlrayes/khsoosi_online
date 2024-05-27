@@ -16,6 +16,7 @@ class GetTeachersBloc extends Bloc<GetTeachersEvent, GetTeachersState> {
       : super(GetTeachersState()) {
     on<LoadTeachersEvent>(
       (event, emit) async {
+        
         if (event.refresh) {
           await _refreshData(emit, event.filter);
         } else if (state.hasReachedMax)

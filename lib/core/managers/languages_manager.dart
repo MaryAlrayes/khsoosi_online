@@ -1,4 +1,3 @@
-// ignore_for_file: constant_identifier_names
 
 class LanguagesManager {
   static const Arabic = 'ar';

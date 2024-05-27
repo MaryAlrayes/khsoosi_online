@@ -36,11 +36,13 @@ dependencies:
   geolocator: ^11.0.0
   permission_handler: ^11.3.0
   syncfusion_flutter_charts: ^25.1.41+2
-  # flutter_html: ^2.2.1
-  # flutter_html: ^2.2.1
-  # html: ^0.15.4
-  # flutter_widget_from_html: ^0.14.11
-  # webview_flutter: ^4.7.0
+  flutter_html: 3.0.0-beta.2
+  url_launcher: ^6.2.6
+  html: ^0.15.4
+  google_maps_flutter: ^2.0.5
+  like_button: ^2.0.5
+  flutter_dotenv: ^5.1.0
+
 
 
 
@@ -74,6 +76,8 @@ flutter:
     - assets/images/google.png
     - assets/images/app_logo.png
     - assets/images/wallpaper.png
+    - assets/images/operator.svg
+    - assets/config/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

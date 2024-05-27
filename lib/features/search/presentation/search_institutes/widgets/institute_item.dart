@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 
@@ -107,10 +108,7 @@ class InstituteItem extends StatelessWidget {
       child: Text(
         'جبريل القادري',
         maxLines: 2,
-        style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            overflow: TextOverflow.ellipsis),
+        style:kBlackBoldTextStyle,
       ),
     );
   }

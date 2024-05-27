@@ -44,7 +44,7 @@ class LocationRepoImpl extends LocationRepo {
   @override
   Future<Either<Failure, CoordsEntity>> getCoords() async {
     try {
-            print('hi from repo');
+            
       GeoLoc? coords = await LocationService.getLocationCoords();
 
       if (coords == null) {

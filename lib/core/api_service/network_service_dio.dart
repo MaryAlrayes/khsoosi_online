@@ -23,7 +23,7 @@ class NetworkServiceDio implements BaseApiService {
     );
 
     Dio dio = Dio(options);
-   
+
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // Do something before request is sent

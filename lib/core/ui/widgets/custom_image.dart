@@ -8,6 +8,7 @@ class CustomImage extends StatelessWidget {
   final double? height;
   final bool? isCircle;
   final double? radius;
+  final BoxFit fit;
   const CustomImage({
     Key? key,
     required this.image,
@@ -15,10 +16,12 @@ class CustomImage extends StatelessWidget {
     this.height,
     this.isCircle,
     this.radius,
+    this.fit=BoxFit.cover,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return isCircle == true
         ? PhysicalModel(
             color: Colors.grey.withOpacity(0.3),
@@ -33,6 +36,7 @@ class CustomImage extends StatelessWidget {
           )
         : CachedNetworkImage(
             imageUrl: image,
+            fit: fit,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(
               child: CircularProgressIndicator(
@@ -46,10 +50,10 @@ class CustomImage extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                shape: isCircle == null ? BoxShape.rectangle : BoxShape.circle,
+                shape: isCircle == null || isCircle==false ? BoxShape.rectangle : BoxShape.circle,
                 image: DecorationImage(
                   image: imageProvider,
-                  fit: BoxFit.cover,
+                  fit:fit,
                 ),
               ),
             ),

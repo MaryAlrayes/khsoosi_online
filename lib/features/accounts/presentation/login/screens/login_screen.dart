@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             AppAssetsManager.wallpaper,
             fit: BoxFit.contain,
             width:double.infinity,
-            height: 160,
+            height: 150,
           ),
           SizedBox(
             height: 16.h,

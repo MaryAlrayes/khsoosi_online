@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 import 'package:khosousi_online/core/utils/enums/enums.dart';
-import 'package:khosousi_online/features/search/domain/entities/teacher_speciality_entity.dart';
+import 'package:khosousi_online/features/search/domain/entities/teacher_category_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_certificates_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_courses_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_portofolio_entity.dart';
@@ -56,7 +56,7 @@ class TeacherDetailsEntity extends Equatable {
   final String teacherDescription;
 
   //categories
-  final List<TeacherSpecialityEntity> teacherSpecialityEntity;
+  final List<TeacherCategoryEntity> teacherSpecialityEntity;
 
   // reviews
   final List<TeacherDetailsReviewEntity> reviewEntity;

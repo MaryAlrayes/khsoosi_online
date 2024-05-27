@@ -10,17 +10,17 @@ class CustomElevatedButton extends StatelessWidget {
   final Color? foregroundColor;
   final Icon? icon;
   final bool? isRounded;
-  final EdgeInsetsGeometry ?padding;
-  const CustomElevatedButton({
-    Key? key,
-    required this.label,
-    required this.onPressed,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.icon,
-    this.isRounded,
-    this.padding
-  }) : super(key: key);
+  final EdgeInsetsGeometry? padding;
+  const CustomElevatedButton(
+      {Key? key,
+      required this.label,
+      required this.onPressed,
+      this.backgroundColor,
+      this.foregroundColor,
+      this.icon,
+      this.isRounded,
+      this.padding})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,21 @@ class CustomElevatedButton extends StatelessWidget {
       child: Text(
         label,
         maxLines: 1,
-            style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 14),
         overflow: TextOverflow.ellipsis,
       ),
       style: _getStyle(isRounded),
     );
   }
+}
+
+getCancelButton(BuildContext context) {
+  return CustomElevatedButton(
+    label: 'إغلاق',
+    onPressed: () {
+      Navigator.pop(context);
+    },
+    backgroundColor: ColorManager.gray2,
+    foregroundColor: Colors.black,
+  );
 }

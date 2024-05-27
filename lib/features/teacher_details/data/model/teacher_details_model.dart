@@ -1,7 +1,7 @@
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/core/utils/helpers/age_calculator.dart';
-import 'package:khosousi_online/features/search/data/models/teacher_speciality_model.dart';
+import 'package:khosousi_online/features/search/data/models/teacher_category_model.dart';
 import 'package:khosousi_online/features/teacher_details/data/model/teacher_certificates_model.dart';
 import 'package:khosousi_online/features/teacher_details/data/model/teacher_courses_model.dart';
 import 'package:khosousi_online/features/teacher_details/data/model/teacher_portofolio_model.dart';
@@ -66,7 +66,9 @@ class TeacherDetailsModel extends TeacherDetailsEntity {
       name: teacherInfo['Name'] ?? '',
       imagePath: teacherInfo['Image_path'] == null ||
               (teacherInfo['Image_path'] as String).isEmpty
-          ?teacherInfo['Jender'] == '0' ?  EndPointsManager.maleUserDefaultImageBaseUrl: EndPointsManager.femaleUserDefaultImageBaseUrl
+          ? teacherInfo['Jender'] == '0'
+              ? EndPointsManager.maleUserDefaultImageBaseUrl
+              : EndPointsManager.femaleUserDefaultImageBaseUrl
           : EndPointsManager.userImageBaseUrl + teacherInfo['Image_path'],
       isVipAccount: teacherInfo['Is_vip_account'] == '1',
       isSpecial: teacherInfo['Is_special'] == '1',
@@ -125,15 +127,21 @@ class TeacherDetailsModel extends TeacherDetailsEntity {
       teacherDescription: teacherInfo['Skills'] ?? '',
       teacherSpecialityEntity: (teacherCategories as List<dynamic>)
           .map(
-            (e) => TeacherSpecialityModel.fromJson(e),
+            (e) => TeacherCategoryModel.fromJson(e),
           )
           .toList(),
       reviewEntity: List.generate(
         reviews.length,
         (index) => TeacherDetailsReviewModel.fromJson(
-          reviews[index],
-          index,
-        ),
+            map: reviews[index],
+            index: index,
+            teacherImage: teacherInfo['Image_path'] == null ||
+                    (teacherInfo['Image_path'] as String).isEmpty
+                ? teacherInfo['Jender'] == '0'
+                    ? EndPointsManager.maleUserDefaultImageBaseUrl
+                    : EndPointsManager.femaleUserDefaultImageBaseUrl
+                : EndPointsManager.userImageBaseUrl + teacherInfo['Image_path'],
+            teacherName: teacherInfo['Name']),
       ),
       universities: (teacherUniversities as List<dynamic>)
           .map(

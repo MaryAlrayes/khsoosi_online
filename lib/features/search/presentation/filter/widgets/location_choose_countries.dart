@@ -85,8 +85,6 @@ class LocationChooseCountries extends StatelessWidget {
     );
   }
 
-
-
   Widget _buildCountriesAutoComplete(BuildContext context) {
     return BlocBuilder<FilterSearchCubit, FilterSearchState>(
       builder: (context, state) {
@@ -107,6 +105,46 @@ class LocationChooseCountries extends StatelessWidget {
             return state.filter.country == null
                 ? _buildCountriesSearchTextField(focusNode)
                 : _buildCountryChip(state, context);
+          },
+          optionsViewBuilder: (context, onSelected, options) {
+            List<CountryEntity> _items = options.toList();
+            return Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  color: Colors.white,
+                  elevation: 4.0,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width - 90,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: _items.length,
+                        separatorBuilder: (context, i) {
+                          return Divider();
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          String label = '';
+                          if (_items[index].countryNameAr.isNotEmpty) {
+                            label += _items[index].countryNameAr;
+                          }
+                          if (_items[index].countryNameEn.isNotEmpty) {
+                            if (label.isNotEmpty) label += ' | ';
+                            label += _items[index].countryNameEn;
+                          }
+                          return InkWell(
+                            onTap: () {
+                              onSelected(_items[index]);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                label,
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                ));
           },
           optionsBuilder: (textEditingValue) {
             if (textEditingValue.text.isEmpty) {
@@ -170,6 +208,7 @@ class LocationChooseCountries extends StatelessWidget {
       },
     );
   }
+
   Text _buildCountryLabel() {
     return Text(
       'اختر الدولة:',

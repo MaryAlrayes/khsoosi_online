@@ -13,6 +13,7 @@ class SearchTeachersUseCase {
   });
   Future<Either<Failure, List<TeacherEntity>>> call(
       {required int start, required SearchFilterEntity filter}) async {
+      
     final res = await searchTeachersRepo.getTeachers(
       start: start,
       countryId: filter.country == null ? null : filter.country!.id,

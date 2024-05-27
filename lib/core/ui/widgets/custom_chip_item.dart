@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
+import 'package:khosousi_online/core/utils/helpers/date_formatter.dart';
 
 class CustomChipItem extends StatelessWidget {
   final String? label;
@@ -90,6 +92,7 @@ CustomChipItem getOnlineChip() {
 }
 
 CustomChipItem getFaceToFaceChip(String location, String image) {
+
   return CustomChipItem(
     widgetChild: Row(
       mainAxisSize: MainAxisSize.min,
@@ -106,7 +109,18 @@ CustomChipItem getFaceToFaceChip(String location, String image) {
             ),
           ),
         ),
-        Container(width: 20, height: 20, child: Image.network(image))
+        SizedBox(width: 4,),
+        Container(
+            width: 20,
+            height: 20,
+            child: FittedBox(
+              child: CustomImage(
+                image: image,
+                width: 20,
+                height: 20,
+                isCircle: false,
+              ),
+            ))
       ],
     ),
     backgroundColor: ColorManager.gray1.withOpacity(0.4),
@@ -123,11 +137,9 @@ CustomChipItem getGrayChip({required String text, VoidCallback? onPressed}) {
   );
 }
 
-Widget getLastUpdate(String date) {
-  DateTime dateTime =DateTime.parse(date);
+Widget getLastUpdateChip(String date) {
   return CustomChipItem(
-    label: 'آخر تحديث: ${DateFormat('dd-MM-yyyy').format(dateTime)}',
-
+    label: 'آخر تحديث: ${DateFormatter.getFormatedDate(date)}',
     backgroundColor: ColorManager.lightGreen,
     foregroundColor: ColorManager.green1,
     iconData: Icons.calendar_month,
@@ -160,6 +172,28 @@ Widget getBlackEmptyChip({required String text, VoidCallback? onPressed}) {
         overflow: TextOverflow.ellipsis,
         fontFamily: 'Roboto',
       ),
+    ),
+  );
+}
+
+Widget getAcceptedChip(){
+  return Card(
+    elevation: 0.2,
+    child: CustomChipItem(
+      label: 'تم القبول',
+      backgroundColor: ColorManager.lightGreen1,
+     foregroundColor: ColorManager.green1,
+    ),
+  );
+}
+Widget getRejectedChip(){
+  return Card(
+     elevation: 0.2,
+
+    child: CustomChipItem(
+      label: 'تم الرفض',
+      backgroundColor: ColorManager.lightRed,
+      foregroundColor: ColorManager.red1,
     ),
   );
 }

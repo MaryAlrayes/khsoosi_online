@@ -14,7 +14,7 @@ static const String femaleUserDefaultImageBaseUrl = "${baseAppUrl}assets/templat
   static const String certificateImageBaseUrl =
       "${baseAppUrl}assets/images/users/portfolios/";
   static const String certificateDefaultImageBaseUrl =
-      "${baseAppUrl}/assets/template_files/images/logokhsoosi.webp";
+      "${baseAppUrl}assets/template_files/images/logo-khsoosi.webp";
 
 //courses
   static const String coursesImageBaseUrl =
@@ -39,11 +39,29 @@ static const String femaleUserDefaultImageBaseUrl = "${baseAppUrl}assets/templat
   static const String servicesDefaultImageBaseUrl =
       "${baseAppUrl}assets/images/services/default/default.webp";
 
+//course Details
+static const String courseDetailsBaseUrl =
+      "${baseAppUrl}API/Courses/course_info?course_id=";
+
+      //service Details
+static const String serviceDetailsBaseUrl =
+      "${baseAppUrl}API/Services/service_info?service_id=";
+
   static const String getCategories = "users/get_categories_tags";
   static const String getCountries = "countries/get_all_countries";
   static const String getCities = "countries/get_cities_by_country_api";
 
+//get teachers
   static const String getAllTeachers = "Teachers/get_all_teachers_api";
   static const String getTeachersbyFilter = "API/Teachers/get_teachers";
   static const String getTeachersDetails = "API/Teachers/teacher_info";
+
+//get courses
+  static const String getCoursesbyFilter = "API/Courses/get_courses";
+
+//get services
+  static const String getServicesbyFilter = "API/Services/get_services";
+
+  //get institutes
+  static const String getInstitutesbyFilter = "Institutes/get_all_institutes_api";
 }

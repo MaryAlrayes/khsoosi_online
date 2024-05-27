@@ -3,36 +3,18 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:khosousi_online/features/rates/domain/entities/rate_entity.dart';
 
-class TeacherDetailsReviewEntity extends Equatable {
-  final String id;
-  final String userName;
-  final String date;
-  final String image;
-  final String comment;
-  final String reply;
-  final double? rate;
-  final String? voice;
-  TeacherDetailsReviewEntity({
-    required this.id,
-    required this.userName,
-    required this.date,
-    required this.image,
-    required this.comment,
-    required this.reply,
-    required this.rate,
-    required this.voice,
-  });
-
-  @override
-  List<Object?> get props => [
-        id,
-        userName,
-        date,
-        image,
-        comment,
-        reply,
-        rate,
-        voice,
-      ];
+class TeacherDetailsReviewEntity extends RateEntity {
+  TeacherDetailsReviewEntity(
+      {required super.id,
+      required super.userName,
+      required super.date,
+      required super.image,
+      required super.comment,
+      required super.teacherReply,
+      required super.teacherName,
+      required super.teacherImage,
+      super.rate,
+      super.voice});
 }

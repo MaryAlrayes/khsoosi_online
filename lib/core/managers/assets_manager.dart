@@ -5,6 +5,6 @@ class AppAssetsManager {
   static const online_learning = 'assets/images/online_learning.json';
   static const googleIcon = 'assets/images/google.png';
   static const app_logo = 'assets/images/app_logo.png';
-
-   static const wallpaper = 'assets/images/wallpaper.png';
+  static const wallpaper = 'assets/images/wallpaper.png';
+  static const operator = 'assets/images/operator.svg';
 }

@@ -18,10 +18,10 @@ import 'package:khosousi_online/core/ui/widgets/custom_rating.dart';
 import 'package:khosousi_online/core/ui/widgets/no_connection_widget.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/core/utils/extensions/extensions.dart';
-import 'package:khosousi_online/features/search/domain/entities/teacher_speciality_entity.dart';
+import 'package:khosousi_online/features/search/domain/entities/teacher_category_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/bloc/get_teacher_details_bloc.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/screens/youtube_screen.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/youtube_section.dart';
 
 import '../../../../core/ui/widgets/error_widget.dart';
 
@@ -46,10 +46,7 @@ class TeacherDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (teacherDetailsEntity.youtubeBio.isNotEmpty)
-                  YoutubeScreen(
-                    youtube: teacherDetailsEntity.youtubeBio,
-                  ),
+                if (teacherDetailsEntity.youtubeBio.isNotEmpty) _buildYoutube(),
                 SizedBox(
                   height: 16,
                 ),
@@ -69,7 +66,7 @@ class TeacherDetails extends StatelessWidget {
                         children: [
                           _buildNameAndAuthentication(),
                           SizedBox(
-                            height: 4.h,
+                            height: 4,
                           ),
                           _buildRate()
                         ],
@@ -93,7 +90,7 @@ class TeacherDetails extends StatelessWidget {
                         teacherDetailsEntity.residenseCountryCode,
                       ),
                     if (!teacherDetailsEntity.isOnline)
-                      getLastUpdate(teacherDetailsEntity.lastDateActive),
+                      getLastUpdateChip(teacherDetailsEntity.lastDateActive),
                   ],
                 ),
                 SizedBox(
@@ -130,6 +127,12 @@ class TeacherDetails extends StatelessWidget {
     );
   }
 
+  YoutubeSection _buildYoutube() {
+    return YoutubeSection(
+      youtube: teacherDetailsEntity.youtubeBio,
+    );
+  }
+
   Container _buildContactbtn() {
     return Container(
       width: 150,
@@ -137,8 +140,7 @@ class TeacherDetails extends StatelessWidget {
       child: PopupMenuButton(
         position: PopupMenuPosition.under,
         color: Colors.white,
-
-        key: _popupMenu, // <- Here
+        key: _popupMenu,
         itemBuilder: (context) => [
           PopupMenuItem<int>(
             value: 1,
@@ -364,7 +366,7 @@ class TeacherDetails extends StatelessWidget {
   }
 
   Widget _buildCategories() {
-    List<TeacherSpecialityEntity> _data =
+    List<TeacherCategoryEntity> _data =
         teacherDetailsEntity.teacherSpecialityEntity;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

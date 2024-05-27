@@ -5,14 +5,14 @@ import 'package:permission_handler/permission_handler.dart';
 
 class LocationService {
   static Future<GeoLoc?> getLocationCoords() async {
-    print('hi from top loc service');
+
     try {
       LocationPermission status = await Geolocator.checkPermission();
-      print('hi statuse $status');
+
       if (status == LocationPermission.whileInUse ||
           status == LocationPermission.always) {
         try {
-          print('hi from loc service');
+        
           Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high,
           );

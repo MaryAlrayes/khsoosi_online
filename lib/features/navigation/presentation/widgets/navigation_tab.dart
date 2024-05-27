@@ -8,11 +8,13 @@ class NavigationTab extends StatelessWidget {
   final PersistentTabController controller;
   final  List<Widget> screens;
   final List<Map<String,dynamic>> items;
+  final Function? onSelected;
   const NavigationTab({
     Key? key,
     required this.controller,
     required this.screens,
     required this.items,
+     this.onSelected,
   }) : super(key: key);
 
   @override
@@ -48,7 +50,10 @@ class NavigationTab extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style15, // Choose the nav bar style with this property.
+          NavBarStyle.style15,
+        onItemSelected: (value) {
+       if(onSelected!=null)  onSelected!(value);
+            },
     );
   }
   List<PersistentBottomNavBarItem> _navBarsItems() {

@@ -9,12 +9,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:khosousi_online/core/managers/assets_manager.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_rating.dart';
+import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
-import 'package:khosousi_online/features/search/domain/entities/teacher_speciality_entity.dart';
+import 'package:khosousi_online/features/search/domain/entities/teacher_category_entity.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -137,12 +139,13 @@ class TeacherItem extends StatelessWidget {
     return CustomElevatedButton(
       label: 'تواصل معي',
       onPressed: () {
-        PersistentNavBarNavigator.pushNewScreen(context,
-            screen: TeacherDetailsScreen(
-              teacherEntity: teacherEntity,
-            ),
-            withNavBar: false,
-            pageTransitionAnimation: PageTransitionAnimation.slideUp);
+        pushScreen(
+          context: context,
+          screen: TeacherDetailsScreen(
+            teacherId: teacherEntity.id,
+            teacherName: teacherEntity.name,
+          ),
+        );
       },
       backgroundColor: ColorManager.black,
       icon: Icon(
@@ -202,7 +205,7 @@ class TeacherItem extends StatelessWidget {
     );
   }
 
-  Widget _buildSpecialityItem(TeacherSpecialityEntity teacherSpecialityEntity) {
+  Widget _buildSpecialityItem(TeacherCategoryEntity teacherSpecialityEntity) {
     return getGrayChip(
       text:
           '${teacherSpecialityEntity.nameAr} | ${teacherSpecialityEntity.nameEng}',
@@ -225,12 +228,7 @@ class TeacherItem extends StatelessWidget {
     return Flexible(
       child: Text(
         teacherEntity.name,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.black,
-          overflow: TextOverflow.ellipsis,
-        ),
+        style: kBlackBoldTextStyle,
         maxLines: 1,
       ),
     );

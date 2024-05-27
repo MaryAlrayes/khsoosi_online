@@ -47,7 +47,7 @@ class MainMessageItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 6,
+                      height: 8,
                     ),
                     Text(
                      'مرحبا كيف حالك',
@@ -55,7 +55,7 @@ class MainMessageItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         // color: Colors.grey
                       ),
                     ),

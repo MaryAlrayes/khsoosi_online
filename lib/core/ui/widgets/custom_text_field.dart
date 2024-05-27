@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:khosousi_online/core/managers/color_manager.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextInputAction textInputAction;
@@ -14,6 +15,9 @@ class CustomTextField extends StatefulWidget {
   final bool isObscure;
   final TextEditingController? textEditingController;
   final TextAlign textAlign;
+  final bool expand;
+  final int? maxLines;
+  final TextAlignVertical textAlignVertical;
   final String? initalValue;
   final Function(String?) validator;
   final Function? onChanged;
@@ -26,10 +30,13 @@ class CustomTextField extends StatefulWidget {
       this.withBorder,
       this.iconData,
       this.isFilled,
+      this.expand=false,
+      this.maxLines=1,
       this.backgroundColor = Colors.white,
       this.textEditingController,
       this.textAlign = TextAlign.start,
       this.initalValue,
+      this.textAlignVertical=TextAlignVertical.center,
       this.onChanged,
       required this.validator,
       required this.isObscure,
@@ -52,16 +59,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 60,
-      // padding: EdgeInsets.symmetric(horizontal: 8.w),
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //     color: Colors.grey.withOpacity(.3),
-      //     width: 1,
-      //   ),
-      //   borderRadius: BorderRadius.circular(5.r),
+
        color: widget.backgroundColor,
-      // ),
+
 
       child: TextFormField(
         focusNode: widget.focusNode,
@@ -72,11 +72,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           color: Colors.black,
           fontSize: 16
         ),
-        textAlignVertical: TextAlignVertical.center,
+        maxLines: widget.maxLines,
+        expands: widget.expand,
+        textAlignVertical: widget. textAlignVertical,
         textAlign: widget.textAlign,
         controller: widget.textEditingController,
         initialValue: widget.initalValue,
         obscuringCharacter: '●',
+         cursorColor: ColorManager.orange,
         decoration: __buildFieldDecoration(
           hint: widget.hintText,
           icon: widget.iconData,

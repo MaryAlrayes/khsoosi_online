@@ -4,16 +4,21 @@ import 'package:khosousi_online/core/managers/string_manager.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/choose_state_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/login_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/pages/signup_screen.dart';
+import 'package:khosousi_online/features/assistence/presentation/pages/assistence_screen.dart';
+import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
+import 'package:khosousi_online/features/assistence/presentation/pages/faq_screen.dart';
+import 'package:khosousi_online/features/courses_services_details/presentation/services/screens/service_details_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/screens/teacher_screen.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
 import 'package:khosousi_online/features/startup/screens/splash_screen.dart';
-import 'package:khosousi_online/features/startup/screens/start_screen.dart';
+import 'package:khosousi_online/features/teacher_balance/presentation/pages/charge_screen.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_portofolio_details_screen.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/screens/youtube_screen.dart';
-
-import '../../features/courses_details/presentation/screens/course_details_screen.dart';
-import '../../features/search/presentation/my search/screens/my_search_screen.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_service_details_screen.dart';
+import '../../features/courses_services_details/presentation/courses/screens/course_details_screen.dart';
+import '../../features/search/presentation/search/screens/search_screen.dart';
+import '../../features/teacher_details/presentation/screens/teacher_course_details_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -24,34 +29,11 @@ class AppRouter {
             return SplashScreen();
           },
         );
-      case StartScreen.routeName:
-        return MaterialPageRoute(
-          builder: (context) {
-            return StartScreen();
-          },
-        );
 
-      case TeacherDetailsScreen.routeName:
-        final arg = routeSettings.arguments as Map;
-
+      case SearchScreen.routeName:
         return MaterialPageRoute(
           builder: (context) {
-            return TeacherDetailsScreen(
-              teacherEntity: arg['teacher'],
-            );
-          },
-        );
-
-      case CourseDetailsScreen.routeName:
-        return MaterialPageRoute(
-          builder: (context) {
-            return CourseDetailsScreen();
-          },
-        );
-      case MySearchScreen.routeName:
-        return MaterialPageRoute(
-          builder: (context) {
-            return MySearchScreen();
+            return SearchScreen();
           },
         );
       case FilterScreen.routeName:
@@ -92,6 +74,87 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) {
             return TeacherScreen();
+          },
+        );
+      case AssistenceScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return AssistenceScreen();
+          },
+        );
+      case FAQScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return AssistenceScreen();
+          },
+        );
+      case ContactUsScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ContactUsScreen();
+          },
+        );
+      case ChargeScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ChargeScreen();
+          },
+        );
+
+      case TeacherDetailsScreen.routeName:
+
+        final arg = routeSettings.arguments as Map;
+
+        return MaterialPageRoute(
+          builder: (context) {
+            return TeacherDetailsScreen(teacherId: arg['id'],
+            );
+          },
+        );
+      case TeacherPortofolioDetailsScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return TeacherPortofolioDetailsScreen(
+              portofolioEntity: arg['portofolio'],
+              teacherDetailsEntity: arg['details'],
+            );
+          },
+        );
+
+     case TeacherCourseDetailsScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return TeacherCourseDetailsScreen(courseId: arg['id'],
+            );
+          },
+        );
+
+      case CourseDetailsScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return CourseDetailsScreen(id: arg['id'],
+            );
+          },
+        );
+
+       case ServiceDetailsScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return ServiceDetailsScreen(id: arg['id'],
+            );
+          },
+        );
+
+        case TeacherServiceDetailsScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return TeacherServiceDetailsScreen(serviceId: arg['id'],
+            );
           },
         );
       default:

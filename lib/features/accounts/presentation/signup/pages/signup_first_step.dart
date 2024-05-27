@@ -99,19 +99,7 @@ class _SignupFirstStepState extends State<SignupFirstStep> {
   }
 
   // Container _buildTop(BoxConstraints constraints) {
-  Row _buildOrDivider() {
-    return Row(children: [
-      Expanded(child: Divider()),
-      SizedBox(
-        width: 8.w,
-      ),
-      Text('أو'),
-      SizedBox(
-        width: 8.w,
-      ),
-      Expanded(child: Divider()),
-    ]);
-  }
+
 
   Widget _buildLoginBtn(BuildContext context) {
     return CustomElevatedButton(

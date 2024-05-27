@@ -1,6 +1,8 @@
 import 'package:khosousi_online/core/api_service/base_api_service.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
+import 'package:khosousi_online/features/search/data/models/course_model.dart';
 import 'package:khosousi_online/features/search/data/models/teacher_model.dart';
+import 'package:khosousi_online/features/search/domain/entities/course_entity.dart';
 
 abstract class SearchTeacherDataProvider {
   Future<List<TeacherModel>> getTeachers({
@@ -13,6 +15,7 @@ abstract class SearchTeacherDataProvider {
     required String? searchkeyword,
     required String teachMethod,
   });
+
 }
 
 class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
@@ -46,8 +49,9 @@ class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
       url: EndPointsManager.getTeachersbyFilter,
       jsonBody: body,
     );
+
     List<TeacherModel> data = [];
-    int index=start;
+    int index = start;
     for (int i = 0; i < res.length; i++) {
       TeacherModel teacherModel = TeacherModel.fromJson(res[i], index);
       data.add(teacherModel);
@@ -56,4 +60,5 @@ class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
 
     return data;
   }
-}
+
+ }

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
-import 'package:khosousi_online/features/search/domain/entities/teacher_speciality_entity.dart';
+import 'package:khosousi_online/features/search/domain/entities/teacher_category_entity.dart';
 
 class TeacherEntity extends Equatable {
   final String id;
@@ -21,7 +21,7 @@ class TeacherEntity extends Equatable {
   final bool teachMethodOfflineByRoot;
   final double? average;
   final String countryCode;
-  final List<TeacherSpecialityEntity> teacherSpecialityEntity;
+  final List<TeacherCategoryEntity> teacherSpecialityEntity;
 
   TeacherEntity({
    required  this.id,

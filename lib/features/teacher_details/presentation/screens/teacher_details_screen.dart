@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/details_content_main.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/teacher_details_main_content.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:khosousi_online/core/managers/assets_manager.dart';
@@ -22,31 +22,32 @@ import 'package:khosousi_online/core/ui/widgets/error_widget.dart';
 import 'package:khosousi_online/core/ui/widgets/no_connection_widget.dart';
 import 'package:khosousi_online/core/ui/widgets/sliver_tabbar.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/bloc/get_teacher_details_bloc.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/screens/youtube_screen.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/about_teacher.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/certificates.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/courses.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/educational_services.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/rates.dart';
-import 'package:khosousi_online/features/teacher_details/presentation/widgets/recorded_explanations.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/youtube_section.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_about_teacher.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_certificates.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_courses.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_services.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_rates.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_portofolio.dart';
 
 import '../widgets/teacher_details.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 
 class TeacherDetailsScreen extends StatefulWidget {
   static const routeName = 'teacher_details_screen';
- final TeacherEntity teacherEntity;
+  final String teacherId;
+  final String teacherName;
   const TeacherDetailsScreen({
     Key? key,
-    required this.teacherEntity,
+    required this.teacherId,
+    this.teacherName='',
   }) : super(key: key);
 
   @override
   State<TeacherDetailsScreen> createState() => _TeacherDetailsScreenState();
 }
 
-class _TeacherDetailsScreenState extends State<TeacherDetailsScreen>
-    {
+class _TeacherDetailsScreenState extends State<TeacherDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -72,11 +73,18 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen>
     );
   }
 
-  GetTeacherDetailsBloc _getBloc() => sl.locator<GetTeacherDetailsBloc>()..add(LoadTeacherDetails(id: widget.teacherEntity.id));
+  GetTeacherDetailsBloc _getBloc() => sl.locator<GetTeacherDetailsBloc>()
+    ..add(
+      LoadTeacherDetails(
+        id: widget.teacherId,
+      ),
+    );
 
   Widget _buildLoading() {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.teacherEntity.name),),
+      appBar: AppBar(
+        title: Text(widget.teacherName),
+      ),
       body: Center(
         child: CircularProgressIndicator(),
       ),
@@ -86,13 +94,15 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen>
   Widget _buildError(
       GetGetTeacherDetailsLoadedNetworkError state, BuildContext context) {
     return Scaffold(
-           appBar: AppBar(title: Text(widget.teacherEntity.name),),
+      appBar: AppBar(
+        title: Text(widget.teacherName),
+      ),
       body: Center(
         child: NetworkErrorWidget(
           message: state.message,
           onPressed: () {
             BlocProvider.of<GetTeacherDetailsBloc>(context)
-                .add(LoadTeacherDetails(id: widget.teacherEntity.id));
+                .add(LoadTeacherDetails(id: widget.teacherId));
           },
         ),
       ),
@@ -101,20 +111,21 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen>
 
   Widget _buildOffline(BuildContext context) {
     return Scaffold(
-           appBar: AppBar(title: Text(widget.teacherEntity.name),),
+      appBar: AppBar(
+        title: Text(widget.teacherName),
+      ),
       body: Center(
         child: NoConnectionWidget(
           onPressed: () {
             BlocProvider.of<GetTeacherDetailsBloc>(context)
-                .add(LoadTeacherDetails(id: widget.teacherEntity.id));
+                .add(LoadTeacherDetails(id: widget.teacherId));
           },
         ),
       ),
     );
   }
- Widget _buildMainContent(TeacherDetailsEntity teacherDetailsEntity) {
-    return DetailsContentMain(teacherDetailsEntity: teacherDetailsEntity);
 
-    }
-
+  Widget _buildMainContent(TeacherDetailsEntity teacherDetailsEntity) {
+    return TeacherDetailsMainContent(teacherDetailsEntity: teacherDetailsEntity);
+  }
 }
