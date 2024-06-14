@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -15,22 +16,18 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<!--
-		Don't delete the meta-data below.
-		This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-		-->
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCkGTIrK_ko923z2nIp8Cica9sEw2Z1tvw" />
 		<meta-data android:name="flutterEmbedding" android:value="2" />
-		<meta-data android:name="com.google.android.geo.API_KEY"
-		android:value="AIzaSyBhagklPVkun8yJeZyJURbJGRCwtfKs1QI" />
 
+<!-- <meta-data
+    android:name="com.google.android.maps.v2.API_KEY"
+    android:value="AIzaSyAj8BjoImIJP_JG2KMAn_Zq3HCcW4_2jKU"/> -->
+
+<uses-library
+    android:name="com.google.android.maps"
+    android:required="true" />
 	</application>
-	<!--
-	Required to query activities that can process text, see:
-	https://developer.android.com/training/package-visibility?hl=en and
-	https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
 
-	In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
-	-->
 	<queries>
 		<intent>
 			<action android:name="android.intent.action.PROCESS_TEXT" />

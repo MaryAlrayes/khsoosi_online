@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-showCustomBottomSheet({
+Future<dynamic> showCustomBottomSheet({
   required BuildContext context,
   required Widget child,
-}) {
+}) async{
   var basicBody = SingleChildScrollView(
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -22,7 +22,7 @@ showCustomBottomSheet({
     ),
   );
 
-  showModalBottomSheet(
+ return await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(

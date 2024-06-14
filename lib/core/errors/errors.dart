@@ -2,8 +2,8 @@
 import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/core/managers/string_manager.dart';
 
-enum DataSource {
-  SUCCESS,
+enum ErrorTypes {
+
   NO_CONTENT,
   BAD_REQUEST,
   FORBIDDEN,
@@ -16,66 +16,74 @@ enum DataSource {
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
+  ERROR_FETCHING_IP,
+  DEVICE_INFO_ERROR,
   DEFAULT
 }
 
-extension DataSourceExtension on DataSource {
+extension DataSourceExtension on ErrorTypes {
   Failure getFailure() {
     switch (this) {
-      case DataSource.SUCCESS:
-        return NetworkErrorFailure(
-            responseCode: ResponseCode.SUCCESS,
-            message: ResponseMessage.SUCCESS);
-      case DataSource.NO_CONTENT:
+     
+      case ErrorTypes.NO_CONTENT:
         return NetworkErrorFailure(
             responseCode: ResponseCode.NO_CONTENT,
             message: ResponseMessage.NO_CONTENT);
-      case DataSource.BAD_REQUEST:
+      case ErrorTypes.BAD_REQUEST:
         return NetworkErrorFailure(
             responseCode: ResponseCode.BAD_REQUEST,
             message: ResponseMessage.BAD_REQUEST);
-      case DataSource.FORBIDDEN:
+      case ErrorTypes.FORBIDDEN:
         return NetworkErrorFailure(
             responseCode: ResponseCode.FORBIDDEN,
             message: ResponseMessage.FORBIDDEN);
-      case DataSource.UNAUTORISED:
+      case ErrorTypes.UNAUTORISED:
         return NetworkErrorFailure(
             responseCode: ResponseCode.UNAUTORISED,
             message: ResponseMessage.UNAUTORISED);
-      case DataSource.NOT_FOUND:
+      case ErrorTypes.NOT_FOUND:
         return NetworkErrorFailure(
             responseCode: ResponseCode.NOT_FOUND,
             message: ResponseMessage.NOT_FOUND);
-      case DataSource.INTERNAL_SERVER_ERROR:
+      case ErrorTypes.INTERNAL_SERVER_ERROR:
         return NetworkErrorFailure(
             responseCode: ResponseCode.INTERNAL_SERVER_ERROR,
             message: ResponseMessage.INTERNAL_SERVER_ERROR);
-      case DataSource.CONNECT_TIMEOUT:
+      case ErrorTypes.CONNECT_TIMEOUT:
         return NetworkErrorFailure(
             responseCode: ResponseCode.CONNECT_TIMEOUT,
             message: ResponseMessage.CONNECT_TIMEOUT);
-      case DataSource.CANCEL:
+      case ErrorTypes.CANCEL:
         return NetworkErrorFailure(
             responseCode: ResponseCode.CANCEL, message: ResponseMessage.CANCEL);
-      case DataSource.RECIEVE_TIMEOUT:
+      case ErrorTypes.RECIEVE_TIMEOUT:
         return NetworkErrorFailure(
             responseCode: ResponseCode.RECIEVE_TIMEOUT,
             message: ResponseMessage.RECIEVE_TIMEOUT);
-      case DataSource.SEND_TIMEOUT:
+      case ErrorTypes.SEND_TIMEOUT:
         return NetworkErrorFailure(
             responseCode: ResponseCode.SEND_TIMEOUT,
             message: ResponseMessage.SEND_TIMEOUT);
-      case DataSource.CACHE_ERROR:
+      case ErrorTypes.CACHE_ERROR:
         return NetworkErrorFailure(
             responseCode: ResponseCode.CACHE_ERROR,
             message: ResponseMessage.CACHE_ERROR);
-      case DataSource.NO_INTERNET_CONNECTION:
+      case ErrorTypes.NO_INTERNET_CONNECTION:
         return OfflineFailure();
-      case DataSource.DEFAULT:
+      case ErrorTypes.DEFAULT:
         return NetworkErrorFailure(
             responseCode: ResponseCode.DEFAULT,
             message: ResponseMessage.DEFAULT);
 
+      case ErrorTypes.ERROR_FETCHING_IP:
+   return NetworkErrorFailure(
+            responseCode: ResponseCode.IP_ERROR,
+            message: ResponseMessage.IP_ADDRESS_ERROR);
+
+      case ErrorTypes.DEVICE_INFO_ERROR:
+       return NetworkErrorFailure(
+            responseCode: ResponseCode.DEVICE_INFO_ERROR,
+            message: ResponseMessage.DEVICE_INFO_ERROR);
     }
   }
 }
@@ -102,6 +110,10 @@ class ResponseCode {
   static const int CACHE_ERROR = -5;
   static const int NO_INTERNET_CONNECTION = -6;
   static const int DEFAULT = -7;
+
+  //
+   static const int IP_ERROR = -8;
+  static const int DEVICE_INFO_ERROR = -9;
 }
 
 
@@ -129,4 +141,7 @@ class ResponseMessage {
   static const String CACHE_ERROR = AppStrings.strCacheError;
   static const String NO_INTERNET_CONNECTION = AppStrings.strNoInternetError;
   static const String DEFAULT = AppStrings.strDefaultError;
+  static const String IP_ADDRESS_ERROR = AppStrings.strErrorFetchingIPAddress;
+
+  static const String DEVICE_INFO_ERROR = AppStrings.strDeviceInfoError;
 }

@@ -21,6 +21,7 @@ class CustomTextField extends StatefulWidget {
   final String? initalValue;
   final Function(String?) validator;
   final Function? onChanged;
+  final VoidCallback? onTap;
   const CustomTextField(
       {Key? key,
       required this.textInputAction,
@@ -30,14 +31,15 @@ class CustomTextField extends StatefulWidget {
       this.withBorder,
       this.iconData,
       this.isFilled,
-      this.expand=false,
-      this.maxLines=1,
+      this.expand = false,
+      this.maxLines = 1,
       this.backgroundColor = Colors.white,
       this.textEditingController,
       this.textAlign = TextAlign.start,
       this.initalValue,
-      this.textAlignVertical=TextAlignVertical.center,
+      this.textAlignVertical = TextAlignVertical.center,
       this.onChanged,
+      this.onTap,
       required this.validator,
       required this.isObscure,
       this.focusNode})
@@ -59,27 +61,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
-       color: widget.backgroundColor,
-
-
+      color: widget.backgroundColor,
       child: TextFormField(
         focusNode: widget.focusNode,
         textInputAction: widget.textInputAction,
         autocorrect: false,
         keyboardType: widget.textInputType,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 16
-        ),
+        style: const TextStyle(color: Colors.black, fontSize: 16),
         maxLines: widget.maxLines,
         expands: widget.expand,
-        textAlignVertical: widget. textAlignVertical,
+        textAlignVertical: widget.textAlignVertical,
         textAlign: widget.textAlign,
         controller: widget.textEditingController,
         initialValue: widget.initalValue,
         obscuringCharacter: '●',
-         cursorColor: ColorManager.orange,
+        cursorColor: ColorManager.orange,
         decoration: __buildFieldDecoration(
           hint: widget.hintText,
           icon: widget.iconData,
@@ -92,6 +88,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           if (widget.focusNode != null) {
             widget.focusNode!.requestFocus();
           }
+          if (widget.onTap != null) widget.onTap!();
         },
         onChanged: (value) {
           if (widget.onChanged != null) {

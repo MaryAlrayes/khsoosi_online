@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:khosousi_online/core/managers/string_manager.dart';
-import 'package:khosousi_online/features/accounts/presentation/login/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
+import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/login_screen.dart';
+import 'package:khosousi_online/features/accounts/presentation/otp/screens/otp_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/pages/signup_screen.dart';
+import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/assistence_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/faq_screen.dart';
@@ -29,11 +32,23 @@ class AppRouter {
             return SplashScreen();
           },
         );
-
-      case SearchScreen.routeName:
+      case AppWrapper.routeName:
         return MaterialPageRoute(
           builder: (context) {
-            return SearchScreen();
+            return AppWrapper();
+          },
+        );
+      case SearchWithoutAuth.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return SearchWithoutAuth();
+          },
+        );
+      case SearchScreen.routeName:
+        final arg = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return SearchScreen(withAppBar: arg['withAppBar']);
           },
         );
       case FilterScreen.routeName:
@@ -102,12 +117,12 @@ class AppRouter {
         );
 
       case TeacherDetailsScreen.routeName:
-
         final arg = routeSettings.arguments as Map;
 
         return MaterialPageRoute(
           builder: (context) {
-            return TeacherDetailsScreen(teacherId: arg['id'],
+            return TeacherDetailsScreen(
+              teacherId: arg['id'],
             );
           },
         );
@@ -122,11 +137,12 @@ class AppRouter {
           },
         );
 
-     case TeacherCourseDetailsScreen.routeName:
+      case TeacherCourseDetailsScreen.routeName:
         final arg = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
-            return TeacherCourseDetailsScreen(courseId: arg['id'],
+            return TeacherCourseDetailsScreen(
+              courseId: arg['id'],
             );
           },
         );
@@ -135,25 +151,39 @@ class AppRouter {
         final arg = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
-            return CourseDetailsScreen(id: arg['id'],
+            return CourseDetailsScreen(
+              id: arg['id'],
             );
           },
         );
 
-       case ServiceDetailsScreen.routeName:
+      case ServiceDetailsScreen.routeName:
         final arg = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
-            return ServiceDetailsScreen(id: arg['id'],
+            return ServiceDetailsScreen(
+              id: arg['id'],
             );
           },
         );
 
-        case TeacherServiceDetailsScreen.routeName:
+      case TeacherServiceDetailsScreen.routeName:
         final arg = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
-            return TeacherServiceDetailsScreen(serviceId: arg['id'],
+            return TeacherServiceDetailsScreen(
+              serviceId: arg['id'],
+            );
+          },
+        );
+
+      case OtpScreen.routeName:
+        final args = routeSettings.arguments as Map;
+        print('hiii ${args['onSkip']}');
+        return MaterialPageRoute(
+          builder: (context) {
+            return OtpScreen(
+              onSkipClicked: args['onSkip'] as Function,
             );
           },
         );

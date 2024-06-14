@@ -6,7 +6,6 @@ import 'package:khosousi_online/shared_features/data/models/country_model.dart';
 
 abstract class CountriesProvider {
   Future<List<CountryModel>> getCountries();
-
   Future<List<CityModel>> getCities({required String country});
 }
 

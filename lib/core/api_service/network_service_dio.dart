@@ -52,7 +52,9 @@ class NetworkServiceDio implements BaseApiService {
 
   @override
   Future getRequest({required String url}) async {
+     print('API $url');
     Dio _dio = await dio;
+
     try {
       var response = await _dio.get(
         url,
@@ -73,6 +75,7 @@ class NetworkServiceDio implements BaseApiService {
     String? filesAttributeName,
     List<File>? files,
   }) async {
+     print('API $url');
     Dio _dio = await dio;
     try {
       if (filesAttributeName != null && files != null) {
@@ -106,6 +109,7 @@ class NetworkServiceDio implements BaseApiService {
     required String url,
     required Map<String, dynamic> jsonBody,
   }) async {
+     print('API $url');
     try {
       Dio _dio = await dio;
       var response = await _dio.post(url, data: jsonBody);

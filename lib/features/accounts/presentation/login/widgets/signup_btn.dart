@@ -19,7 +19,9 @@ class SignupBtn extends StatelessWidget {
               'إنشاء حساب',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+
               ),
+
             ),
             onPressed: () {
                  Navigator.pushNamed(context, SignupScreen.routeName);

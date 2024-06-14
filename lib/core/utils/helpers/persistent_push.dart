@@ -7,5 +7,6 @@ pushScreen( {required BuildContext context, required Widget screen}) {
     screen: screen,
     withNavBar: false,
     pageTransitionAnimation: PageTransitionAnimation.slideUp,
+    
   );
 }

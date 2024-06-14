@@ -56,6 +56,7 @@ ThemeData getApplicationThemeData() {
 
 //check box theme
     checkboxTheme: CheckboxThemeData(
+
       fillColor: MaterialStateProperty.resolveWith<Color?>(
           (Set<MaterialState> states) {
         if (states.contains(MaterialState.disabled)) {
@@ -67,6 +68,7 @@ ThemeData getApplicationThemeData() {
         return null;
       }),
     ),
+
 
 
     // app bar theme
@@ -191,7 +193,7 @@ ThemeData getApplicationThemeData() {
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: Colors.red,
-          
+
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(

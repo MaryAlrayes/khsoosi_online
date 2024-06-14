@@ -1,14 +1,25 @@
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 
-extension SignupTypeExtension on SignupType {
+extension SignupTypeExtension on UserType {
   String getText() {
     switch (this) {
-      case SignupType.student:
+      case UserType.student:
         return 'طالب';
-      case SignupType.teacher:
+      case UserType.teacher:
         return 'مدرس';
-      case SignupType.institute:
-        return 'معهد أو مؤسسة تدريبية';
+      case UserType.institute:
+        return 'معهد/ مركز تعليمي';
+    }
+  }
+   String getValueForApi() {
+    switch (this) {
+
+      case UserType.student:
+      return '0';
+      case UserType.teacher:
+       return '1';
+      case UserType.institute:
+         return '2';
     }
   }
 }
@@ -17,7 +28,7 @@ extension TeachingMethodExtension on TeachingMethod {
   String getText() {
     switch (this) {
       case TeachingMethod.presence:
-        return 'حضوري';
+        return 'حضوري وجها لوجه';
       case TeachingMethod.online:
         return 'اونلاين/عن بعد';
     }
@@ -64,11 +75,11 @@ extension EducationalLevelExtension on EducationalLevel {
         return 'غير محدد';
       case EducationalLevel.elementry:
         return 'الابتدائية';
-      case EducationalLevel.mid:
+      case EducationalLevel.preparatory:
         return 'المتوسطة - الاعدادية';
-      case EducationalLevel.high:
+      case EducationalLevel.secondary:
         return 'الثانوية';
-      case EducationalLevel.college:
+      case EducationalLevel.university:
         return 'الجامعية';
     }
   }
@@ -78,11 +89,11 @@ extension EducationalLevelExtension on EducationalLevel {
         return 'غير محدد';
       case EducationalLevel.elementry:
         return 'الابتدائية';
-      case EducationalLevel.mid:
+      case EducationalLevel.preparatory:
         return 'متوسط(إعدادي)';
-      case EducationalLevel.high:
+      case EducationalLevel.secondary:
         return 'ثانوي';
-      case EducationalLevel.college:
+      case EducationalLevel.university:
         return 'جامعي';
     }
   }
@@ -93,11 +104,11 @@ extension EducationalLevelExtension on EducationalLevel {
         return '';
       case EducationalLevel.elementry:
         return 'elementry';
-      case EducationalLevel.mid:
+      case EducationalLevel.preparatory:
         return 'preparatory';
-      case EducationalLevel.high:
+      case EducationalLevel.secondary:
         return 'secondary';
-      case EducationalLevel.college:
+      case EducationalLevel.university:
         return 'university';
     }
   }

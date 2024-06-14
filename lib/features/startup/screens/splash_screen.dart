@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
-import 'package:khosousi_online/features/accounts/presentation/login/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/features/startup/widgets/custome_footer.dart';
 
 import '../../../core/managers/assets_manager.dart';
@@ -18,16 +21,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  startTime() async {
+    var duration = const Duration(seconds: 3);
+    return Timer(duration, navigationPage);
+  }
+
+  void navigationPage() {
+    if (mounted) {
+      BlocProvider.of<AuthenticationBloc>(context).add(AppStarted());
+    }
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed(AppWrapper.routeName);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    //navigate to the first screen after 3 seconds
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacementNamed(
-              context,
-              ChooseStateScreen.routeName,
-            ));
+    startTime();
   }
 
   @override

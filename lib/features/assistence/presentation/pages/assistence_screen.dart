@@ -20,8 +20,7 @@ class AssistenceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customeAppBar,
-      // backgroundColor: ColorManager.scaffoldBackground,
+      appBar: getCustomAppBar(context:context),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
           child: SafeArea(
@@ -89,7 +88,7 @@ class AssistenceScreen extends StatelessWidget {
                               screen: ContactUsScreen(),
                             );
                           }),
-                            SizedBox(height: 8),
+                      SizedBox(height: 8),
                       _buildCard(
                           icon: Icon(Icons.message, color: ColorManager.black),
                           title: 'مواقع التواصل الاجتماعي',
@@ -99,7 +98,7 @@ class AssistenceScreen extends StatelessWidget {
                               screen: SocialMediaScreen(),
                             );
                           }),
-                           SizedBox(height: 8),
+                      SizedBox(height: 8),
                     ],
                   ),
                 ],
@@ -116,7 +115,7 @@ class AssistenceScreen extends StatelessWidget {
       required String title,
       required VoidCallback onPressed}) {
     return Material(
-       color: Colors.transparent,
+      color: Colors.transparent,
       child: Card(
         elevation: 1,
         color: Colors.transparent,

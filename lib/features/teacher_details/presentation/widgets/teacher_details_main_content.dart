@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
@@ -21,7 +23,8 @@ class TeacherDetailsMainContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TeacherDetailsMainContent> createState() => _TeacherDetailsMainContentState();
+  State<TeacherDetailsMainContent> createState() =>
+      _TeacherDetailsMainContentState();
 }
 
 class _TeacherDetailsMainContentState extends State<TeacherDetailsMainContent>
@@ -86,6 +89,7 @@ class _TeacherDetailsMainContentState extends State<TeacherDetailsMainContent>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppbar(),
+      floatingActionButton: _buildContactUs(),
       body: NestedScrollView(
         scrollDirection: Axis.vertical,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -110,6 +114,50 @@ class _TeacherDetailsMainContentState extends State<TeacherDetailsMainContent>
               .toList(),
         ),
       ),
+    );
+  }
+
+  Widget _buildContactUs() {
+    return Theme(
+      data: ThemeData(
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+        ),
+      ),
+      child: AnimatedFloatingActionButton(
+          fabButtons: <Widget>[
+            Container(
+              child: FloatingActionButton(
+                onPressed: () {},
+                heroTag: "phone btn",
+                tooltip: 'Phone button',
+                child: Icon(Icons.phone_enabled_sharp, color: Colors.white),
+                backgroundColor: ColorManager.blue1,
+              ),
+            ),
+            Container(
+              child: FloatingActionButton(
+                onPressed: () {},
+                heroTag: "whatsapp btn",
+                tooltip: 'Whatsapp button',
+                child: Icon(FontAwesomeIcons.whatsapp, color: Colors.white),
+                backgroundColor: Colors.green,
+              ),
+            ),
+            Container(
+              child: FloatingActionButton(
+                onPressed: () {},
+                heroTag: "message btn",
+                tooltip: 'message button',
+                child: Icon(FontAwesomeIcons.solidMessage, color: Colors.white),
+                backgroundColor: ColorManager.black,
+              ),
+            ),
+          ],
+          // key : key,
+          colorStartAnimation: ColorManager.blue2,
+          colorEndAnimation: Colors.red,
+          animatedIconData: AnimatedIcons.menu_close),
     );
   }
 

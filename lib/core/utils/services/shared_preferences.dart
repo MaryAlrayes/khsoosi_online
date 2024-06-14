@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceUtils {
@@ -49,6 +51,21 @@ class PreferenceUtils {
 
   static Future<bool> setDouble(String key, double value) async {
     return _prefsInstance.setDouble(key, value);
+  }
+
+  static setObject(String key, value) async {
+    return _prefsInstance.setString(key, json.encode(value));
+  }
+
+  static dynamic getObject(String key) {
+    var string = _prefsInstance.getString(key);
+    if (string == null) {
+      return null;
+    }
+
+    final decodedJson = json.decode(string) as dynamic;
+
+    return decodedJson;
   }
 
   static Future<bool> removeValue(

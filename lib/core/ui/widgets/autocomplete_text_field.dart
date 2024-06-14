@@ -11,7 +11,7 @@ class AutocompleteTextField extends StatelessWidget {
   const AutocompleteTextField({
     Key? key,
     required this.focusNode,
-    required this.textEditingController,
+     this.textEditingController,
   }) : super(key: key);
 
   @override

@@ -58,7 +58,7 @@ class TeacherModel extends TeacherEntity {
             ? ''
             : EndPointsManager.countryImageBaseUrl +
                 data['Country_code'] +
-                '.webp',
+                EndPointsManager.countryImageExtension,
         teacherSpecialityEntity:
             (categories as List<dynamic>)
                 .map(

@@ -11,7 +11,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: _buildAppbar(),
+        appBar: _buildAppbar(context),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -28,7 +28,7 @@ class NotificationScreen extends StatelessWidget {
         ));
   }
 
-  PreferredSizeWidget _buildAppbar() {
-    return customeAppBar;
+  PreferredSizeWidget _buildAppbar(BuildContext context) {
+    return getCustomAppBar(context:context);
   }
 }

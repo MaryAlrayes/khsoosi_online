@@ -6,6 +6,7 @@ class ColorManager {
   static Color primaryColor = Colors.white;
   static Color black = Color(0xff24292D);
   static Color blue1 = Color(0xff066AC9);
+  static Color blue2=Color(0xff17A2B8);
   static Color lightBlue = Color(0xffE7F6F8);
 
   static Color green1 = Color(0xff0CB682);

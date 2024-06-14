@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/managers/string_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_text_field.dart';
+import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/cubit/login_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/signup_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/social_media.dart';
+import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
 
 import '../../../../../core/managers/assets_manager.dart';
+import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 
 class LoginScreen extends StatefulWidget {
   static const routeName = 'login_screen';
@@ -22,80 +29,113 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-            padding: EdgeInsets.all(16.r),
-            child: LayoutBuilder(
-              builder: (context, constraints) => Container(
-                height: constraints.maxHeight,
-                child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildTop(constraints),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Container(
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _buildEmailTextField(context),
-                                SizedBox(
-                                  height: 12.h,
+    return BlocProvider(
+      create: (context) => sl.locator<LoginCubit>(),
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<LoginCubit, LoginState>(listener: (context, state) {
+              _buildLoginListener(state, context);
+            }),
+            BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                // _buildAuthListener(state, context);
+              },
+            ),
+          ],
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: Padding(
+                  padding: EdgeInsets.all(16.r),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => Container(
+                      height: constraints.maxHeight,
+                      child: SingleChildScrollView(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _buildTop(constraints),
+                              SizedBox(
+                                height: 16.h,
+                              ),
+                              Container(
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      _buildEmailTextField(context),
+                                      SizedBox(
+                                        height: 12.h,
+                                      ),
+                                      _buildPasswordTextField(context),
+                                    ],
+                                  ),
                                 ),
-                                _buildPasswordTextField(context),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        _buildLoginBtn(context),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        _builSignUpBtn(context),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        _buildOrDivider(),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        _buildSocialMedia(),
-                      ]),
-                ),
-              ),
-            )),
-      ),
+                              ),
+                              SizedBox(
+                                height: 12.h,
+                              ),
+                              _buildLoginBtn(context),
+                              SizedBox(
+                                height: 12.h,
+                              ),
+                              _buildOrDivider(),
+                              SizedBox(
+                                height: 12.h,
+                              ),
+                              _buildSocialMedia(),
+                              SizedBox(
+                                height: 12.h,
+                              ),
+                              _builSignUpBtn(context),
+                            ]),
+                      ),
+                    ),
+                  )),
+            ),
+          ),
+        );
+      }),
     );
   }
 
+  void _buildLoginListener(LoginState state, BuildContext context) {
+    if (state.loginStatus == LoginStatus.done) {
+      BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppWrapper.routeName,
+        (route) => false,
+      );
+    } else if (state.loginStatus == LoginStatus.noInternet) {
+      showSnackbar(context,AppStrings.noInternetConnectionMessage);
+    } else if (state.loginStatus == LoginStatus.networkError) {
+      showSnackbar(context, '${state.errorMessage}');
+    }
+  }
+
+ 
+
   Container _buildTop(BoxConstraints constraints) {
     return Container(
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.asset(
             AppAssetsManager.wallpaper,
             fit: BoxFit.contain,
-            width:double.infinity,
-            height: 150,
+            width: double.infinity,
+            height: 100.h,
           ),
           SizedBox(
             height: 16.h,
           ),
           Container(
             child: Text(
-              'تسجيل الدخول',
+              'حياك الله!',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
@@ -105,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Container(
             child: Text(
-              'من الجميل رؤيتك! الرجاء تسجيل الدخول بحسابك.',
+              'قم بتسجيل الدخول لحسابك للاستفادة من جميع مزايا التطبيق.',
               textAlign: TextAlign.center,
               style: TextStyle(color: ColorManager.gray4, fontSize: 14),
             ),
@@ -130,11 +170,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn(BuildContext context) {
-    return CustomElevatedButton(
-      label: 'تسجيل الدخول',
-      padding: EdgeInsets.symmetric(vertical: 12),
-      onPressed: () {
-        Navigator.pushNamed(context, StudentScreen.routeName);
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        return CustomElevatedButton(
+          label: 'تسجيل الدخول',
+          isLoading: state.loginStatus == LoginStatus.loading,
+          onPressed: state.loginStatus == LoginStatus.loading
+              ? () {}
+              : () {
+                  final valid = _formKey.currentState!.validate();
+
+                  if (valid) {
+                    BlocProvider.of<LoginCubit>(context).submit();
+                  }
+                },
+          backgroundColor: ColorManager.black,
+        );
       },
     );
   }
@@ -144,28 +195,39 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CustomTextField(
-          textInputAction: TextInputAction.done,
-          textInputType: TextInputType.text,
-          labelText: 'كلمة السر',
-          validator: (value) {},
-          isObscure: true,
-          iconData: Icon(Icons.lock),
-          withBorder: true,
-          isFilled: true,
-        ),
+            textInputAction: TextInputAction.done,
+            textInputType: TextInputType.text,
+            labelText: 'كلمة السر',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'لا يمكن لهذا الحقل أن يبقى فارغ';
+              }
+            },
+            isObscure: true,
+            iconData: Icon(Icons.lock),
+            withBorder: true,
+            isFilled: true,
+            onChanged: (value) {
+              BlocProvider.of<LoginCubit>(context).setPassword(value);
+            }),
         Container(
           alignment: Alignment.centerLeft,
           child: TextButton(
             onPressed: () {},
             child: Text(
               'نسيت كلمة المرور؟',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
             ),
             style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: Size(50, 30),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                alignment: Alignment.centerLeft),
+              padding: EdgeInsets.zero,
+              minimumSize: Size(50, 30),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              alignment: Alignment.centerLeft,
+              // foregroundColor: ColorManager.black,
+            ),
           ),
         )
       ],
@@ -177,44 +239,43 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: TextInputAction.next,
       textInputType: TextInputType.emailAddress,
       labelText: 'البريد الالكتروني',
-      validator: (value) {},
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'لا يمكن لهذا الحقل أن يبقى فارغ';
+        }
+      },
       isObscure: false,
       iconData: Icon(Icons.email),
       withBorder: true,
       isFilled: true,
+      onChanged: (value) {
+        BlocProvider.of<LoginCubit>(context).setEmail(value);
+      },
     );
   }
 
   Widget _buildSocialMedia() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SocialMedia(
-            icon: Image.asset(
-              AppAssetsManager.googleIcon,
-              scale: 20,
-            ),
-            onPressed: () {}),
-        SizedBox(
-          width: 8.w,
+          icon: Image.asset(
+            AppAssetsManager.googleIcon,
+            scale: 20,
+          ),
+          onPressed: () {},
+          label: 'تسجيل باستخدام جوجل',
         ),
-        SocialMedia(
-            icon: Icon(
-              Icons.facebook,
-              color: Colors.blue,
-              size: 30.w,
-            ),
-            onPressed: () {}),
-        SizedBox(
-          width: 8.w,
-        ),
+        SizedBox(height: 8),
         SocialMedia(
             icon: Icon(
               Icons.apple,
               color: Colors.black,
               size: 30,
             ),
-            onPressed: () {})
+            onPressed: () {},
+            label: 'تسجيل باستخدام أبل')
       ],
     );
   }

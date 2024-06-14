@@ -4,6 +4,7 @@ class EndPointsManager {
 //countries
   static const String countryImageBaseUrl =
       "${baseAppUrl}assets/template_files/images/countries/png/48/";
+  static const String countryImageExtension = '.png';
 
 //user
   static const String userImageBaseUrl = "${baseAppUrl}assets/images/users/";
@@ -64,4 +65,24 @@ static const String serviceDetailsBaseUrl =
 
   //get institutes
   static const String getInstitutesbyFilter = "Institutes/get_all_institutes_api";
+
+//signup
+static const String signup = "API/Auth/signup";
+//login
+static const String login = "API/Auth/login";
+//user info
+static const String userInfo = "API/Users/get_general_user_info?user_id=";
+
+//submit info
+static const String contactInfo = "API/Auth/continue_contact_profile_info";
+static const String teacherInfo = "API/Auth/continue_teacher_profile_info";
+
+//activate account
+static const String activateAccount = "API/Auth/activate_user";
+//resend activation code
+static const String resendActivationCode = "API/Auth/resubmit_activation_code";
+
+//change password
+static const String changePassword = "API/Users/change_password";
+
 }

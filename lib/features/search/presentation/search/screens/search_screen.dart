@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:khosousi_online/core/managers/assets_manager.dart';
+import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_app_bar.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
-import 'package:khosousi_online/features/search/domain/entities/search_filter_entity.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
-import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
 import 'package:khosousi_online/features/search/presentation/search/cubit/search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/search/widgets/custom_circle.dart';
 import 'package:khosousi_online/features/search/presentation/search/widgets/filter_icon.dart';
@@ -22,16 +18,18 @@ import 'package:khosousi_online/features/search/presentation/search_services/blo
 import 'package:khosousi_online/features/search/presentation/search_services/screens/search_services_result.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/screens/search_teachers_result.dart';
-import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
-
 import '../../../../../shared_features/presentation/bloc/get_cities_bloc.dart';
 import '../../../../../shared_features/presentation/bloc/get_countries_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
   static const routeName = 'my_search_screen';
-  const SearchScreen({super.key});
+  final bool withAppBar;
+  const SearchScreen({
+    Key? key,
+    required this.withAppBar,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,7 @@ class SearchScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: ColorManager.scaffoldBackground,
-          appBar: _buildAppbar(),
+          appBar:withAppBar? _buildAppbar(context):null,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -98,8 +96,8 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppbar() {
-    return customeAppBar;
+  PreferredSizeWidget _buildAppbar(BuildContext context) {
+    return getCustomAppBar(context:context);
   }
 
   Widget _buildCircles(SearchState state) {

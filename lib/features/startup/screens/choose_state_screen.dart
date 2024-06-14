@@ -8,6 +8,7 @@ import 'package:khosousi_online/features/accounts/presentation/login/screens/log
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/signup_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/pages/signup_screen.dart';
 import 'package:khosousi_online/features/search/presentation/search/screens/search_screen.dart';
+import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
 import 'package:lottie/lottie.dart';
 
 class ChooseStateScreen extends StatelessWidget {
@@ -91,7 +92,7 @@ class ChooseStateScreen extends StatelessWidget {
       backgroundColor: ColorManager.black,
       padding: EdgeInsets.symmetric(vertical: 12),
       onPressed: () {
-        Navigator.pushNamed(context, SearchScreen.routeName);
+        Navigator.pushNamed(context, SearchWithoutAuth.routeName);
       },
       icon: Icon(Icons.search),
     );

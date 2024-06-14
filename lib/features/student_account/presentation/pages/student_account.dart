@@ -16,7 +16,7 @@ class StudentAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customeAppBar,
+      appBar: getCustomAppBar(context:context),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

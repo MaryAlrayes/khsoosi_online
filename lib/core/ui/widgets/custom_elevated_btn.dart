@@ -5,12 +5,14 @@ import 'package:khosousi_online/core/managers/color_manager.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Icon? icon;
   final bool? isRounded;
   final EdgeInsetsGeometry? padding;
+  final bool isLoading;
+  final bool isEnabled;
   const CustomElevatedButton(
       {Key? key,
       required this.label,
@@ -19,7 +21,9 @@ class CustomElevatedButton extends StatelessWidget {
       this.foregroundColor,
       this.icon,
       this.isRounded,
-      this.padding})
+      this.padding,
+      this.isLoading=false,
+      this.isEnabled=true})
       : super(key: key);
 
   @override
@@ -31,9 +35,10 @@ class CustomElevatedButton extends StatelessWidget {
 
   ElevatedButton _buildElevatedWithIcon(bool? isRounded) {
     return ElevatedButton.icon(
+      
       icon: icon!,
       onPressed: onPressed,
-      label: Text(
+      label:isLoading? CircularProgressIndicator(): Text(
         label,
         style: TextStyle(fontSize: 14),
         maxLines: 1,
@@ -55,7 +60,7 @@ class CustomElevatedButton extends StatelessWidget {
   Widget _buildElevatedWithoutIcon(bool? isRounded) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(
+      child:isLoading? CircularProgressIndicator(): Text(
         label,
         maxLines: 1,
         style: TextStyle(fontSize: 14),

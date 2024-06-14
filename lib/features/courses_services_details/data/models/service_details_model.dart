@@ -54,7 +54,7 @@ class ServiceDetailsModel extends CourseServiceDetailsEntity {
           ? ''
           : EndPointsManager.countryImageBaseUrl +
               info['Country_code'] +
-              '.webp',
+             EndPointsManager.countryImageExtension,
 
       // TODO: fetch service rate from API
       rate:

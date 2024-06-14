@@ -33,7 +33,7 @@ class TeacherAccountScreen extends StatelessWidget {
       create: (context) => sl.locator<RefreshAccountCubit>(),
       child: Builder(builder: (context) {
         return Scaffold(
-          appBar: customeAppBar,
+          appBar: getCustomAppBar(context:context),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(

@@ -3,6 +3,32 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:khosousi_online/core/api_service/base_api_service.dart';
 import 'package:khosousi_online/core/api_service/network_service_dio.dart';
 import 'package:khosousi_online/core/network/check_internet.dart';
+import 'package:khosousi_online/features/accounts/data/data_sources/accounts_data_provider.dart';
+import 'package:khosousi_online/features/accounts/data/repositories_impl/accounts_repo_impl.dart';
+import 'package:khosousi_online/features/accounts/data/repositories_impl/auth_repo_impl.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/accounts_repo.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/activate_account_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/fetch_user_data_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/login_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/resend_activation_code_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/signup_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/submit_student_info_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/submit_teacher_extra_info_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/sumbit_teacher_info_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/upload_picture_use_case.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/cubit/login_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/otp/cubit/activate_account_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/otp/cubit/resend_activation_code_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/student_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/student_info_stepper_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_extra_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_info_stepper_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/upload_picture_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_stepper_cubit.dart';
 import 'package:khosousi_online/features/courses_services_details/data/data%20providers/service_details_data_provider.dart';
 import 'package:khosousi_online/features/courses_services_details/data/repositories/service_details_repo_impl.dart';
 import 'package:khosousi_online/features/courses_services_details/domain/repositories/course_details_repo.dart';
@@ -11,6 +37,10 @@ import 'package:khosousi_online/features/courses_services_details/domain/use%20c
 import 'package:khosousi_online/features/courses_services_details/domain/use%20cases/service_details_use_case.dart';
 import 'package:khosousi_online/features/courses_services_details/presentation/courses/bloc/get_course_details_bloc.dart';
 import 'package:khosousi_online/features/courses_services_details/presentation/services/bloc/get_services_details_bloc.dart';
+import 'package:khosousi_online/features/edit_password/data/data_sources/edit_password_data_source.dart';
+import 'package:khosousi_online/features/edit_password/data/repositories_impl/change_password_repo_impl.dart';
+import 'package:khosousi_online/features/edit_password/domain/use_cases/change_password_use_case.dart';
+import 'package:khosousi_online/features/edit_password/presentation/cubit/change_password_cubit.dart';
 import 'package:khosousi_online/features/localization/cubit/lacalization_cubit.dart';
 import 'package:khosousi_online/features/localization/localize_app.dart';
 import 'package:khosousi_online/features/localization/localize_app_impl.dart';
@@ -53,6 +83,7 @@ import 'package:khosousi_online/shared_features/domain/use_cases/get_cities_use_
 import 'package:khosousi_online/shared_features/domain/use_cases/get_countries_use_case.dart';
 import '../../features/courses_services_details/data/data providers/course_details_data_provider.dart';
 import '../../features/courses_services_details/data/repositories/course_details_repo_impl.dart';
+import '../../features/edit_password/domain/repositories/change_password_repo.dart';
 import '../../shared_features/presentation/bloc/get_categories_bloc.dart';
 
 final locator = GetIt.I;
@@ -79,11 +110,30 @@ Future<void> setupLocator() async {
       () => GetCourseDetailsBloc(courseDetailsUseCase: locator()));
   locator
       .registerFactory(() => GetCoursesBloc(searchCoursesUseCase: locator()));
- locator
+  locator
       .registerFactory(() => GetServicesBloc(searchServicesUseCase: locator()));
-locator
-      .registerFactory(() => GetServicesDetailsBloc(serviceDetailsUseCase: locator()));
-
+  locator.registerFactory(
+      () => GetServicesDetailsBloc(serviceDetailsUseCase: locator()));
+  locator.registerFactory(() => SignupCubit(signupUseCase: locator()));
+  locator.registerFactory(() => SignupStepperCubit());
+  locator.registerFactory(() => LoginCubit(loginUseCase: locator()));
+  locator.registerFactory(() => AuthenticationBloc(
+      authRepository: locator(), fetchUserDataUseCase: locator()));
+  locator.registerFactory(() => StudentInfoStepperCubit());
+  locator
+      .registerFactory(() => StudentInfoCubit(studentInfoUseCase: locator()));
+  locator.registerFactory(
+      () => UploadPictureCubit(uploadPictureUseCase: locator()));
+  locator.registerFactory(
+      () => ActivateAccountCubit(activateAccountUseCase: locator()));
+  locator.registerFactory(
+      () => ResendActivationCodeCubit(resendActivationCodeUseCase: locator()));
+  locator.registerFactory(
+      () => ChangePasswordCubit(changePasswordUseCase: locator()));
+  locator.registerFactory(
+      () => TeacherInfoCubit(submitTeacherInfoUseCase: locator()));
+  locator.registerFactory(() => TeacherInfoStepperCubit());
+ locator.registerFactory(() => TeacherExtraInfoCubit(submitTeacherExtraInfoUseCase:locator()));
 
 
   //use cases
@@ -104,9 +154,39 @@ locator
       () => SearchCoursesUseCase(searchCoursesRepo: locator()));
   locator.registerLazySingleton(
       () => SearchServicesUseCase(searchServicesRepo: locator()));
-locator.registerLazySingleton(
+  locator.registerLazySingleton(
       () => ServiceDetailsUseCase(servicesDetailsRepo: locator()));
-
+  locator.registerLazySingleton(() => SignupUseCase(accountsRepo: locator()));
+  locator.registerLazySingleton(
+      () => LoginUseCase(accountsRepo: locator(), authRepo: locator()));
+  locator.registerLazySingleton(() => FetchUserDataUseCase(
+        accountsRepo: locator(),
+      ));
+  locator.registerLazySingleton(() =>
+      SubmitStudentInfoUseCase(accountsRepo: locator(), authRepo: locator()));
+  locator.registerLazySingleton(() => UploadPictureUseCase(
+        accountsRepo: locator(),
+      ));
+  locator.registerLazySingleton(() =>
+      ActivateAccountUseCase(accountsRepo: locator(), authRepo: locator()));
+  locator.registerLazySingleton(() => ResendActivationCodeUseCase(
+        accountsRepo: locator(),
+      ));
+  locator.registerLazySingleton(() => ChangePasswordUseCase(
+        changePasswordRepo: locator(),
+      ));
+  locator.registerLazySingleton(
+    () => SubmitTeacherInfoUseCase(
+      accountsRepo: locator(),
+     
+    ),
+  );
+   locator.registerLazySingleton(
+    () => SubmitTeacherExtraInfoUseCase(
+      accountsRepo: locator(),
+      authRepo: locator(),
+    ),
+  );
 
   //repositories
   locator.registerLazySingleton<CategoriesRepo>(
@@ -122,12 +202,15 @@ locator.registerLazySingleton(
       () => CourseDetailsRepoImpl(courseDetailsDataProvider: locator()));
   locator.registerLazySingleton<SearchCoursesRepo>(
       () => SearchCoursesRepoImp(searchCoursesDataProvider: locator()));
-locator.registerLazySingleton<SearchServicesRepo>(
+  locator.registerLazySingleton<SearchServicesRepo>(
       () => SearchServicesRepoImp(searchServicesDataProvider: locator()));
-locator.registerLazySingleton<ServicesDetailsRepo>(
-      () => ServiceDetailsRepoImpl(serviceDetailsDataProvider : locator()));
-
-
+  locator.registerLazySingleton<ServicesDetailsRepo>(
+      () => ServiceDetailsRepoImpl(serviceDetailsDataProvider: locator()));
+  locator.registerLazySingleton<AccountsRepo>(
+      () => AccountsRepoImpl(accountsDataProvider: locator()));
+  locator.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
+  locator.registerLazySingleton<ChangePasswordRepo>(
+      () => ChangePasswordRepoImpl(changePasswordProvider: locator()));
 
   //data sources
   locator.registerLazySingleton<CategoriesProvider>(
@@ -142,10 +225,14 @@ locator.registerLazySingleton<ServicesDetailsRepo>(
       () => CourseDetailsDataProviderWithDio(client: locator()));
   locator.registerLazySingleton<SearchCoursesDataProvider>(
       () => SearchCoursesDataProviderWithDio(client: locator()));
- locator.registerLazySingleton<SearchServicesDataProvider>(
+  locator.registerLazySingleton<SearchServicesDataProvider>(
       () => SearchServicesDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<ServiceDetailsDataProvider>(
+  locator.registerLazySingleton<ServiceDetailsDataProvider>(
       () => ServiceDetailsDataProviderWithDio(client: locator()));
+  locator.registerLazySingleton<AccountsDataProvider>(
+      () => AccountsDataProviderWithDio(client: locator()));
+  locator.registerLazySingleton<ChangePasswordProvider>(
+      () => ChangePasswordProviderWithDio(client: locator()));
 
   //core
   locator.registerLazySingleton<NetworkInfo>(

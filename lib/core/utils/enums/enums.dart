@@ -1,7 +1,32 @@
-enum SignupType{
+enum UserType{
   student,
   teacher,
   institute
+}
+
+enum SignupSteps{
+  userType,
+  name,
+  emailPassword
+}
+
+enum StudentInfoStepperSteps{
+  phones,
+  general,
+  picture,
+}
+
+enum TeacherInfoStepperSteps{
+  phones,
+  general,
+  social_media,
+  teachingMethod,
+  educationalLevel,
+  address,
+  categories,
+  certificates,
+  skills,
+  picture,
 }
 
 enum SearchType{
@@ -29,7 +54,7 @@ enum Gender {
 
 enum TeachingMethod { presence, online }
 
-enum EducationalLevel { unspecified, elementry, mid, high, college }
+enum EducationalLevel { unspecified, elementry, preparatory, secondary, university }
 
 enum SearchCoursesSteps {
   teachingMethod,

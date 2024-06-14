@@ -35,17 +35,18 @@ class _AppDropDownState<T> extends State<AppDropDown<T>> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:  EdgeInsets.symmetric(horizontal: 8.w),
+      padding:  EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
           color: Colors.grey.withOpacity(.3),
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(5.r),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: DropdownButtonHideUnderline(
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
            if(widget.icon!=null)...[  Padding(
                padding: const EdgeInsets.all(8.0),
@@ -62,7 +63,7 @@ class _AppDropDownState<T> extends State<AppDropDown<T>> {
 
                   hint: Text(
                     widget.hintText,
-                    style:  TextStyle(fontSize: 14.sp, color: Color(0xff888888)),
+                    style:  TextStyle(fontSize: 14, color: Color(0xff888888)),
                   ),
                   items: widget.items,
                   isExpanded: true,

@@ -9,11 +9,11 @@ class OfflineFailure extends Failure {
 }
 
 class NetworkErrorFailure extends Failure {
-  final int responseCode;
+  final int? responseCode;
   final String message;
   NetworkErrorFailure({
     required this.message,
-    required this.responseCode
+     this.responseCode
   });
 
   @override

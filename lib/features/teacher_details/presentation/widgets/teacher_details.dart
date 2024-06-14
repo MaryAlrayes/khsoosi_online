@@ -96,10 +96,10 @@ class TeacherDetails extends StatelessWidget {
                 SizedBox(
                   height: 12,
                 ),
-                _buildContactbtn(),
-                SizedBox(
-                  height: 16,
-                ),
+                // _buildContactbtn(),
+                // SizedBox(
+                //   height: 16,
+                // ),
                 Container(
                   child: _buildCategories(),
                 ),
@@ -192,7 +192,7 @@ class TeacherDetails extends StatelessWidget {
             'تواصل معي',
             style: TextStyle(color: Colors.white),
           ),
-          style: ElevatedButton.styleFrom(backgroundColor: Color(0xff17A2B8)),
+          style: ElevatedButton.styleFrom(backgroundColor:ColorManager.blue2),
         ),
       ),
     );
@@ -318,15 +318,15 @@ class TeacherDetails extends StatelessWidget {
     }
     if (teacherDetailsEntity.preparatory) {
       level.isNotEmpty ? level += '/ ' : '';
-      level += EducationalLevel.mid.getTextForDispalay();
+      level += EducationalLevel.preparatory.getTextForDispalay();
     }
     if (teacherDetailsEntity.secondary) {
       level.isNotEmpty ? level += '/ ' : '';
-      level += EducationalLevel.high.getTextForDispalay();
+      level += EducationalLevel.secondary.getTextForDispalay();
     }
     if (teacherDetailsEntity.university) {
       level.isNotEmpty ? level += '/ ' : '';
-      level += EducationalLevel.college.getTextForDispalay();
+      level += EducationalLevel.university.getTextForDispalay();
     }
     return _buildRowDetails(
       level,

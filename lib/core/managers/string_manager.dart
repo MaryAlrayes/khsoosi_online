@@ -2,8 +2,8 @@ class AppStrings{
   static const noRouteFound = "No Route Found";
 
   static const String success = "success";
-  static const String noInternetConnectionMessage = 'No Internet Connection';
-  static const String networkError = 'An error occurred while sending';
+  static const String noInternetConnectionMessage = 'لا يوجد اتصال بشبكة الانترنت، حاول مرة أخرى';
+  static const String networkError = 'حدث خطأ أثناء الإرسال، حاول مرة أخرى';
   // error handler
   static const String strBadRequestError = "bad_request_error";
   static const String strNoContent = "no_content";
@@ -17,4 +17,8 @@ class AppStrings{
   static const String strDefaultError = "network_error";
   static const String strCacheError = "cache_error";
   static const String strNoInternetError = "no_internet_error";
+
+
+  static const String strErrorFetchingIPAddress = "error";
+static const String strDeviceInfoError = "error";
 }

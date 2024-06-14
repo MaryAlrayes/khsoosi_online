@@ -39,9 +39,16 @@ dependencies:
   flutter_html: 3.0.0-beta.2
   url_launcher: ^6.2.6
   html: ^0.15.4
-  google_maps_flutter: ^2.0.5
+  google_maps_flutter: ^2.6.1
   like_button: ^2.0.5
   flutter_dotenv: ^5.1.0
+  device_info_plus: ^9.0.3
+  badges: ^3.1.2
+  image_picker: ^1.1.2
+  fluttertoast: ^8.2.2
+  pin_code_fields: ^8.0.1
+  animated_floating_buttons: ^0.0.2
+
 
 
 
@@ -73,10 +80,13 @@ flutter:
     - assets/images/logo_black.png
     - assets/images/logo_white.png
     - assets/images/online_learning.json
+    - assets/images/accepted.json
+    - assets/images/warning.json
     - assets/images/google.png
     - assets/images/app_logo.png
     - assets/images/wallpaper.png
     - assets/images/operator.svg
+    - assets/images/otp.svg
     - assets/config/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see

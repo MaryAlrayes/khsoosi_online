@@ -20,7 +20,7 @@ class TeacherSatatisticsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppbar(),
+        appBar: _buildAppbar(context),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -142,7 +142,7 @@ class TeacherSatatisticsScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppbar() {
-    return customeAppBar;
+  PreferredSizeWidget _buildAppbar(BuildContext context) {
+    return getCustomAppBar(context: context);
   }
 }

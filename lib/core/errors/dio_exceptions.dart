@@ -12,7 +12,7 @@ class DioExceptions implements Exception {
       failure = _handleError(error);
     } else {
       // default error
-      failure = DataSource.DEFAULT.getFailure();
+      failure = ErrorTypes.DEFAULT.getFailure();
     }
   }
 }
@@ -20,11 +20,11 @@ class DioExceptions implements Exception {
 Failure _handleError(DioException error) {
   switch (error.type) {
     case DioExceptionType.connectionTimeout:
-      return DataSource.CONNECT_TIMEOUT.getFailure();
+      return ErrorTypes.CONNECT_TIMEOUT.getFailure();
     case DioExceptionType.sendTimeout:
-      return DataSource.SEND_TIMEOUT.getFailure();
+      return ErrorTypes.SEND_TIMEOUT.getFailure();
     case DioExceptionType.receiveTimeout:
-      return DataSource.RECIEVE_TIMEOUT.getFailure();
+      return ErrorTypes.RECIEVE_TIMEOUT.getFailure();
     case DioExceptionType.badResponse:
       if (error.response != null &&
           error.response?.statusCode != null &&
@@ -33,11 +33,11 @@ Failure _handleError(DioException error) {
             responseCode: error.response?.statusCode ?? 0,
             message: error.response?.data["message"] ?? "");
       } else {
-        return DataSource.BAD_REQUEST.getFailure();
+        return ErrorTypes.BAD_REQUEST.getFailure();
       }
     case DioExceptionType.cancel:
-      return DataSource.CANCEL.getFailure();
+      return ErrorTypes.CANCEL.getFailure();
     default:
-      return DataSource.DEFAULT.getFailure();
+      return ErrorTypes.DEFAULT.getFailure();
   }
 }

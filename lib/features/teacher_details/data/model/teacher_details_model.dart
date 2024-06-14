@@ -82,7 +82,7 @@ class TeacherDetailsModel extends TeacherDetailsEntity {
           ? ''
           : EndPointsManager.countryImageBaseUrl +
               teacherInfo['Country_of_residense_code'] +
-              '.webp',
+              EndPointsManager.countryImageExtension,
       nationalityAr: teacherInfo['nationality_name_ar'] ?? '',
       nationalityEn: teacherInfo['nationality_name_en'] ?? '',
       nationalityCountryCode: teacherInfo['nationality_country_code'] == null ||
@@ -90,7 +90,7 @@ class TeacherDetailsModel extends TeacherDetailsEntity {
           ? ''
           : EndPointsManager.countryImageBaseUrl +
               teacherInfo['nationality_country_code'] +
-              '.webp',
+             EndPointsManager.countryImageExtension,
       gender: teacherInfo['Jender'] == '0' ? Gender.male : Gender.female,
       age: AgeCalculator.getAg(DateTime.parse(teacherInfo['Born_date'])),
       elementary: teacherInfo['Stage_elementry'] == null

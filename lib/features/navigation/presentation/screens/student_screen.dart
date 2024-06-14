@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/assistence_screen.dart';
 import 'package:khosousi_online/features/messages/presentation/pages/inbox_messages_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/widgets/navigation_tab.dart';
@@ -20,7 +16,7 @@ class StudentScreen extends StatelessWidget {
     return [
       AssistenceScreen(),
       InboxMessagesScreen(),
-      SearchScreen(),
+      SearchScreen(withAppBar:true),
       NotificationScreen(),
       StudentAccount(),
     ];

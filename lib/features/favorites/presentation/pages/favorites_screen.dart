@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:khosousi_online/features/favorites/presentation/pages/favorite_courses_screen.dart';
+import 'package:khosousi_online/features/favorites/presentation/pages/favorite_services_screen.dart';
+import 'package:khosousi_online/features/favorites/presentation/pages/favorite_teachers_screen.dart';
 import '../../../../core/managers/color_manager.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -11,7 +14,6 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen>
     with TickerProviderStateMixin {
-
   late TabController _tabController;
 
   @override
@@ -30,6 +32,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         children: <Widget>[
           Container(
             color: ColorManager.gray3,
+            height: 50,
             child: TabBar(
               controller: _tabController,
               unselectedLabelColor: Colors.black,
@@ -62,7 +65,12 @@ class _FavoritesScreenState extends State<FavoritesScreen>
             child: TabBarView(
               physics: BouncingScrollPhysics(),
               controller: _tabController,
-              children: <Widget>[Container(), Container(), Container()],
+              children: <Widget>[
+                FavoriteCoursesScreen(),
+                FavoriteServicesScreen(),
+                FavoriteTeacherScreen
+                (),
+              ],
             ),
           ),
         ],
