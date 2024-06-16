@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:khosousi_online/core/ui/style/common_styles.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
@@ -30,7 +29,7 @@ class CourseItem extends StatelessWidget {
       child: Material(
         child: InkWell(
           onTap: () {
-            pushScreen(
+            barPushScreen(
               context: context,
               screen: CourseDetailsScreen(
                 id: courseEntity.id,
@@ -152,7 +151,7 @@ class CourseItem extends StatelessWidget {
   Widget _buildCourseProvider(BuildContext context) {
     return TextButton.icon(
       onPressed: () {
-      pushScreen(context: context, screen: CourseDetailsScreen(id: courseEntity.publisherUserId));
+      barPushScreen(context: context, screen: CourseDetailsScreen(id: courseEntity.publisherUserId));
       },
       icon: Icon(
         Icons.person,

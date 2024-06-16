@@ -5,30 +5,29 @@ import 'package:khosousi_online/features/navigation/presentation/widgets/navigat
 import 'package:khosousi_online/features/notification/presentation/pages/notification_screen.dart';
 import 'package:khosousi_online/features/search/presentation/search/screens/search_screen.dart';
 import 'package:khosousi_online/features/student_account/presentation/pages/student_account.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 class StudentScreen extends StatelessWidget {
   static const routeName = 'student_screen';
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 2);
 
-  List<Widget> _buildScreens() {
-    return [
+  List<Widget> screens=
+     [
       AssistenceScreen(),
       InboxMessagesScreen(),
       SearchScreen(withAppBar:true),
       NotificationScreen(),
       StudentAccount(),
     ];
-  }
+
 
   List<Map<String, dynamic>> _navBarsItems() {
     return [
-      {'icon': Icon(Icons.headset_mic), 'title': 'دعم', 'center': false},
-      {'icon': Icon(Icons.message_sharp), 'title': 'رسائل', 'center': false},
-      {'icon': Icon(Icons.search), 'title': 'بحث', 'center': true},
-      {'icon': Icon(Icons.notifications), 'title': 'اشعارات', 'center': false},
-      {'icon': Icon(Icons.person), 'title': 'حسابي', 'center': false},
+      {'icon': Icon(Icons.headset_mic), 'title': 'دعم', 'center': false,'screen':screens[0]},
+      {'icon': Icon(Icons.message_sharp), 'title': 'رسائل', 'center': false,'screen':screens[1]},
+      {'icon': Icon(Icons.search), 'title': 'بحث', 'center': true,'screen':screens[2]},
+      {'icon': Icon(Icons.notifications), 'title': 'اشعارات', 'center': false,'screen':screens[3]},
+      {'icon': Icon(Icons.person), 'title': 'حسابي', 'center': false,'screen':screens[4]},
     ];
   }
 
@@ -36,7 +35,6 @@ class StudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationTab(
       controller: _controller,
-      screens: _buildScreens(),
       items: _navBarsItems(),
 
     );

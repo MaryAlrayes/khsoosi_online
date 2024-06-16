@@ -9,7 +9,6 @@ import 'package:khosousi_online/features/assistence/presentation/pages/contact_u
 import 'package:khosousi_online/features/assistence/presentation/pages/faq_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/personal_assistence.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/social_media_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../../../core/managers/color_manager.dart';
 
@@ -61,7 +60,7 @@ class AssistenceScreen extends StatelessWidget {
                             Icon(Icons.headset_mic, color: ColorManager.black),
                         title: 'المساعد الشخصي',
                         onPressed: () {
-                          pushScreen(
+                          barPushScreen(
                             context: context,
                             screen: PersonalAssistenceScreen(),
                           );
@@ -73,7 +72,7 @@ class AssistenceScreen extends StatelessWidget {
                               color: ColorManager.black),
                           title: 'الأسئلة الأكثر شيوعا',
                           onPressed: () {
-                            pushScreen(
+                            barPushScreen(
                               context: context,
                               screen: FAQScreen(),
                             );
@@ -83,7 +82,7 @@ class AssistenceScreen extends StatelessWidget {
                           icon: Icon(Icons.call, color: ColorManager.black),
                           title: 'تواصل معنا',
                           onPressed: () {
-                            pushScreen(
+                            barPushScreen(
                               context: context,
                               screen: ContactUsScreen(),
                             );
@@ -93,7 +92,7 @@ class AssistenceScreen extends StatelessWidget {
                           icon: Icon(Icons.message, color: ColorManager.black),
                           title: 'مواقع التواصل الاجتماعي',
                           onPressed: () {
-                            pushScreen(
+                            barPushScreen(
                               context: context,
                               screen: SocialMediaScreen(),
                             );

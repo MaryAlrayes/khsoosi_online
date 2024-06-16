@@ -13,20 +13,23 @@ import 'package:khosousi_online/features/accounts/domain/use_cases/fetch_user_da
 import 'package:khosousi_online/features/accounts/domain/use_cases/login_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/resend_activation_code_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/signup_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/submit_institute_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_student_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_teacher_extra_info_use_case.dart';
-import 'package:khosousi_online/features/accounts/domain/use_cases/sumbit_teacher_info_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/submit_teacher_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/upload_picture_use_case.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/cubit/login_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/activate_account_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/resend_activation_code_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/student_info_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/student_info_stepper_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_extra_info_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_info_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/teacher_info_stepper_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/cubit/upload_picture_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/intitute_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_stepper_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_extra_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_info_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_info_stepper_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/common/cubit/upload_picture_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_stepper_cubit.dart';
 import 'package:khosousi_online/features/courses_services_details/data/data%20providers/service_details_data_provider.dart';
@@ -134,6 +137,9 @@ Future<void> setupLocator() async {
       () => TeacherInfoCubit(submitTeacherInfoUseCase: locator()));
   locator.registerFactory(() => TeacherInfoStepperCubit());
  locator.registerFactory(() => TeacherExtraInfoCubit(submitTeacherExtraInfoUseCase:locator()));
+ locator.registerFactory(() => IntituteInfoCubit(submitInstituteInfoUseCase:locator()));
+ locator.registerFactory(() => InstituteInfoStepperCubit());
+
 
 
   //use cases
@@ -178,13 +184,19 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(
     () => SubmitTeacherInfoUseCase(
       accountsRepo: locator(),
-     
+
     ),
   );
    locator.registerLazySingleton(
     () => SubmitTeacherExtraInfoUseCase(
       accountsRepo: locator(),
       authRepo: locator(),
+    ),
+  );
+   locator.registerLazySingleton(
+    () => SubmitInstituteInfoUseCase(
+      accountsRepo: locator(),
+
     ),
   );
 

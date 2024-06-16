@@ -5,8 +5,7 @@ import 'package:khosousi_online/features/messages/presentation/pages/inbox_messa
 import 'package:khosousi_online/features/navigation/presentation/widgets/navigation_tab.dart';
 import 'package:khosousi_online/features/notification/presentation/pages/notification_screen.dart';
 import 'package:khosousi_online/features/teacher_account/presentation/account/pages/teacher_account_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import '../../../statistics/presentation/pages/teacher_statistics_screen.dart';
 
 class TeacherScreen extends StatelessWidget {
@@ -15,23 +14,23 @@ class TeacherScreen extends StatelessWidget {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 2);
 
-  List<Widget> _buildScreens() {
-    return [
+  List<Widget>screens=
+    [
       AssistenceScreen(),
       InboxMessagesScreen(),
       TeacherSatatisticsScreen(),
       NotificationScreen(),
       TeacherAccountScreen(),
     ];
-  }
+
 
   List<Map<String, dynamic>> _navBarsItems() {
     return [
-      {'icon': Icon(Icons.headset_mic), 'title': 'دعم', 'center': false},
-      {'icon': Icon(Icons.message_sharp), 'title': 'رسائل', 'center': false},
-      {'icon': Icon(Icons.bar_chart), 'title': 'احصائيات', 'center': true},
-      {'icon': Icon(Icons.notifications), 'title': 'اشعارات', 'center': false},
-      {'icon': Icon(Icons.person), 'title': 'حسابي', 'center': false},
+      {'icon': Icon(Icons.headset_mic), 'title': 'دعم', 'center': false,'screen':screens[0]},
+      {'icon': Icon(Icons.message_sharp), 'title': 'رسائل', 'center': false,'screen':screens[1]},
+      {'icon': Icon(Icons.bar_chart), 'title': 'احصائيات', 'center': true,'screen':screens[2]},
+      {'icon': Icon(Icons.notifications), 'title': 'اشعارات', 'center': false,'screen':screens[3]},
+      {'icon': Icon(Icons.person), 'title': 'حسابي', 'center': false,'screen':screens[4]},
     ];
   }
 
@@ -39,7 +38,6 @@ class TeacherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationTab(
       controller: _controller,
-      screens: _buildScreens(),
       items: _navBarsItems(),
 
 

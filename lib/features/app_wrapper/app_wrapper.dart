@@ -4,7 +4,7 @@ import 'package:khosousi_online/core/utils/helpers/user_type_selection.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
 import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/screens/registeration_info_screen.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/registeration_info_screen.dart';
 
 import '../navigation/presentation/screens/homepage_screen.dart';
 import '../startup/screens/splash_screen.dart';

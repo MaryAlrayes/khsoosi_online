@@ -56,7 +56,7 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: SettingsScreen());
+              barPushScreen(context: context, screen: SettingsScreen());
             }),
         CustomAccountListTile(
             label: 'اتفاقية استخدام الموقع',
@@ -72,7 +72,7 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: EditPasswordScreen());
+              barPushScreen(context: context, screen: EditPasswordScreen());
             }),
         CustomAccountListTile(
             label: 'تسجيل الخروج',
@@ -113,7 +113,7 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-                pushScreen(context: context, screen: StudentStatisticsScreen());
+                barPushScreen(context: context, screen: StudentStatisticsScreen());
 
             }),
         CustomAccountListTile(
@@ -123,7 +123,7 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-                pushScreen(context: context, screen: FavoritesScreen());
+                barPushScreen(context: context, screen: FavoritesScreen());
 
             }),
       ],

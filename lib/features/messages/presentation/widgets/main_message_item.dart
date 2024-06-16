@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
+import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/messages/presentation/pages/messages_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
 
 class MainMessageItem extends StatelessWidget {
   const MainMessageItem({super.key});
@@ -12,9 +13,8 @@ class MainMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-         PersistentNavBarNavigator.pushNewScreen(context,
-            screen: MessagesScreen(), withNavBar: false, pageTransitionAnimation :PageTransitionAnimation.slideUp);
-      },
+        barPushScreen(context: context, screen:  MessagesScreen());
+              },
       child: Container(
         height: 80,
         color: Colors.white,

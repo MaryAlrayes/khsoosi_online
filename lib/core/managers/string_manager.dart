@@ -19,6 +19,6 @@ class AppStrings{
   static const String strNoInternetError = "no_internet_error";
 
 
-  static const String strErrorFetchingIPAddress = "error";
+static const String strErrorFetchingIPAddress = "error";
 static const String strDeviceInfoError = "error";
 }

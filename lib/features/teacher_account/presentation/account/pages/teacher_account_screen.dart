@@ -75,7 +75,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: ChargeScreen());
+              barPushScreen(context: context, screen: ChargeScreen());
             }),
         CustomAccountListTile(
             label: 'الإعدادات',
@@ -84,7 +84,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: SettingsScreen());
+              barPushScreen(context: context, screen: SettingsScreen());
             }),
         CustomAccountListTile(
             label: 'اتفاقية استخدام الموقع',
@@ -100,7 +100,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: EditPasswordScreen());
+              barPushScreen(context: context, screen: EditPasswordScreen());
             }),
         CustomAccountListTile(
             label: 'تسجيل الخروج',
@@ -146,7 +146,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: LocationMapScreen());
+              barPushScreen(context: context, screen: LocationMapScreen());
             }),
         CustomAccountListTile(
             label: 'تحديث الحساب',
@@ -174,7 +174,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: TeacherRatesScreen());
+              barPushScreen(context: context, screen: TeacherRatesScreen());
             }),
         CustomAccountListTile(
             label: 'دوراتي',
@@ -183,7 +183,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: TeacherCoursesScreen());
+              barPushScreen(context: context, screen: TeacherCoursesScreen());
             }),
         CustomAccountListTile(
             label: 'خدماتي',
@@ -192,7 +192,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: TeacherServicesScreen());
+              barPushScreen(context: context, screen: TeacherServicesScreen());
             }),
         CustomAccountListTile(
             label: 'شروحاتي',
@@ -201,7 +201,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: TeacherPortofolioScreen());
+              barPushScreen(context: context, screen: TeacherPortofolioScreen());
             }),
         CustomAccountListTile(
             label: 'رصيدي',
@@ -210,7 +210,7 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              pushScreen(context: context, screen: TeacherBalanceScreen());
+              barPushScreen(context: context, screen: TeacherBalanceScreen());
             }),
       ],
     );

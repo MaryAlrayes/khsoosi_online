@@ -11,20 +11,9 @@ class LocationMapScreen extends StatefulWidget {
 }
 
 class _LocationMapScreenState extends State<LocationMapScreen> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-  late CameraPosition _initialCameraPosition;
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
+  late GoogleMapController myMapController;
+  final Set<Marker> _markers = new Set();
+  static const LatLng _mainLocation = const LatLng(25.69893, 32.6421);
   @override
   void initState() {
     super.initState();
@@ -43,32 +32,43 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-
-        child: GoogleMap(
-           myLocationEnabled: false,
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: _mainLocation,
+                zoom: 10.0,
+              ),
+              markers: this.myMarker(),
               mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(37.7749, -122.4194), // San Francisco coordinates
-            zoom: 12,
+              onMapCreated: (controller) {
+                setState(() {
+                  myMapController = controller;
+                });
+              },
+            ),
           ),
-          onMapCreated: (GoogleMapController c) {
-            _controller.complete(c); // <--- Assign controller
-          },
-        ),
+        ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: const Text('To the lake!'),
-      //   icon: const Icon(Icons.directions_boat),
-      // ),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  Set<Marker> myMarker() {
+    setState(() {
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(_mainLocation.toString()),
+        position: _mainLocation,
+        infoWindow: InfoWindow(
+          title: 'Historical City',
+          snippet: '5 Star Rating',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+
+    return _markers;
   }
 }

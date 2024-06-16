@@ -18,7 +18,7 @@ import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_category_entity.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
 
 class TeacherItem extends StatelessWidget {
   final TeacherEntity teacherEntity;
@@ -139,7 +139,7 @@ class TeacherItem extends StatelessWidget {
     return CustomElevatedButton(
       label: 'تواصل معي',
       onPressed: () {
-        pushScreen(
+        barPushScreen(
           context: context,
           screen: TeacherDetailsScreen(
             teacherId: teacherEntity.id,

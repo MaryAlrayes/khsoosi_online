@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
-import 'package:permission_handler/permission_handler.dart';
 
 class LocationService {
+
+
   static Future<GeoLoc?> getLocationCoords() async {
 
     try {
@@ -13,7 +13,7 @@ class LocationService {
       if (status == LocationPermission.whileInUse ||
           status == LocationPermission.always) {
         try {
-        
+
           Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high,
           );
@@ -42,8 +42,11 @@ class LocationService {
       }
       rethrow;
     }
+    return null;
   }
 }
+
+
 
 class GeoLoc extends Equatable{
   late double lat;

@@ -6,10 +6,12 @@ import 'package:khosousi_online/core/errors/errors.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/core/utils/services/device_info_api.dart';
 import 'package:khosousi_online/features/accounts/data/data_sources/accounts_data_provider.dart';
+import 'package:khosousi_online/features/accounts/data/models/institute_contact_info_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/signup_data_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/student_contact_info_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/teacher_contact_info_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/teacher_extra_info_model.dart';
+import 'package:khosousi_online/features/accounts/domain/entities/institute_contact_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/loggedin_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/login_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/signup_data_entity.dart';
@@ -230,6 +232,33 @@ class AccountsRepoImpl implements AccountsRepo {
       request: () async {
         return await accountsDataProvider.submitExtraTeacherInfo(
           teacherExtraInfoModel: teacherExtraInfoModel,
+          userId: userId,
+        );
+      },
+    );
+    return data.fold((f) => Left(f), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<Failure, Unit>> submitInstituteInfo({
+    required InstituteContactEnitity instituteContactEnitity,
+    required String userId,
+  }) async {
+    InstituteContactModel instituteContactModel = InstituteContactModel(
+      bornDate: instituteContactEnitity.bornDate,
+
+      mobile: instituteContactEnitity.mobile,
+      mobileCountry: instituteContactEnitity.mobileCountry,
+      countryResidence: instituteContactEnitity.countryResidence,
+      whatsapp: instituteContactEnitity.whatsapp,
+      whatsappCountry: instituteContactEnitity.whatsappCountry,
+      cityResidence: instituteContactEnitity.cityResidence,
+      nationality: instituteContactEnitity.nationality,
+    );
+    final data = await BaseRepo.repoRequest(
+      request: () async {
+        return await accountsDataProvider.submitContactInstituteInfo(
+          instituteContactModel: instituteContactModel,
           userId: userId,
         );
       },

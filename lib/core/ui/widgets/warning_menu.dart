@@ -20,7 +20,7 @@ PopupMenuButton<int> buildWarningMenu(
                 child: ListTile(
                   onTap: () {
 
-                    pushScreen(
+                    barPushScreen(
                         context: context,
                         screen: OtpScreen(
                           onSkipClicked: (returnedContext) {
@@ -45,7 +45,7 @@ PopupMenuButton<int> buildWarningMenu(
                             style: TextStyle(color: ColorManager.orange),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                pushScreen(
+                                barPushScreen(
                         context: context,
                         screen: OtpScreen(
                           onSkipClicked: (returnedContext) {

@@ -24,7 +24,7 @@ class ServiceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        pushScreen(context: context, screen: ServiceDetailsScreen(id: serviceEntity.id));
+        barPushScreen(context: context, screen: ServiceDetailsScreen(id: serviceEntity.id));
       },
       child: Card(
         elevation: 1,

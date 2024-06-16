@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
+import 'package:khosousi_online/features/accounts/domain/entities/institute_contact_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/loggedin_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/login_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/signup_data_entity.dart';
@@ -34,4 +35,9 @@ abstract class AccountsRepo {
  Future<Either<Failure, Unit>>  submitExtraTeacherInfo(
       {required TeacherExtraInfoEntity teacherExtraInfo,
       required String userId});
+
+       Future<Either<Failure, Unit>> submitInstituteInfo({
+    required InstituteContactEnitity instituteContactEnitity,
+    required String userId,
+  });
 }

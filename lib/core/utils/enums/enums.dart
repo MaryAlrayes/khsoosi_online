@@ -1,22 +1,14 @@
-enum UserType{
-  student,
-  teacher,
-  institute
-}
+enum UserType { student, teacher, institute }
 
-enum SignupSteps{
-  userType,
-  name,
-  emailPassword
-}
+enum SignupSteps { userType, name, emailPassword }
 
-enum StudentInfoStepperSteps{
+enum StudentInfoStepperSteps {
   phones,
   general,
   picture,
 }
 
-enum TeacherInfoStepperSteps{
+enum TeacherInfoStepperSteps {
   phones,
   general,
   social_media,
@@ -29,12 +21,15 @@ enum TeacherInfoStepperSteps{
   picture,
 }
 
-enum SearchType{
-  teachers,
-  courses,
-  institutes,
-  services
+enum InstituteInfoStepperSteps {
+  phones,
+  general,
+  nameAboutAddress,
+  categories,
+  picture,
 }
+
+enum SearchType { teachers, courses, institutes, services }
 
 enum SearchTeacherSteps {
   teachingMethod,
@@ -46,15 +41,17 @@ enum SearchTeacherSteps {
   result
 }
 
-enum Gender {
-  male,
-  female,
-  unspecified
-}
+enum Gender { male, female, unspecified }
 
 enum TeachingMethod { presence, online }
 
-enum EducationalLevel { unspecified, elementry, preparatory, secondary, university }
+enum EducationalLevel {
+  unspecified,
+  elementry,
+  preparatory,
+  secondary,
+  university
+}
 
 enum SearchCoursesSteps {
   teachingMethod,
@@ -82,7 +79,4 @@ enum SearchServicesSteps {
   result
 }
 
-enum LocationType{
-  nearestTeacher,
-  chooseCountey
-}
+enum LocationType { nearestTeacher, chooseCountey }

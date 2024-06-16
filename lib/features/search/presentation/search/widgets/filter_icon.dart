@@ -15,7 +15,7 @@ import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.d
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
 
 class FilterIconBtn extends StatelessWidget {
   final SearchType searchType;
@@ -29,7 +29,7 @@ class FilterIconBtn extends StatelessWidget {
     return InkWell(
       onTap: () {
         BlocProvider.of<FilterSearchCubit>(context).saveFilter();
-       pushScreen(
+       barPushScreen(
         context:
           context,
           screen: MultiBlocProvider(

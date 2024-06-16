@@ -44,7 +44,7 @@ class DeleteAccount extends StatelessWidget {
           child: CustomElevatedButton(
             label: 'تواصل معنا من أجل حذف عضويتك',
             onPressed: () {
-              pushScreen(
+              barPushScreen(
                 context: context,
                 screen: ContactUsScreen(),
               );
