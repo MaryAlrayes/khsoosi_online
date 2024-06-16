@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -30,9 +31,10 @@ class LocationService {
           rethrow;
         }
       } else {
-        Map<Permission, PermissionStatus> statuses = await [
-          Permission.location,
-        ].request();
+        await Geolocator.requestPermission();
+        // Map<Permission, PermissionStatus> statuses = await [
+        //   Permission.location,
+        // ].request();
       }
     } catch (e) {
       if (kDebugMode) {
@@ -43,7 +45,7 @@ class LocationService {
   }
 }
 
-class GeoLoc {
+class GeoLoc extends Equatable{
   late double lat;
   late double lng;
 
@@ -60,4 +62,7 @@ class GeoLoc {
     data['lng'] = lng;
     return data;
   }
+
+  @override
+  List<Object?> get props => [lat,lng];
 }

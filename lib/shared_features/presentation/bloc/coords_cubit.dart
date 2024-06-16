@@ -14,7 +14,7 @@ class CoordsCubit extends Cubit<CoordsState> {
   void fetchLocation() async {
     emit(CoordsLoading());
     final res = await locationRepo.getCoords();
-    res.fold((l) {
+    await res.fold((l) {
       emit(CoordsError());
     }, (coords) {
       emit(CoordsFetched(

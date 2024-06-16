@@ -15,6 +15,7 @@ class LocationCoordsDialogContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CoordsCubit, CoordsState>(
       listener: (context, state) {
+        print('state $state');
         if (state is CoordsFetched) {
           _buildCloseDialog(context, state);
         }
