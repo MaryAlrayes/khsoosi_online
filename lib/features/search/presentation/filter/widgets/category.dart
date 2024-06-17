@@ -20,11 +20,11 @@ import 'package:khosousi_online/shared_features/domain/entities/category_entity.
 
 import '../../../../../core/ui/widgets/error_widget.dart';
 
-class SpecialityFilter extends StatefulWidget {
+class CatefgoryFilter extends StatefulWidget {
   final VoidCallback? onNext;
   final VoidCallback? onPrevious;
   final bool withNext;
-  SpecialityFilter({
+  CatefgoryFilter({
     Key? key,
     this.onNext,
     this.onPrevious,
@@ -32,10 +32,10 @@ class SpecialityFilter extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SpecialityFilter> createState() => _SpecialityFilterState();
+  State<CatefgoryFilter> createState() => _CatefgoryFilterState();
 }
 
-class _SpecialityFilterState extends State<SpecialityFilter> {
+class _CatefgoryFilterState extends State<CatefgoryFilter> {
   late TextEditingController specialityTextEditingController;
   late FocusNode specialityFocusNode;
 
@@ -147,13 +147,13 @@ class _SpecialityFilterState extends State<SpecialityFilter> {
               color: Colors.white,
               elevation: 4.0,
               child: Container(
-                  width: MediaQuery.of(context).size.width - 90,
                   child: ListView.separated(
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(8.0),
                     itemCount: _items.length,
                     separatorBuilder: (context, i) {
-                      return Divider();
+                       return Divider(color: ColorManager.gray1,);
+
                     },
                     itemBuilder: (BuildContext context, int index) {
                       String label = '';

@@ -6,8 +6,8 @@ import 'package:khosousi_online/core/utils/enums/enums.dart';
 
 import 'package:khosousi_online/features/accounts/domain/entities/institute_contact_info_entity.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/institute_info.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 import '../../../../domain/use_cases/submit_institute_info_use_case.dart';
 

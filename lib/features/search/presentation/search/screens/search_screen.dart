@@ -18,10 +18,10 @@ import 'package:khosousi_online/features/search/presentation/search_services/blo
 import 'package:khosousi_online/features/search/presentation/search_services/screens/search_services_result.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/screens/search_teachers_result.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
-import '../../../../../shared_features/presentation/bloc/get_cities_bloc.dart';
-import '../../../../../shared_features/presentation/bloc/get_countries_bloc.dart';
+import '../../../../location/presentation/blocs/get_cities_bloc.dart';
+import '../../../../location/presentation/blocs/get_countries_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
   static const routeName = 'my_search_screen';

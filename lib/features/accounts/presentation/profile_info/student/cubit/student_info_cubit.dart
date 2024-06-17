@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 
 import 'package:khosousi_online/core/utils/enums/enums.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 import '../../../../domain/entities/student_contact_info_entity.dart';
 import '../../../../domain/use_cases/submit_student_info_use_case.dart';

@@ -79,7 +79,7 @@ class _BirthDateState extends State<BirthDate> {
             width: MediaQuery.of(context).size.width,
             height: 50,
             child: Text(date == null
-                ? 'ادخل ${widget.label}'
+                ? 'YYYY-MM-DD'
                 : '${date!.year}-${date!.month}-${date!.day}'),
           ),
         ),

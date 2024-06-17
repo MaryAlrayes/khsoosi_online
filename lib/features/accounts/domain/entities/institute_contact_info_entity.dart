@@ -2,8 +2,8 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:khosousi_online/core/utils/enums/enums.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class InstituteContactEnitity extends Equatable {
   final String mobile;
@@ -69,7 +69,7 @@ class InstituteContactEnitity extends Equatable {
       whatsapp: whatsapp ?? this.whatsapp,
       whatsappCountry: whatsappCountry ?? this.whatsappCountry,
       bornDate: bornDate ?? this.bornDate,
-   
+
       countryResidence: countryResidence ?? this.countryResidence,
       cityResidence: cityResidence ?? this.cityResidence,
       nationality: nationality ?? this.nationality,

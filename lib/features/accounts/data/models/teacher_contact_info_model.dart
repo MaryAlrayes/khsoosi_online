@@ -4,9 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/core/utils/extensions/extensions.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/teacher_contact_info_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
 
-import '../../../../shared_features/domain/entities/country_entity.dart';
+import '../../../location/domain/entities/country_entity.dart';
 
 class TeacherContactInfoModel extends TeacherContactInfoEntity {
   TeacherContactInfoModel({

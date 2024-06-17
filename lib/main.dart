@@ -36,7 +36,7 @@ Future<void> main() async {
   //initializing shared preference
   await PreferenceUtils.init();
 
-  //initializing sedrvice locator from get_it
+  //initializing service locator from get_it
   await sl.setupLocator();
 
   await dotenv.load(fileName: "assets/config/.env");

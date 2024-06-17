@@ -11,10 +11,10 @@ import 'package:khosousi_online/features/search/presentation/filter/screens/filt
 import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
 
 
 class FilterIconBtn extends StatelessWidget {

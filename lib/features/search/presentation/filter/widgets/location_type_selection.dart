@@ -6,7 +6,7 @@ import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_coords_dialog_content.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 
 class SelectLocationType extends StatelessWidget {
   const SelectLocationType({super.key});

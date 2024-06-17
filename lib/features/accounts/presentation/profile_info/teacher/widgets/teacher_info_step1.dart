@@ -7,7 +7,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/teac
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/phone_numbers.dart';
 
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class TeacherInfoStep1 extends StatelessWidget {
   final List<CountryEntity> countries;

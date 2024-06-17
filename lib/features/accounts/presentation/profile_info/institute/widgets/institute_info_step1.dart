@@ -8,7 +8,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/inst
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/intitute_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/phone_numbers.dart';
 
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class InstituteInfoStep1 extends StatelessWidget {
     final List<CountryEntity> countries;

@@ -20,7 +20,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/teac
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step7.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step8.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step9.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
 
 class TeacherInfo extends StatelessWidget {

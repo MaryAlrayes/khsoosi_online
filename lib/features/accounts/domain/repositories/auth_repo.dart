@@ -8,6 +8,7 @@ abstract class AuthRepo {
   Future<bool> deleteUserInfo();
   Future<void> updateActiveState();
   Future<void> updateHasFinishedInfoState();
+  Future<void> updateLocationState({required double lat,required double lng});
 
 
   String? getUserId();

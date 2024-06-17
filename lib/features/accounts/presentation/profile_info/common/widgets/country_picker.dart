@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:khosousi_online/core/managers/color_manager.dart';
 
 import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/autocomplete_input_chip.dart';
 import 'package:khosousi_online/core/ui/widgets/autocomplete_text_field.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class CountryPicker extends StatelessWidget {
   final String label;
@@ -12,19 +13,18 @@ class CountryPicker extends StatelessWidget {
   final List<CountryEntity> countries;
   final Function onChanged;
   final VoidCallback onDelete;
-final bool isRequired;
-   CountryPicker({
+  final bool isRequired;
+  CountryPicker({
     Key? key,
     required this.label,
     required this.initialValue,
     required this.countries,
     required this.onChanged,
     required this.onDelete,
-    this.isRequired=true,
+    this.isRequired = true,
   }) : super(key: key);
 
-
-   TextEditingController controller=TextEditingController();
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,11 @@ final bool isRequired;
               text: label,
               style: kBlackBoldTextStyle,
             ),
-        if(isRequired)    TextSpan(
-              text: '*',
-              style: TextStyle(color: Colors.red),
-            ),
+            if (isRequired)
+              TextSpan(
+                text: '*',
+                style: TextStyle(color: Colors.red),
+              ),
           ]),
         ),
         SizedBox(
@@ -72,13 +73,12 @@ final bool isRequired;
                     color: Colors.white,
                     elevation: 4.0,
                     child: Container(
-                        width: MediaQuery.of(context).size.width - 90,
-                        child: ListView.separated(
+                         child: ListView.separated(
                           shrinkWrap: true,
                           padding: const EdgeInsets.all(8.0),
                           itemCount: _items.length,
                           separatorBuilder: (context, i) {
-                            return Divider();
+                            return Divider(color: ColorManager.gray2,);
                           },
                           itemBuilder: (BuildContext context, int index) {
                             String label = '';

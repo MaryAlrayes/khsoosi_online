@@ -9,9 +9,9 @@ import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/institute_info.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/student_info.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/teacher_info.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
 
 class RegisterationInfoScreen extends StatelessWidget {
   final UserType userType;

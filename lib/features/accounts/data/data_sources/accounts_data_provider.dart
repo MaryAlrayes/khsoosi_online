@@ -5,6 +5,7 @@ import 'package:khosousi_online/core/api_service/base_api_service.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 import 'package:khosousi_online/features/accounts/data/models/institute_contact_info_model.dart';
+import 'package:khosousi_online/features/accounts/data/models/institute_extra_info_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/login_data_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/signup_data_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/student_contact_info_model.dart';
@@ -36,6 +37,9 @@ abstract class AccountsDataProvider {
       required String userId});
   Future<Unit> submitContactInstituteInfo(
       {required InstituteContactModel instituteContactModel,
+      required String userId});
+  Future<Unit> submitExtraInstituteInfo(
+      {required InstituteExtraInfoModel instituteExtraInfoModel,
       required String userId});
 }
 
@@ -225,6 +229,32 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
     final res = await client.multipartRequest(
       url: EndPointsManager.contactInfo,
       jsonBody: instituteContactModel.toJson(userId: userId),
+    );
+    if (res['status'] == true) {
+      return unit;
+    } else {
+      String errorMessage = '';
+      final errors = res['error messages'] as Map<String, dynamic>;
+      List<String> keys = (errors).keys.toList();
+      keys.forEach((e) {
+        if (errors[e].isNotEmpty) {
+          errorMessage += errors[e] + '\n';
+        }
+      });
+      throw NetworkErrorFailure(
+        message: errorMessage,
+      );
+    }
+  }
+
+  @override
+  Future<Unit> submitExtraInstituteInfo({
+    required InstituteExtraInfoModel instituteExtraInfoModel,
+    required String userId,
+  }) async {
+    final res = await client.multipartRequest(
+      url: EndPointsManager.InstituteInfo,
+      jsonBody: instituteExtraInfoModel.toJson(userId: userId),
     );
     if (res['status'] == true) {
       return unit;

@@ -4,7 +4,7 @@
 //         "country_name_en_url": "Afghanistan",
 //         "country_name_ar": "",
 //         "calling_code": "93"
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class CountryModel extends CountryEntity {
   CountryModel(

@@ -9,10 +9,10 @@ import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
 
 
 class SearchField extends StatelessWidget {

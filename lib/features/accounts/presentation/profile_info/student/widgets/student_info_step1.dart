@@ -6,7 +6,7 @@ import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/phone_numbers.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 import '../../../common_widgets/next_btn.dart';
 

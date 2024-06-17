@@ -76,6 +76,7 @@ static const String userInfo = "API/Users/get_general_user_info?user_id=";
 //submit info
 static const String contactInfo = "API/Auth/continue_contact_profile_info";
 static const String teacherInfo = "API/Auth/continue_teacher_profile_info";
+static const String InstituteInfo = "API/Auth/continue_institute_profile_info";
 
 //activate account
 static const String activateAccount = "API/Auth/activate_user";
@@ -84,5 +85,8 @@ static const String resendActivationCode = "API/Auth/resubmit_activation_code";
 
 //change password
 static const String changePassword = "API/Users/change_password";
+
+//Add location
+static const String addLocation ="API/Auth/Add_location";
 
 }

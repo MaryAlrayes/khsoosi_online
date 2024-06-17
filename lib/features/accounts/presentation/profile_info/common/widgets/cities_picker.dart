@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khosousi_online/core/managers/string_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/app_drop_down.dart';
 import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
 
 import '../../../../../../core/ui/style/common_styles.dart';
 

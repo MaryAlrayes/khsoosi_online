@@ -4,6 +4,7 @@ import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/log_out.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_extra_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/intitute_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/widgets/institute_info_step1.dart';
@@ -11,7 +12,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/inst
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/widgets/institute_info_step3.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/widgets/institute_info_step4.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/widgets/institute_info_step5.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 import '../../../../../../shared_features/presentation/bloc/get_categories_bloc.dart';
 class InstituteInfo extends StatelessWidget {
  final List<CountryEntity> countries;
@@ -34,9 +35,9 @@ class InstituteInfo extends StatelessWidget {
         BlocProvider(
           create: (context) => sl.locator<IntituteInfoCubit>(),
         ),
-        //  BlocProvider(
-        //   create: (context) => sl.locator<TeacherExtraInfoCubit>(),
-        // ),
+         BlocProvider(
+          create: (context) => sl.locator<InstituteExtraInfoCubit>(),
+        ),
          BlocProvider(
           create: (context) => sl.locator<GetCategoriesBloc>()..add(LoadCategoriesEvent()),
         ),

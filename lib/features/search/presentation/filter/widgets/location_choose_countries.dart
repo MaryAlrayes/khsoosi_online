@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/managers/string_manager.dart';
 import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/app_drop_down.dart';
@@ -9,10 +10,10 @@ import 'package:khosousi_online/core/ui/widgets/autocomplete_input_chip.dart';
 import 'package:khosousi_online/core/ui/widgets/autocomplete_text_field.dart';
 import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
 
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
 
 class LocationChooseCountries extends StatelessWidget {
   final List<CountryEntity> countries;
@@ -114,13 +115,12 @@ class LocationChooseCountries extends StatelessWidget {
                   color: Colors.white,
                   elevation: 4.0,
                   child: Container(
-                      width: MediaQuery.of(context).size.width - 90,
                       child: ListView.separated(
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8.0),
                         itemCount: _items.length,
                         separatorBuilder: (context, i) {
-                          return Divider();
+                          return Divider(color: ColorManager.gray1,);
                         },
                         itemBuilder: (BuildContext context, int index) {
                           String label = '';

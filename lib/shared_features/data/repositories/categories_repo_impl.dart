@@ -5,7 +5,7 @@ import 'package:khosousi_online/core/api_service/base_repo.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/shared_features/data/data%20provider/categories_provider.dart';
 import 'package:khosousi_online/shared_features/domain/entities/category_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 import 'package:khosousi_online/shared_features/domain/repositories/categories_repo.dart';
 
 class CategoriesRepoImpl extends CategoriesRepo {

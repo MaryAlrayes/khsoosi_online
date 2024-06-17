@@ -6,8 +6,8 @@ import 'package:khosousi_online/core/utils/enums/enums.dart';
 
 import 'package:khosousi_online/features/accounts/domain/entities/teacher_contact_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_teacher_info_use_case.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 part 'teacher_info_state.dart';
 

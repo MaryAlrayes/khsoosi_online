@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/features/search/domain/entities/search_filter_entity.dart';
 import 'package:khosousi_online/shared_features/domain/entities/category_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 part 'filter_search_state.dart';
 

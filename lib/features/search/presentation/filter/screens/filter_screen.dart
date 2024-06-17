@@ -12,7 +12,7 @@ import 'package:khosousi_online/features/search/presentation/filter/widgets/educ
 import 'package:khosousi_online/features/search/presentation/filter/widgets/gender.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/keyword.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location.dart';
-import 'package:khosousi_online/features/search/presentation/filter/widgets/speciality.dart';
+import 'package:khosousi_online/features/search/presentation/filter/widgets/category.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/teaching_method.dart';
 import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
@@ -93,14 +93,14 @@ class FilterScreen extends StatelessWidget {
           ),
         );
       case SearchType.institutes:
+        //Todo this case
+      case SearchType.services:
         BlocProvider.of<GetServicesBloc>(context).add(
           LoadServicesEvent(
             refresh: true,
             filter: context.read<FilterSearchCubit>().state.filter,
           ),
         );
-      case SearchType.services:
-      // TODO: Handle this case.
     }
   }
 
@@ -138,7 +138,7 @@ class FilterScreen extends StatelessWidget {
           },
           {
             'title': 'التخصص',
-            'content': SpecialityFilter(
+            'content': CatefgoryFilter(
               withNext: false,
             ),
           },
@@ -184,7 +184,7 @@ class FilterScreen extends StatelessWidget {
           },
           {
             'title': 'التخصص',
-            'content': SpecialityFilter(
+            'content': CatefgoryFilter(
               withNext: false,
             ),
           },
@@ -205,7 +205,7 @@ class FilterScreen extends StatelessWidget {
         return [
           {
             'title': 'التخصص',
-            'content': SpecialityFilter(
+            'content': CatefgoryFilter(
               withNext: false,
             ),
           },

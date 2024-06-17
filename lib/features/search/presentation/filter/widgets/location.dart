@@ -23,11 +23,11 @@ import 'package:khosousi_online/features/search/presentation/filter/widgets/loca
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_choose_countries.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_coords_dialog_content.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/location_type_selection.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 import '../../search_teacher/widgets/next_previous_btn.dart';
 

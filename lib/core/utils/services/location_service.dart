@@ -3,17 +3,18 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationService {
-
-
   static Future<GeoLoc?> getLocationCoords() async {
-
+    LocationPermission status;
     try {
-      LocationPermission status = await Geolocator.checkPermission();
+      status = await Geolocator.checkPermission();
+    
+      if (status == LocationPermission.denied) {
+        status = await Geolocator.requestPermission();
 
-      if (status == LocationPermission.whileInUse ||
-          status == LocationPermission.always) {
-        try {
-
+        if (status == LocationPermission.denied)
+          return null;
+        else if (status == LocationPermission.whileInUse ||
+            status == LocationPermission.always) {
           Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high,
           );
@@ -24,17 +25,19 @@ class LocationService {
 
           print('lng ${position.longitude} lat ${position.latitude}');
           return geoLoc;
-        } catch (e) {
-          if (kDebugMode) {
-            print(e);
-          }
-          rethrow;
         }
-      } else {
-        await Geolocator.requestPermission();
-        // Map<Permission, PermissionStatus> statuses = await [
-        //   Permission.location,
-        // ].request();
+      } else if (status == LocationPermission.whileInUse ||
+          status == LocationPermission.always) {
+        Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+        GeoLoc geoLoc = GeoLoc(
+          lng: position.longitude,
+          lat: position.latitude,
+        );
+
+        print('lng ${position.longitude} lat ${position.latitude}');
+        return geoLoc;
       }
     } catch (e) {
       if (kDebugMode) {
@@ -44,11 +47,24 @@ class LocationService {
     }
     return null;
   }
+
+  static double calculateDistanceInKilo({
+    required double lat1,
+    required double lat2,
+    required double lng1,
+    required double lng2,
+  }) {
+    double distanceInMeters = Geolocator.distanceBetween(
+      lat1,
+      lng1,
+      lat2,
+      lng2,
+    );
+    return distanceInMeters / 1000;
+  }
 }
 
-
-
-class GeoLoc extends Equatable{
+class GeoLoc extends Equatable {
   late double lat;
   late double lng;
 
@@ -67,5 +83,5 @@ class GeoLoc extends Equatable{
   }
 
   @override
-  List<Object?> get props => [lat,lng];
+  List<Object?> get props => [lat, lng];
 }

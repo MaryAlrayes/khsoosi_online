@@ -2,8 +2,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khosousi_online/core/managers/string_manager.dart';
+import 'package:khosousi_online/core/ui/widgets/custom_error_message.dart';
 
 import 'package:khosousi_online/core/utils/helpers/snackbar.dart';
+import 'package:khosousi_online/core/utils/helpers/toast_utils.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/accounts/presentation/common_widgets/next_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/common_widgets/previous_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
@@ -11,14 +15,13 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/inst
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/birth_date.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/country_picker.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/gender_selector.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
 
 import '../../common/widgets/cities_picker.dart';
 
-
 class InstituteInfoStep2 extends StatelessWidget {
-   final List<CountryEntity> countries;
+  final List<CountryEntity> countries;
   InstituteInfoStep2({
     Key? key,
     required this.countries,
@@ -28,10 +31,12 @@ class InstituteInfoStep2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-       Column(
+    return BlocListener<IntituteInfoCubit, IntituteInfoState>(
+      listener: (context, state) {
+        _buildListener(state, context);
+      },
+      child: Column(
         children: [
-
           _buildDate(context),
           SizedBox(
             height: 16,
@@ -50,8 +55,30 @@ class InstituteInfoStep2 extends StatelessWidget {
           ),
           _buildBtns(context),
         ],
-
+      ),
     );
+  }
+
+  BlocBuilder<IntituteInfoCubit, IntituteInfoState> _buildErrorMessages() {
+    return BlocBuilder<IntituteInfoCubit, IntituteInfoState>(
+        builder: (context, state) {
+      return state.errorMessage.isEmpty
+          ? Container()
+          : CustomErrorMessage(
+              errorMessage: state.errorMessage,
+            );
+    });
+  }
+
+  void _buildListener(IntituteInfoState state, BuildContext context) {
+    if (state.intituteInfoStatus == IntituteInfoStatus.done) {
+      ToastUtils.showSusToastMessage('تم إضافة معلوماتك بنجاح');
+      BlocProvider.of<InstituteInfoStepperCubit>(context).nextStep();
+    } else if (state.intituteInfoStatus == IntituteInfoStatus.noInternet) {
+      showSnackbar(context, AppStrings.noInternetConnectionMessage);
+    } else if (state.intituteInfoStatus == IntituteInfoStatus.networkError) {
+      showSnackbar(context, AppStrings.networkError);
+    }
   }
 
   Widget _buildBtns(BuildContext context) {
@@ -62,28 +89,36 @@ class InstituteInfoStep2 extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             NextBtn(
-              onPressed: () {
-                final state = context.read<IntituteInfoCubit>().state;
-                if (state.instituteContactEnitity.bornDate == null) {
-                  showSnackbar(context, 'من فضلك قم بإضافة تاريخ ميلادك');
-                } else if (state.instituteContactEnitity.nationality ==
-                    CountryEntity.empty()) {
-                  showSnackbar(context, 'من فضلك قم بإدخال جنسيتك');
-                } else if (state.instituteContactEnitity.countryResidence ==
-                    CountryEntity.empty()) {
-                  showSnackbar(context, 'من فضلك قم بإدخال دولة الإقامة');
-                } else {
-                  BlocProvider.of<InstituteInfoStepperCubit>(context).nextStep();
-                }
-              },
+              isLoading: state.intituteInfoStatus == IntituteInfoStatus.loading,
+              onPressed: state.intituteInfoStatus == IntituteInfoStatus.loading
+                  ? () {}
+                  : () {
+                      final state = context.read<IntituteInfoCubit>().state;
+                      if (state.instituteContactEnitity.bornDate == null) {
+                        showSnackbar(context, 'من فضلك قم بإضافة تاريخ ميلادك');
+                      } else if (state.instituteContactEnitity.nationality ==
+                          CountryEntity.empty()) {
+                        showSnackbar(context, 'من فضلك قم بإدخال جنسيتك');
+                      } else if (state
+                              .instituteContactEnitity.countryResidence ==
+                          CountryEntity.empty()) {
+                        showSnackbar(context, 'من فضلك قم بإدخال دولة الإقامة');
+                      } else {
+                        BlocProvider.of<IntituteInfoCubit>(context)
+                            .submit(id: context.read<AuthRepo>().getUserId()!);
+                      }
+                    },
             ),
             SizedBox(
               height: 8,
             ),
             PreviousBtn(
-              onPressed: () {
-                BlocProvider.of<InstituteInfoStepperCubit>(context).stepBack();
-              },
+              onPressed: state.intituteInfoStatus == IntituteInfoStatus.loading
+                  ? () {}
+                  : () {
+                      BlocProvider.of<InstituteInfoStepperCubit>(context)
+                          .stepBack();
+                    },
             ),
           ],
         );
@@ -119,14 +154,12 @@ class InstituteInfoStep2 extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<IntituteInfoCubit>(context)
                 .setCountryResidence(value);
-            BlocProvider.of<GetCitiesBloc>(context)
-                .add(LoadCitiesEvent(country: (value as CountryEntity).countryNameEn));
+            BlocProvider.of<GetCitiesBloc>(context).add(LoadCitiesEvent(
+                country: (value as CountryEntity).countryNameEn));
           },
           onDelete: () {
             BlocProvider.of<IntituteInfoCubit>(context).emptyResidence();
-              BlocProvider.of<GetCitiesBloc>(context)
-                .add(ResetCitiesEvent());
-
+            BlocProvider.of<GetCitiesBloc>(context).add(ResetCitiesEvent());
           },
         );
       },
@@ -134,7 +167,7 @@ class InstituteInfoStep2 extends StatelessWidget {
   }
 
   BlocBuilder<IntituteInfoCubit, IntituteInfoState> _buildCityResidence() {
-    return BlocBuilder<IntituteInfoCubit,IntituteInfoState>(
+    return BlocBuilder<IntituteInfoCubit, IntituteInfoState>(
       builder: (context, state) {
         return CitiesPicker(
           label: 'مدينة الاقامة:',
@@ -150,13 +183,14 @@ class InstituteInfoStep2 extends StatelessWidget {
   BirthDate _buildDate(BuildContext context) {
     return BirthDate(
       label: 'تاريخ التأسيس: ',
-      initalValue:
-          context.read<IntituteInfoCubit>().state.instituteContactEnitity.bornDate,
+      initalValue: context
+          .read<IntituteInfoCubit>()
+          .state
+          .instituteContactEnitity
+          .bornDate,
       onChanged: (value) {
         BlocProvider.of<IntituteInfoCubit>(context).setBornDate(value);
       },
     );
   }
-
-
 }

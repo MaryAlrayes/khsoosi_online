@@ -16,7 +16,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/stud
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/birth_date.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/country_picker.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/gender_selector.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 
 class StudentInfoStep2 extends StatelessWidget {
   final List<CountryEntity> countries;

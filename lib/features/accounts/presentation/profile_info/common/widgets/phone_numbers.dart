@@ -8,7 +8,7 @@ import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_text_field.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/countries_codes_picker.dart';
 
-import '../../../../../../shared_features/domain/entities/country_entity.dart';
+import '../../../../../location/domain/entities/country_entity.dart';
 
 class PhoneNumbers extends StatelessWidget {
   final List<CountryEntity> countries;

@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:khosousi_online/core/errors/failures.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_countries_use_case.dart';
 
 part 'get_countries_event.dart';

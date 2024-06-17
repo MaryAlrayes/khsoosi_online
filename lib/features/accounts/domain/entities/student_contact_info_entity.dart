@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/utils/enums/enums.dart';
-import '../../../../shared_features/domain/entities/country_entity.dart';
+import '../../../location/domain/entities/country_entity.dart';
 
 class StudentContactInfoEntity extends Equatable {
   final String mobile;

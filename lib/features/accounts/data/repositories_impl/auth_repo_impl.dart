@@ -90,5 +90,11 @@ class AuthRepoImpl extends AuthRepo {
     saveUserInfo(newData);
   }
 
-
+  @override
+  Future<void> updateLocationState(
+      {required double lat, required double lng}) async {
+    UserInfoModel currentData = getUserInfo() as UserInfoModel;
+    UserInfoModel newData = currentData.copyWith(lat: lat, lng: lng);
+    saveUserInfo(newData);
+  }
 }

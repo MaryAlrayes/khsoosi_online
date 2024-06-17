@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:khosousi_online/shared_features/domain/entities/coords_entity.dart';
-import 'package:khosousi_online/shared_features/domain/repositories/location_repo.dart';
+import 'package:khosousi_online/features/location/domain/entities/coords_entity.dart';
+import 'package:khosousi_online/features/location/domain/repositories/location_repo.dart';
 
 part 'coords_state.dart';
 

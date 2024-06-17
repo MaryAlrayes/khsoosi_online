@@ -5,26 +5,26 @@ import 'package:khosousi_online/core/api_service/base_repo.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/core/utils/services/location_service.dart';
 import 'package:khosousi_online/shared_features/data/data%20provider/categories_provider.dart';
-import 'package:khosousi_online/shared_features/data/data%20provider/location_provider.dart';
-import 'package:khosousi_online/shared_features/data/models/coords_model.dart';
+import 'package:khosousi_online/features/location/data/data_sources/location_provider.dart';
+import 'package:khosousi_online/features/location/data/models/coords_model.dart';
 import 'package:khosousi_online/shared_features/domain/entities/category_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/coords_entity.dart';
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/coords_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 import 'package:khosousi_online/shared_features/domain/repositories/categories_repo.dart';
-import 'package:khosousi_online/shared_features/domain/repositories/location_repo.dart';
+import 'package:khosousi_online/features/location/domain/repositories/location_repo.dart';
 
-class LocationRepoImpl extends LocationRepo {
-  final CountriesProvider countriesProvider;
+class LocationRepoImpl implements LocationRepo {
+  final LocationProvider locationProvider;
   LocationRepoImpl({
-    required this.countriesProvider,
+    required this.locationProvider,
   });
 
   @override
   Future<Either<Failure, List<CountryEntity>>> getCountries() async {
     final data = await BaseRepo.repoRequest(
       request: () async {
-        return await countriesProvider.getCountries();
+        return await locationProvider.getCountries();
       },
     );
     return data.fold((f) => Left(f), (data) => Right(data));
@@ -35,7 +35,7 @@ class LocationRepoImpl extends LocationRepo {
       {required String country}) async {
     final data = await BaseRepo.repoRequest(
       request: () async {
-        return await countriesProvider.getCities(country: country);
+        return await locationProvider.getCities(country: country);
       },
     );
     return data.fold((f) => Left(f), (data) => Right(data));
@@ -44,7 +44,6 @@ class LocationRepoImpl extends LocationRepo {
   @override
   Future<Either<Failure, CoordsEntity>> getCoords() async {
     try {
-            
       GeoLoc? coords = await LocationService.getLocationCoords();
 
       if (coords == null) {
@@ -69,5 +68,20 @@ class LocationRepoImpl extends LocationRepo {
         ),
       );
     }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> addLocation(
+      {required CoordsEntity coords, required String userId}) async {
+    CoordsModel coordsModel = CoordsModel(lat: coords.lat, lng: coords.lng);
+    final data = await BaseRepo.repoRequest(
+      request: () async {
+        return await locationProvider.addLocation(
+          coordsModel: coordsModel,
+          userId: userId,
+        );
+      },
+    );
+    return data.fold((f) => Left(f), (data) => Right(data));
   }
 }

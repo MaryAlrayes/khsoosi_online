@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 
 class LocationNearest extends StatelessWidget {
   const LocationNearest({super.key});

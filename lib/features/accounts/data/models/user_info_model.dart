@@ -30,8 +30,8 @@ class UserInfoModel extends UserInfoEntity {
       'Type': type,
       'Mobile':mobile,
       'Whatsapp':whatsapp,
-      'latitude':lat,
-      'longitude':lng,
+      'latitude':lat.toString(),
+      'longitude':lng.toString(),
       'Is_active': isActive ? '1' : '0',
       'Is_enabled': isEnabled ? '1' : '0',
       'Is_conditions_agreed': isConditionAgreed ? '1' : '0',
@@ -44,11 +44,11 @@ class UserInfoModel extends UserInfoEntity {
       name: map['Name'] ?? map['name'] ?? '',
       userName: map['User_name'] ?? '',
       email: map['Email'] ?? map['email'] ?? '',
-      mobile: map['Mobile'] ?? '',
-      whatsapp: map['Whatsapp'] ?? '',
+      mobile:map['Mobile']==null|| map['Mobile']==false ? '':map['Mobile'],
+      whatsapp: map['Whatsapp']==null || map['Whatsapp']==false ? '':map['Whatsapp'],
       imagePath: map['Image_path'] ?? '',
-      lat: map['latitude'] ?? 0,
-      lng: map['longitude'] ?? 0,
+      lat: map['latitude']==null ? 0:double.parse(map['latitude']as String),
+      lng: map['longitude']==null ? 0:double.parse(map['longitude']as String),
       image: map['Image_path'] == null || (map['Image_path'] as String).isEmpty
           ? map['Jender'] == '0'
               ? EndPointsManager.maleUserDefaultImageBaseUrl

@@ -30,6 +30,8 @@ class TeacherInfoStep6 extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<TeacherExtraInfoCubit>(context).setAddress(value);
           },
+          initValue: context.read<TeacherExtraInfoCubit>().state.teacherExtraInfoEntity.address??'',
+        onValidate: (value){},
         ),
         SizedBox(
           height: 32,

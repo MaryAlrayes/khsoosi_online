@@ -13,7 +13,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/stud
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/widgets/student_info_step2.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/widgets/student_info_step3.dart';
 
-import '../../../../../../shared_features/domain/entities/country_entity.dart';
+import '../../../../../location/domain/entities/country_entity.dart';
 
 class StudentInfo extends StatelessWidget {
 final  List<CountryEntity> countries;

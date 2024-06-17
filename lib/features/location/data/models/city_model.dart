@@ -1,4 +1,4 @@
-import 'package:khosousi_online/shared_features/domain/entities/city_entity.dart';
+import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
 
 class CityModel extends CityEntity {
   CityModel(

@@ -6,7 +6,7 @@ import 'package:khosousi_online/core/ui/dialogs_widgets/error_content_dialog.dar
 import 'package:khosousi_online/core/ui/dialogs_widgets/loading_content_dialog.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 
 class LocationCoordsDialogContent extends StatelessWidget {
   const LocationCoordsDialogContent({Key? key}) : super(key: key);

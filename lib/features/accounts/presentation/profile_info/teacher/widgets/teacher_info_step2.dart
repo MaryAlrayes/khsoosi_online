@@ -15,8 +15,8 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/comm
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/country_picker.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/gender_selector.dart';
 
-import 'package:khosousi_online/shared_features/domain/entities/country_entity.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
 
 import '../cubit/teacher_info_cubit.dart';
 

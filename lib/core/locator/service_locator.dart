@@ -13,6 +13,7 @@ import 'package:khosousi_online/features/accounts/domain/use_cases/fetch_user_da
 import 'package:khosousi_online/features/accounts/domain/use_cases/login_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/resend_activation_code_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/signup_use_case.dart';
+import 'package:khosousi_online/features/accounts/domain/use_cases/submit_institute_extra_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_institute_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_student_info_use_case.dart';
 import 'package:khosousi_online/features/accounts/domain/use_cases/submit_teacher_extra_info_use_case.dart';
@@ -22,6 +23,7 @@ import 'package:khosousi_online/features/accounts/presentation/login/blocs/authe
 import 'package:khosousi_online/features/accounts/presentation/login/cubit/login_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/activate_account_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/resend_activation_code_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_extra_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/intitute_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_cubit.dart';
@@ -47,6 +49,8 @@ import 'package:khosousi_online/features/edit_password/presentation/cubit/change
 import 'package:khosousi_online/features/localization/cubit/lacalization_cubit.dart';
 import 'package:khosousi_online/features/localization/localize_app.dart';
 import 'package:khosousi_online/features/localization/localize_app_impl.dart';
+import 'package:khosousi_online/features/location/domain/use_cases/submit_location_use_case.dart';
+import 'package:khosousi_online/features/location/presentation/cubit/add_location_cubit.dart';
 import 'package:khosousi_online/features/refresh/domain/use_cases/refresh_account_use_case.dart';
 import 'package:khosousi_online/features/refresh/presentation/cubit/refresh_account_cubit.dart';
 import 'package:khosousi_online/features/search/data/data%20providers/search_courses_data_provider.dart';
@@ -72,15 +76,15 @@ import 'package:khosousi_online/features/teacher_details/data/repositories/teach
 import 'package:khosousi_online/features/teacher_details/domain/repositories/teacher_details_repo.dart';
 import 'package:khosousi_online/features/teacher_details/domain/use%20cases/get_teaches_details_use_case.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/bloc/get_teacher_details_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/coords_cubit.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_cities_bloc.dart';
-import 'package:khosousi_online/shared_features/presentation/bloc/get_countries_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
+import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
 import 'package:khosousi_online/shared_features/data/data%20provider/categories_provider.dart';
-import 'package:khosousi_online/shared_features/data/data%20provider/location_provider.dart';
+import 'package:khosousi_online/features/location/data/data_sources/location_provider.dart';
 import 'package:khosousi_online/shared_features/data/repositories/categories_repo_impl.dart';
-import 'package:khosousi_online/shared_features/data/repositories/location_repo_impl.dart';
+import 'package:khosousi_online/features/location/data/repositories_impl/location_repo_impl.dart';
 import 'package:khosousi_online/shared_features/domain/repositories/categories_repo.dart';
-import 'package:khosousi_online/shared_features/domain/repositories/location_repo.dart';
+import 'package:khosousi_online/features/location/domain/repositories/location_repo.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_categories_use_case.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_cities_use_case.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_countries_use_case.dart';
@@ -139,7 +143,8 @@ Future<void> setupLocator() async {
  locator.registerFactory(() => TeacherExtraInfoCubit(submitTeacherExtraInfoUseCase:locator()));
  locator.registerFactory(() => IntituteInfoCubit(submitInstituteInfoUseCase:locator()));
  locator.registerFactory(() => InstituteInfoStepperCubit());
-
+ locator.registerFactory(() => InstituteExtraInfoCubit(submitInstituteExtraInfoUseCase: locator()));
+locator.registerFactory(() => AddLocationCubit(submitLocationUseCase: locator()));
 
 
   //use cases
@@ -199,12 +204,27 @@ Future<void> setupLocator() async {
 
     ),
   );
+locator.registerLazySingleton(
+    () => SubmitInstituteExtraInfoUseCase(
+      authRepo: locator(),
+      accountsRepo: locator(),
+
+    ),
+  );
+locator.registerLazySingleton(
+    () => SubmitLocationUseCase(
+      locationRepo: locator(),
+      authRepo: locator()
+
+    ),
+  );
+
 
   //repositories
   locator.registerLazySingleton<CategoriesRepo>(
       () => CategoriesRepoImpl(categoriesProvider: locator()));
   locator.registerLazySingleton<LocationRepo>(
-      () => LocationRepoImpl(countriesProvider: locator()));
+      () => LocationRepoImpl(locationProvider: locator()));
   locator.registerLazySingleton<TeacherDetailsRepo>(
       () => TeacherDetailsRepoImpl(teacherDetailsDataProvider: locator()));
   locator.registerLazySingleton<SearchTeachersRepo>(
@@ -224,11 +244,12 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ChangePasswordRepo>(
       () => ChangePasswordRepoImpl(changePasswordProvider: locator()));
 
+
   //data sources
   locator.registerLazySingleton<CategoriesProvider>(
       () => CategoriesProviderWithDio(client: locator()));
-  locator.registerLazySingleton<CountriesProvider>(
-      () => CountriesProviderWithDio(client: locator()));
+  locator.registerLazySingleton<LocationProvider>(
+      () => LocationProviderWithDio(client: locator()));
   locator.registerLazySingleton<TeacherDetailsDataProvider>(
       () => TeacherDetailsDataProviderWithDio(client: locator()));
   locator.registerLazySingleton<SearchTeacherDataProvider>(

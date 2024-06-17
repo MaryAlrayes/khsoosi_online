@@ -8,10 +8,14 @@ import 'package:khosousi_online/features/accounts/presentation/common_widgets/pr
 class MultilineField extends StatelessWidget {
   final String hint;
   final Function onChanged;
+  final String initValue;
+  final Function onValidate;
   const MultilineField({
     Key? key,
     required this.hint,
     required this.onChanged,
+    required this.initValue,
+    required this.onValidate,
   }) : super(key: key);
 
   @override
@@ -19,14 +23,17 @@ class MultilineField extends StatelessWidget {
     return Container(
       height: 150,
       child: CustomTextField(
-        textInputAction: TextInputAction.done,
+        textInputAction: TextInputAction.next,
         textInputType: TextInputType.multiline,
         textAlignVertical: TextAlignVertical.top,
         hintText: hint,
-        validator: (value) {},
+        validator: (value) {
+          onValidate(value);
+        },
         isObscure: false,
         expand: true,
         maxLines: null,
+        initalValue: initValue,
         onChanged: (value) {
           onChanged(value);
         },

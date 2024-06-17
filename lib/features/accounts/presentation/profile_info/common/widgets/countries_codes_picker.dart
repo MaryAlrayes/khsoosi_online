@@ -6,7 +6,7 @@ import 'package:khosousi_online/core/ui/widgets/app_drop_down.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 
 import '../../../../../../core/ui/widgets/custom_image.dart';
-import '../../../../../../shared_features/domain/entities/country_entity.dart';
+import '../../../../../location/domain/entities/country_entity.dart';
 
 class CountriesCodesPicker extends StatelessWidget {
   final List<CountryEntity> countries;
