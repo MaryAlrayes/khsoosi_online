@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
@@ -20,6 +18,8 @@ class TeacherDetailsEntity extends Equatable {
   //is Authenticated
   final bool isVipAccount;
   final bool isSpecial;
+
+
 
   //address
   final String residenseCountryEn;

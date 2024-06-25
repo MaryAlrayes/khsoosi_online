@@ -41,7 +41,7 @@ class SearchServicesDataProviderWithDio extends SearchServicesDataProvider {
     int index = start;
     var jsonRes = res[0]['services'];
     for (int i = 0; i < jsonRes.length; i++) {
-      ServiceModel serviceModel = ServiceModel.fromJson(jsonRes[i], index);
+      ServiceModel serviceModel = ServiceModel.fromJson(jsonRes[i], i);
       data.add(serviceModel);
       index++;
     }

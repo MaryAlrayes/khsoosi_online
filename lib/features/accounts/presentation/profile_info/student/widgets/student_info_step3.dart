@@ -63,13 +63,15 @@ class StudentInfoStep3 extends StatelessWidget {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => OtpScreen(onSkipClicked: (returnedContext) {
-          Navigator.pushNamedAndRemoveUntil(
-            returnedContext,
-            AppWrapper.routeName,
-            (route) => false,
-          );
-        }),
+        builder: (context) => OtpScreen(
+          onSkipClicked: (returnedContext) {
+            Navigator.pushNamedAndRemoveUntil(
+              returnedContext,
+              AppWrapper.routeName,
+              (route) => false,
+            );
+          },
+        ),
       ),
       (route) => false,
     );

@@ -100,12 +100,15 @@ class TeacherDetails extends StatelessWidget {
                 // SizedBox(
                 //   height: 16,
                 // ),
-                Container(
-                  child: _buildCategories(),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
+                if (teacherDetailsEntity
+                    .teacherSpecialityEntity.isNotEmpty) ...[
+                  Container(
+                    child: _buildCategories(),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
@@ -192,7 +195,7 @@ class TeacherDetails extends StatelessWidget {
             'تواصل معي',
             style: TextStyle(color: Colors.white),
           ),
-          style: ElevatedButton.styleFrom(backgroundColor:ColorManager.blue2),
+          style: ElevatedButton.styleFrom(backgroundColor: ColorManager.blue2),
         ),
       ),
     );
@@ -278,11 +281,8 @@ class TeacherDetails extends StatelessWidget {
           Column(
             children: [
               _buildNationality(),
-              SizedBox(height: 12.h),
               _buildGenderAge(),
-              SizedBox(height: 12.h),
               _buildTeachingLevel(),
-              SizedBox(height: 12.h),
               _buildAddress(),
             ],
           ),
@@ -311,7 +311,7 @@ class TeacherDetails extends StatelessWidget {
         ));
   }
 
-  Row _buildTeachingLevel() {
+  Widget _buildTeachingLevel() {
     String level = '';
     if (teacherDetailsEntity.elementary) {
       level += EducationalLevel.elementry.getTextForDispalay();
@@ -328,41 +328,61 @@ class TeacherDetails extends StatelessWidget {
       level.isNotEmpty ? level += '/ ' : '';
       level += EducationalLevel.university.getTextForDispalay();
     }
-    return _buildRowDetails(
-      level,
-      Icon(
-        FontAwesomeIcons.peopleGroup,
-        color: ColorManager.blue1,
-        size: 18,
-      ),
+    return level.isEmpty
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildRowDetails(
+                level,
+                Icon(
+                  FontAwesomeIcons.peopleGroup,
+                  color: ColorManager.blue1,
+                  size: 18,
+                ),
+              ),
+              SizedBox(height: 12.h),
+            ],
+          );
+  }
+
+  Widget _buildGenderAge() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildRowDetails(
+          '${teacherDetailsEntity.gender.getText()}/ ${teacherDetailsEntity.age}',
+          Icon(
+            FontAwesomeIcons.person,
+            color: ColorManager.black,
+            size: 18,
+          ),
+        ),
+        SizedBox(height: 12.h),
+      ],
     );
   }
 
-  Row _buildGenderAge() {
-    return _buildRowDetails(
-      '${teacherDetailsEntity.gender.getText()}/ ${teacherDetailsEntity.age}',
-      Icon(
-        FontAwesomeIcons.person,
-        color: ColorManager.black,
-        size: 18,
-      ),
-    );
-  }
-
-  Row _buildNationality() {
+  Widget _buildNationality() {
     String nationality = 'الجنسية: ';
     if (teacherDetailsEntity.nationalityAr.isNotEmpty)
       nationality += teacherDetailsEntity.nationalityAr;
     if (teacherDetailsEntity.nationalityEn.isNotEmpty)
       nationality += '/ ' + teacherDetailsEntity.nationalityEn;
-    return _buildRowDetails(
-        nationality,
-        Icon(
-          FontAwesomeIcons.idCard,
-          color: ColorManager.black,
-          size: 18,
-        ),
-        teacherDetailsEntity.nationalityCountryCode);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildRowDetails(
+            nationality,
+            Icon(
+              FontAwesomeIcons.idCard,
+              color: ColorManager.black,
+              size: 18,
+            ),
+            teacherDetailsEntity.nationalityCountryCode),
+        SizedBox(height: 12.h),
+      ],
+    );
   }
 
   Widget _buildCategories() {

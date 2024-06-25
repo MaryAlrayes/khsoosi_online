@@ -12,7 +12,7 @@ class TeacherInfoStepperCubit extends Cubit<TeacherInfoStepperState> {
               currentIndex: 0,
               stepsStack: [
                 TeacherInfoStepperSteps.phones,
-                
+
               ]),
         );
   void initStepper(int step) {
@@ -20,7 +20,7 @@ class TeacherInfoStepperCubit extends Cubit<TeacherInfoStepperState> {
       TeacherInfoStepperState(
         currentStep: steps[step],
         currentIndex: step,
-        stepsStack: steps.getRange(0, step).toList(),
+        stepsStack: steps.getRange(0, step+1).toList(),
       ),
     );
   }

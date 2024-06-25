@@ -10,6 +10,8 @@ import 'package:khosousi_online/features/accounts/presentation/common_widgets/pr
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_extra_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_info_stepper_cubit.dart';
 
+import '../../common/widgets/multiline_field.dart';
+
 class TeacherInfoStep8 extends StatelessWidget {
   const TeacherInfoStep8({super.key});
 
@@ -46,22 +48,18 @@ class TeacherInfoStep8 extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        Container(
-          height: 150,
-          child: CustomTextField(
-            textInputAction: TextInputAction.done,
-            textInputType: TextInputType.multiline,
-            textAlignVertical: TextAlignVertical.top,
-            hintText: 'الشهادات والمؤهلات',
-            validator: (value) {},
-            isObscure: false,
-            expand: true,
-            maxLines: null,
-            onChanged: (value) {
-              BlocProvider.of<TeacherExtraInfoCubit>(context)
-                  .setCertificates(value);
-            },
-          ),
+        MultilineField(
+          hint: 'الشهادات والمؤهلات',
+          onChanged: (value) {
+            BlocProvider.of<TeacherExtraInfoCubit>(context)
+                .setCertificates(value);
+          },
+          initValue: context
+              .read<TeacherExtraInfoCubit>()
+              .state
+              .teacherExtraInfoEntity
+              .certificates,
+          onValidate: (value) {},
         ),
         SizedBox(
           height: 32,
@@ -72,34 +70,33 @@ class TeacherInfoStep8 extends StatelessWidget {
   }
 
   Widget _buildBtns(BuildContext context) {
-    return  Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            NextBtn(
-              onPressed: () {
-                if (context
-                    .read<TeacherExtraInfoCubit>()
-                    .state
-                    .teacherExtraInfoEntity
-                    .certificates
-                    .isEmpty) {
-                  showSnackbar(context, 'عليك إدخال شهاداتك ومؤهلاتك');
-                } else {
-                  BlocProvider.of<TeacherInfoStepperCubit>(context).nextStep();
-                }
-              },
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            PreviousBtn(
-              onPressed: () {
-                BlocProvider.of<TeacherInfoStepperCubit>(context).stepBack();
-              },
-            ),
-          ],
-        );
-
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        NextBtn(
+          onPressed: () {
+            if (context
+                .read<TeacherExtraInfoCubit>()
+                .state
+                .teacherExtraInfoEntity
+                .certificates
+                .isEmpty) {
+              showSnackbar(context, 'عليك إدخال شهاداتك ومؤهلاتك');
+            } else {
+              BlocProvider.of<TeacherInfoStepperCubit>(context).nextStep();
+            }
+          },
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        PreviousBtn(
+          onPressed: () {
+            BlocProvider.of<TeacherInfoStepperCubit>(context).stepBack();
+          },
+        ),
+      ],
+    );
   }
 }

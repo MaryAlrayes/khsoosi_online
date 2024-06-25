@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.3+1"
+  easy_stepper:
+    dependency: "direct main"
+    description:
+      name: easy_stepper
+      sha256: d09e974ec9148480072f8a7d3b0779dfdbc1a3ec1ff7daa7fbda95b0c1fe7453
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5"
   equatable:
     dependency: "direct main"
     description:
@@ -973,6 +981,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   readmore:
     dependency: "direct main"
     description:

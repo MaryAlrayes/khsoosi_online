@@ -6,15 +6,22 @@ import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_app_bar.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
+import 'package:khosousi_online/core/utils/helpers/user_type_selection.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/conditions_screen.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/teacher_conditions.dart';
 import 'package:khosousi_online/features/edit_password/presentation/pages/edit_password_screen.dart';
 import 'package:khosousi_online/features/location/presentation/pages/location_map_screen.dart';
 import 'package:khosousi_online/features/refresh/presentation/cubit/refresh_account_cubit.dart';
 import 'package:khosousi_online/features/refresh/presentation/dialog/show_refresh_account_dialog.dart';
 import 'package:khosousi_online/features/settings/presentation/screens/settings_screen.dart';
 import 'package:khosousi_online/features/teacher_account/presentation/account/widgets/custom_account_card.dart';
+import 'package:khosousi_online/features/teacher_balance/presentation/pages/balance_screen.dart';
 import 'package:khosousi_online/features/teacher_balance/presentation/pages/charge_screen.dart';
 import 'package:khosousi_online/features/teacher_balance/presentation/pages/teacher_balance_screen.dart';
 import 'package:khosousi_online/features/teacher_courses/presentation/pages/teacher_courses_screen.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
 import 'package:khosousi_online/features/teacher_portofolio/presentation/pages/teacher_portofolio_screen.dart';
 import 'package:khosousi_online/features/teacher_rates/presentation/pages/teacher_rates_screen.dart';
 import 'package:khosousi_online/features/teacher_services/presentation/pages/teacher_services_screen.dart';
@@ -33,14 +40,14 @@ class TeacherAccountScreen extends StatelessWidget {
       create: (context) => sl.locator<RefreshAccountCubit>(),
       child: Builder(builder: (context) {
         return Scaffold(
-          appBar: getCustomAppBar(context:context),
+          appBar: getCustomAppBar(context: context),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 32),
                 child: Column(
                   children: [
-                    _buildNameAndEmail(),
+                    _buildNameAndEmail(context),
                     SizedBox(
                       height: 16,
                     ),
@@ -75,7 +82,11 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              barPushScreen(context: context, screen: ChargeScreen());
+              barPushScreen(
+                  context: context,
+                  screen: BalanceScreen(
+                    balanceScreenType: BalanceScreenType.charge,
+                  ));
             }),
         CustomAccountListTile(
             label: 'الإعدادات',
@@ -92,7 +103,15 @@ class TeacherAccountScreen extends StatelessWidget {
               FontAwesomeIcons.handshake,
               size: 18,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              barPushScreen(
+                context: context,
+                screen: ConditionsScreen(
+                  userType: UserTypeSelection.getUserType(
+                      context.read<AuthRepo>().getUserInfo()!.type),
+                ),
+              );
+            }),
         CustomAccountListTile(
             label: 'تغيير كلمة المرور',
             icon: Icon(
@@ -108,7 +127,10 @@ class TeacherAccountScreen extends StatelessWidget {
               FontAwesomeIcons.arrowRightFromBracket,
               size: 18,
             ),
-            onPressed: () {})
+            onPressed: () {
+              BlocProvider.of<AuthenticationBloc>(context)
+                  .add(LogOutUserEvent());
+            })
       ],
     );
   }
@@ -131,7 +153,12 @@ class TeacherAccountScreen extends StatelessWidget {
               FontAwesomeIcons.eye,
               size: 18,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              barPushScreen(
+                  context: context,
+                  screen: TeacherDetailsScreen(
+                      teacherId: context.read<AuthRepo>().getUserId()!));
+            }),
         CustomAccountListTile(
             label: 'فيديو التعريف الخاص في',
             icon: Icon(
@@ -201,7 +228,8 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              barPushScreen(context: context, screen: TeacherPortofolioScreen());
+              barPushScreen(
+                  context: context, screen: TeacherPortofolioScreen());
             }),
         CustomAccountListTile(
             label: 'رصيدي',
@@ -210,21 +238,24 @@ class TeacherAccountScreen extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-              barPushScreen(context: context, screen: TeacherBalanceScreen());
+              barPushScreen(
+                  context: context,
+                  screen: BalanceScreen(
+                    balanceScreenType: BalanceScreenType.myBalance,
+                  ));
             }),
       ],
     );
   }
 
-  Widget _buildNameAndEmail() {
+  Widget _buildNameAndEmail(BuildContext context) {
     return CustomAccountCard(
       child: Row(
         children: [
           CustomImage(
             isCircle: true,
             radius: 25,
-            image:
-                'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww',
+            image: context.read<AuthRepo>().getUserInfo()!.image,
           ),
           SizedBox(
             width: 16,
@@ -234,11 +265,11 @@ class TeacherAccountScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'عمرو عويس',
+                  context.read<AuthRepo>().getUserInfo()!.name,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 Text(
-                  'example@example.com',
+                  context.read<AuthRepo>().getUserInfo()!.email,
                   style: TextStyle(fontSize: 12),
                 )
               ],

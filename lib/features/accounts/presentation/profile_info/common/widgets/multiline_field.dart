@@ -21,7 +21,7 @@ class MultilineField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
+      height: 200,
       child: CustomTextField(
         textInputAction: TextInputAction.next,
         textInputType: TextInputType.multiline,

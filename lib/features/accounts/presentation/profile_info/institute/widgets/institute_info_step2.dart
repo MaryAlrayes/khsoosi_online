@@ -52,6 +52,9 @@ class InstituteInfoStep2 extends StatelessWidget {
           _buildCityResidence(),
           SizedBox(
             height: 16,
+          ),_buildErrorMessages(),
+            SizedBox(
+            height: 16,
           ),
           _buildBtns(context),
         ],

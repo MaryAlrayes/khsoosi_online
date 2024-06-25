@@ -16,7 +16,9 @@ import 'package:khosousi_online/features/location/domain/entities/coords_entity.
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 import 'package:khosousi_online/features/location/presentation/cubit/add_location_cubit.dart';
 import 'dart:ui' as ui;
+
 class LocationMapScreen extends StatefulWidget {
+  static const routeName = 'location_map_screen';
   const LocationMapScreen({super.key});
 
   @override
@@ -29,8 +31,8 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
   static final PREVIOUS_LOCATION = 'previous_location';
   static final NEW_SELECTED_LOCATION = 'new_selected_location';
 
-  late LatLng? _userPreviousLocationCoords;
-  late LatLng? _userCurrentLocationCoords;
+   LatLng? _userPreviousLocationCoords=null;
+   LatLng? _userCurrentLocationCoords=null;
 
   late CameraPosition _initialCameraPosition;
   GoogleMapController? _googleMapController;
@@ -42,8 +44,8 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
 
   CoordsEntity? selectedLocation;
 
- Future<Uint8List> _createCustomMarkerBitmap(String text) async {
-final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+  Future<Uint8List> _createCustomMarkerBitmap(String text) async {
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = ColorManager.black;
     final double fontSize = 50.0;
@@ -69,7 +71,8 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final double triangleHeight = 40.0;
 
     // Draw the background
-    final RRect rRect = RRect.fromLTRBR(0, 0, width, height, Radius.circular(10));
+    final RRect rRect =
+        RRect.fromLTRBR(0, 0, width, height, Radius.circular(10));
     canvas.drawRRect(rRect, paint);
 
     // Draw the text
@@ -88,16 +91,18 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
           (height + triangleHeight).toInt(),
         );
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
     return byteData!.buffer.asUint8List();
   }
+
   @override
   void initState() {
     super.initState();
     Marker? _currentLocationMarker;
     Marker? _previousLocationMarker;
 
-    fetchLocation(context).then((_) async{
+    fetchLocation(context).then((_) async {
       if (_userCurrentLocationCoords != null) {
         _initialCameraPosition = CameraPosition(
           target: _userCurrentLocationCoords!,
@@ -106,22 +111,23 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
           bearing: 0,
         );
         //marker for the user current location
-        final Uint8List _currentLocationMarkerIcon = await _createCustomMarkerBitmap("أنت هنا حاليا");
+        final Uint8List _currentLocationMarkerIcon =
+            await _createCustomMarkerBitmap("أنت هنا حاليا");
         _currentLocationMarker = Marker(
             markerId: MarkerId(CURRENT_LOCATION),
             icon: BitmapDescriptor.fromBytes(_currentLocationMarkerIcon),
-
             draggable: false,
             position: _userCurrentLocationCoords!);
       }
 
       //marker for the user previous selected location
       if (_userPreviousLocationCoords != null) {
-            final Uint8List _previousLocationMarkerIcon = await _createCustomMarkerBitmap("موقعك المحدد مسبقا");
+        final Uint8List _previousLocationMarkerIcon =
+            await _createCustomMarkerBitmap("موقعك المحدد مسبقا");
         _previousLocationMarker = Marker(
             markerId: MarkerId(PREVIOUS_LOCATION),
-            icon:BitmapDescriptor.fromBytes(_previousLocationMarkerIcon),
-             draggable: false,
+            icon: BitmapDescriptor.fromBytes(_previousLocationMarkerIcon),
+            draggable: false,
             position: _userPreviousLocationCoords!);
       }
       setState(() {
@@ -132,21 +138,20 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
               circleId: CircleId('maxRadiusCircle'),
               center: LatLng(_userCurrentLocationCoords!.latitude,
                   _userCurrentLocationCoords!.longitude),
-              radius: maxRadiusKM*1000, // Radius in meters (10 kilometers)
+              radius: maxRadiusKM * 1000, // Radius in meters (10 kilometers)
               fillColor: Colors.orange.withOpacity(0.3),
               strokeColor: Colors.orange,
               strokeWidth: 1,
             ),
           );
         }
-        if (_previousLocationMarker != null)
+        if (_previousLocationMarker != null) {
           _markers.add(_previousLocationMarker!);
+        }
         _isLoading = false;
       });
     });
   }
-
-
 
   Future<void> fetchLocation(BuildContext context) async {
     if (context.read<AuthRepo>().getUserInfo()!.lat != 0 &&
@@ -157,11 +162,10 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
       );
     }
     GeoLoc? res = await LocationService.getLocationCoords();
-   if (res != null) {
-
+    if (res != null) {
       _userCurrentLocationCoords = LatLng(res.lat, res.lng);
     }
- }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,23 +185,24 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
                       zoomControlsEnabled: false,
                       onMapCreated: ((controller) {
                         _googleMapController = controller;
-
                       }),
                       initialCameraPosition: _initialCameraPosition,
                       markers: _markers,
                       circles: _circles,
-                      onTap: (position) async{
+                      onTap: (position) async {
                         if (_markers.contains(_markers.where((element) =>
                             element.markerId == NEW_SELECTED_LOCATION))) {
                           _markers.remove(_markers.where((element) =>
                               element.markerId == NEW_SELECTED_LOCATION));
                         }
-                          final Uint8List _selectedLocationMarkerIcon = await _createCustomMarkerBitmap("الموقع");
+                        final Uint8List _selectedLocationMarkerIcon =
+                            await _createCustomMarkerBitmap("الموقع");
 
                         Marker _selectedLocationMarker = Marker(
                             markerId: MarkerId(NEW_SELECTED_LOCATION),
-                             draggable: true,
-                            icon: BitmapDescriptor.fromBytes(_selectedLocationMarkerIcon),
+                            draggable: true,
+                            icon: BitmapDescriptor.fromBytes(
+                                _selectedLocationMarkerIcon),
                             position: position);
 
                         setState(() {
@@ -220,18 +225,6 @@ final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
                     ),
                     if (selectedLocation != null) _buildSubmitBtn(context),
                   ]),
-            // floatingActionButton: FloatingActionButton(
-            //     backgroundColor: Colors.white,
-            //     child: const Icon(
-            //       Icons.my_location,
-            //       color: Colors.black,
-            //     ),
-            //     onPressed: _isLoading
-            //         ? null
-            //         : () {
-            //             _googleMapController?.animateCamera(
-            //                 CameraUpdate.newCameraPosition(_initialCameraPosition));
-            //           }),
           ),
         );
       }),

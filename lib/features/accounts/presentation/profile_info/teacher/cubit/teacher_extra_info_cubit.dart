@@ -105,6 +105,7 @@ class TeacherExtraInfoCubit extends Cubit<TeacherExtraInfoState> {
     categories.remove(categoryEntity);
     TeacherExtraInfoEntity infoEntity =
         state.teacherExtraInfoEntity.copyWith(categories: categories);
+      print('categories $categories');
     emit(
       state.copyWith(
         info: infoEntity,

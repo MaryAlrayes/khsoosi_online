@@ -18,6 +18,8 @@ import 'features/localization/cubit/lacalization_cubit.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 
+import 'features/notification/presentation/cubit/get_notification_cubit.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyHttpOverrides extends HttpOverrides {
@@ -74,6 +76,9 @@ class MyApp extends StatelessWidget {
             authRepository: authRepo,
             fetchUserDataUseCase: sl.locator<FetchUserDataUseCase>(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => sl.locator<GetNotificationCubit>(),
         )
       ],
       child: BlocBuilder<LacalizationCubit, LacalizationState>(

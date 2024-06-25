@@ -18,6 +18,7 @@ enum TeacherInfoStepperSteps {
   categories,
   certificates,
   skills,
+  location,
   picture,
 }
 
@@ -26,6 +27,7 @@ enum InstituteInfoStepperSteps {
   general,
   nameAboutAddress,
   categories,
+  location,
   picture,
 }
 
@@ -80,3 +82,7 @@ enum SearchServicesSteps {
 }
 
 enum LocationType { nearestTeacher, chooseCountey }
+enum FAQUserType{
+  student,
+  teacher,both
+}

@@ -71,27 +71,36 @@ class SearchCoursesResult extends StatelessWidget {
   }
 
   Widget _buildLoadMoreBtn(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: TextButton(
-        onPressed: () {
-          context.read<GetCoursesBloc>().add(
-                LoadCoursesEvent(
-                  filter: _getCurrentFilter(context),
-                ),
-              );
-        },
-        child: Text(
-          'تحميل المزيد',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: TextButton(
+            onPressed: () {
+              context.read<GetCoursesBloc>().add(
+                    LoadCoursesEvent(
+                      filter: _getCurrentFilter(context),
+                    ),
+                  );
+            },
+            child: Text(
+              'تحميل المزيد',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
-      ),
+        SizedBox(
+          height:70,
+        )
+      ],
     );
   }
 
   Widget _buildCoursesGrid(GetCoursesState state, BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         MasonryGridView.builder(
           physics: NeverScrollableScrollPhysics(),

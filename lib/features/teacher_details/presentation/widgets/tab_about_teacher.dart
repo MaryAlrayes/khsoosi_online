@@ -9,7 +9,6 @@ import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_read_text.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
 
-
 class TabAboutTeacher extends StatelessWidget {
   final TeacherDetailsEntity teacherDetailsEntity;
   const TabAboutTeacher({
@@ -24,10 +23,12 @@ class TabAboutTeacher extends StatelessWidget {
       child: ListView(
         physics: NeverScrollableScrollPhysics(),
         children: [
-          _buildReadMoreText(),
-          SizedBox(
-            height: 16,
-          ),
+          if (teacherDetailsEntity.teacherDescription.isNotEmpty) ...[
+            _buildReadMoreText(),
+            SizedBox(
+              height: 16,
+            ),
+          ],
           _buildUniversitiesLabel(),
           SizedBox(
             height: 16,
@@ -63,14 +64,12 @@ class TabAboutTeacher extends StatelessWidget {
   }
 
   Widget _buildReadMoreText() {
-    return CustomReadText(
+    return CustomReadMoreText(
       text: CustomHtmlParser.parseHtml(
         teacherDetailsEntity.teacherDescription,
       ),
       trimLines: 4,
     );
-
-
   }
 
   Widget _buildUniversities() {

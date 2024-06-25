@@ -1,14 +1,15 @@
 part of 'institute_info_stepper_cubit.dart';
 
-
 List<InstituteInfoStepperSteps> steps = [
   InstituteInfoStepperSteps.phones,
   InstituteInfoStepperSteps.general,
-    InstituteInfoStepperSteps.nameAboutAddress ,
-      InstituteInfoStepperSteps.categories,
+  InstituteInfoStepperSteps.nameAboutAddress,
+  InstituteInfoStepperSteps.categories,
+  InstituteInfoStepperSteps.location,
   InstituteInfoStepperSteps.picture
 ];
- class InstituteInfoStepperState extends Equatable {
+
+class InstituteInfoStepperState extends Equatable {
   final InstituteInfoStepperSteps currentStep;
   final int currentIndex;
   final List<InstituteInfoStepperSteps> stepsStack;
@@ -19,11 +20,5 @@ List<InstituteInfoStepperSteps> steps = [
   });
 
   @override
-  List<Object> get props => [
-        currentStep,
-        stepsStack,
-        currentIndex
-      ];
-
+  List<Object> get props => [currentStep, stepsStack, currentIndex];
 }
-

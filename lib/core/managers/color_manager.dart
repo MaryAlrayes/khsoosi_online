@@ -22,10 +22,14 @@ class ColorManager {
   static Color lightGreen = Color.fromARGB(255, 236, 253, 248);
   static Color lightRed = const Color(0xffFBE9EB);
   static Color red1 = const Color(0xffDC4759);
+   static Color darkRed = const Color(0xff801925);
   static Color orange = const Color(0xffF27234);
   static Color lightOrange = Color(0xffFFF2E7);
   static Color orange1 = const Color(0xffFD7E14);
   static Color starColorRate = const Color(0xffF7C32E);
   static Color darkBlue = const Color(0xff425B6F);
   static Color htmlColor = const Color(0xff8A7579);
+
+  static Color darkPurple = const Color(0xff6F42C1);
+  static Color lightPurple= const Color(0xffEAE3F6);
 }

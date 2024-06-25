@@ -15,6 +15,7 @@ import 'package:khosousi_online/features/search/presentation/filter/widgets/loca
 import 'package:khosousi_online/features/search/presentation/filter/widgets/category.dart';
 import 'package:khosousi_online/features/search/presentation/filter/widgets/teaching_method.dart';
 import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
+import 'package:khosousi_online/features/search/presentation/search_institutes/bloc/get_institutes_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/widgets/next_previous_btn.dart';
@@ -78,7 +79,7 @@ class FilterScreen extends StatelessWidget {
   void _search(BuildContext context) {
     switch (searchType) {
       case SearchType.teachers:
-        BlocProvider.of<GetTeachersBloc>(context).add(
+       BlocProvider.of<GetTeachersBloc>(context).add(
           LoadTeachersEvent(
             refresh: true,
             filter: context.read<FilterSearchCubit>().state.filter,
@@ -92,8 +93,15 @@ class FilterScreen extends StatelessWidget {
             filter: context.read<FilterSearchCubit>().state.filter,
           ),
         );
+        Navigator.pop(context);
       case SearchType.institutes:
-        //Todo this case
+        BlocProvider.of<GetInstitutesBloc>(context).add(
+          LoadInstitutesEvent(
+            refresh: true,
+            filter: context.read<FilterSearchCubit>().state.filter,
+          ),
+        );
+        Navigator.pop(context);
       case SearchType.services:
         BlocProvider.of<GetServicesBloc>(context).add(
           LoadServicesEvent(
@@ -101,6 +109,7 @@ class FilterScreen extends StatelessWidget {
             filter: context.read<FilterSearchCubit>().state.filter,
           ),
         );
+        Navigator.pop(context);
     }
   }
 
@@ -120,11 +129,13 @@ class FilterScreen extends StatelessWidget {
             {
               'title': 'موقع المدرس',
               'content': LocationFilter(
-                withNext: true,
-                onNext: () {
+                withControlBtns: true,
+                onNextCallback: () {
+                  print('steppper');
+                  print(context.read<FilterSearchCubit>().state.filter.lat);
                   BlocProvider.of<FilterStepperCubit>(context).nextStep();
                 },
-                onPrevious: () {
+                onPreviousCallback: () {
                   BlocProvider.of<FilterStepperCubit>(context).previousStep();
                 },
               ),
@@ -166,11 +177,11 @@ class FilterScreen extends StatelessWidget {
           {
             'title': 'الموقع',
             'content': LocationFilter(
-              withNext: true,
-              onNext: () {
+              withControlBtns: true,
+              onNextCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).nextStep();
               },
-              onPrevious: () {
+              onPreviousCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).previousStep();
               },
             ),
@@ -204,23 +215,23 @@ class FilterScreen extends StatelessWidget {
       case SearchType.institutes:
         return [
           {
-            'title': 'التخصص',
-            'content': CatefgoryFilter(
-              withNext: false,
-            ),
-          },
-          {
             'title': 'الموقع',
             'content': LocationFilter(
-              withNext: true,
-              onNext: () {
+              withControlBtns: true,
+              onNextCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).nextStep();
               },
-              onPrevious: () {
+              onPreviousCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).previousStep();
               },
             ),
             'enableControlBtn': false,
+          },
+          {
+            'title': 'التخصص',
+            'content': CatefgoryFilter(
+              withNext: false,
+            ),
           },
         ];
       case SearchType.services:
@@ -228,11 +239,11 @@ class FilterScreen extends StatelessWidget {
           {
             'title': 'الموقع',
             'content': LocationFilter(
-              withNext: true,
-              onNext: () {
+              withControlBtns: true,
+              onNextCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).nextStep();
               },
-              onPrevious: () {
+              onPreviousCallback: () {
                 BlocProvider.of<FilterStepperCubit>(context).previousStep();
               },
             ),

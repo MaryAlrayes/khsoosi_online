@@ -8,7 +8,7 @@ import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
-import 'package:khosousi_online/features/courses_services_details/presentation/services/screens/service_details_screen.dart';
+import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/services/screens/service_details_screen.dart';
 import 'package:khosousi_online/features/search/domain/entities/service_entity.dart';
 
 import '../../../../../core/ui/widgets/custom_image.dart';

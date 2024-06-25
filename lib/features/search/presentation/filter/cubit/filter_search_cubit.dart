@@ -86,7 +86,8 @@ class FilterSearchCubit extends Cubit<FilterSearchState> {
   void setCoord(double lat,double lng) {
     SearchFilterEntity filterEntity =
         state.filter.copyWith(lat: lat,lng:lng);
-    emit(
+
+   emit(
       state.copyWith(filter: filterEntity),
     );
   }

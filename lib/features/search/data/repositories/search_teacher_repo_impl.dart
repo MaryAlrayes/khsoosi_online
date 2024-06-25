@@ -23,6 +23,8 @@ class SearchTeachersRepoImp implements SearchTeachersRepo {
     required String? stage,
     required String? searchkeyword,
     required String teachMethod,
+        required double? lat,
+    required double? lng,
   }) async {
     final data = await BaseRepo.repoRequest(
       request: () async {
@@ -34,7 +36,10 @@ class SearchTeachersRepoImp implements SearchTeachersRepo {
             gender: gender,
             stage: stage,
             teachMethod: teachMethod,
-            searchkeyword: searchkeyword);
+            searchkeyword: searchkeyword,
+            lat: lat,
+            lng: lng
+            );
       },
     );
     return data.fold((f) => Left(f), (data) => Right(data));

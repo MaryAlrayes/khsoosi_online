@@ -31,10 +31,9 @@ class SearchInstitutesDataProviderWithDio extends SearchInstitutesDataProvider {
   })async {
     Map<String, dynamic> body = {};
     body['start'] = start;
-      //TODO: MISSING country id , city id ,category FROM API
-    // body['country_id'] = countryId ?? '';
-    // body['city_id'] = cityId ?? '';
-    // body['category_id'] = categoryId ?? '';
+    body['country_id'] = countryId ?? '';
+    body['city_id'] = cityId ?? '';
+    body['category_id'] = categoryId ?? '';
 
     final res = await client.multipartRequest(
       url: EndPointsManager.getInstitutesbyFilter,
@@ -45,7 +44,7 @@ class SearchInstitutesDataProviderWithDio extends SearchInstitutesDataProvider {
     int index = start;
     var jsonRes = res[0]['institutes'];
     for (int i = 0; i < jsonRes.length; i++) {
-      InstituteModel instituteModel = InstituteModel.fromJson(jsonRes[i], index);
+      InstituteModel instituteModel = InstituteModel.fromJson(jsonRes[i], i);
       data.add(instituteModel);
       index++;
     }

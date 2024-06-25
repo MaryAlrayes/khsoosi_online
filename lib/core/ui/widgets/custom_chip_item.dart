@@ -197,3 +197,14 @@ Widget getRejectedChip(){
     ),
   );
 }
+Widget getPendingChip(){
+  return Card(
+     elevation: 0.2,
+
+    child: CustomChipItem(
+      label: 'بانتظار الموافقة',
+      backgroundColor: ColorManager.lightBlue,
+      foregroundColor: ColorManager.blue1,
+    ),
+  );
+}

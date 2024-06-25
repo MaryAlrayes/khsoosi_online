@@ -154,7 +154,7 @@ class _TeacherDetailsMainContentState extends State<TeacherDetailsMainContent>
               ),
             ),
           ],
-          // key : key,
+        
           colorStartAnimation: ColorManager.blue2,
           colorEndAnimation: Colors.red,
           animatedIconData: AnimatedIcons.menu_close),

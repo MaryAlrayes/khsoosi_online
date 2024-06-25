@@ -5,7 +5,7 @@ import 'package:khosousi_online/features/search/domain/entities/teacher_entity.d
 
 abstract class SearchTeachersRepo {
   Future<Either<Failure, List<TeacherEntity>>> getTeachers({
-  required int start,
+    required int start,
     required String? countryId,
     required String? cityId,
     required String? categoryId,
@@ -13,7 +13,7 @@ abstract class SearchTeachersRepo {
     required String? stage,
     required String? searchkeyword,
     required String teachMethod,
-
+    required double? lat,
+    required double? lng,
   });
-   
 }

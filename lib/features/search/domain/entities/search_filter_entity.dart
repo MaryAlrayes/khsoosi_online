@@ -69,6 +69,7 @@ class SearchFilterEntity extends Equatable {
     Gender? gender,
     String? keyword,
   }) {
+    print('in copy with $lat');
     SearchFilterEntity searchFilterEntity = SearchFilterEntity(
       teachingMethod: teachingMethod ?? this.teachingMethod,
       educationalLevel: educationalLevel ?? this.educationalLevel,
@@ -81,7 +82,7 @@ class SearchFilterEntity extends Equatable {
       gender: gender ?? this.gender,
       keyword: keyword ?? this.keyword,
     );
-
+ print('after in copy with ${searchFilterEntity.lat}');
     return searchFilterEntity;
   }
 }

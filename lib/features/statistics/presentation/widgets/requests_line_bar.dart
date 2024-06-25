@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:khosousi_online/core/managers/color_manager.dart';
-import 'package:khosousi_online/features/statistics/domain/entities/requests_series_data.dart';
+import 'package:khosousi_online/features/statistics/domain/entities/requests_series_data_entity.dart';
 
 class RequestsLineBar extends StatelessWidget {
-  final List<RequestsSeriesData> data;
+final List<RequestsSeriesDataEntity> data;
   const RequestsLineBar({
     Key? key,
     required this.data,
@@ -59,15 +59,10 @@ class RequestsLineBar extends StatelessWidget {
         backgroundColor: Colors.transparent,
         enableAxisAnimation: true,
         tooltipBehavior: TooltipBehavior(enable: true, header: 'طلبات'),
-        primaryXAxis: DateTimeAxis(
-          intervalType: DateTimeIntervalType.months,
-          dateFormat: DateFormat('MM-yyyy'),
-          desiredIntervals: 12,
-          axisLine: AxisLine(width: 2),
-          enableAutoIntervalOnZooming: true,
-          autoScrollingDeltaType: DateTimeIntervalType.months,
-          edgeLabelPlacement: EdgeLabelPlacement.none,
-          majorGridLines: MajorGridLines(
+       
+        primaryXAxis: CategoryAxis(
+           axisLine: AxisLine(width: 2),
+            majorGridLines: MajorGridLines(
             width: 1,
             color: Colors.black12,
           ),
@@ -79,16 +74,16 @@ class RequestsLineBar extends StatelessWidget {
           ),
         ),
         series: <CartesianSeries>[
-          LineSeries<RequestsSeriesData, DateTime>(
+          LineSeries<RequestsSeriesDataEntity, String>(
             pointColorMapper: (datum, index) => ColorManager.orange,
             markerSettings: MarkerSettings(
                 isVisible: true,
                 shape: DataMarkerType.diamond,
                 width: 12,
                 height: 12),
-            dataSource: chartData,
-            xValueMapper: (RequestsSeriesData sales, _) => sales.year,
-            yValueMapper: (RequestsSeriesData sales, _) => sales.value,
+            dataSource: data,
+            xValueMapper: (RequestsSeriesDataEntity sales, _) => sales.month,
+            yValueMapper: (RequestsSeriesDataEntity sales, _) => sales.value,
             enableTooltip: true,
           )
         ]);

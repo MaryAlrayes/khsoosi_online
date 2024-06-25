@@ -32,14 +32,14 @@ import 'package:khosousi_online/features/location/domain/entities/country_entity
 import '../../search_teacher/widgets/next_previous_btn.dart';
 
 class LocationFilter extends StatelessWidget {
-  final VoidCallback? onNext;
-  final VoidCallback? onPrevious;
-  final bool withNext;
+  final VoidCallback? onNextCallback;
+  final VoidCallback? onPreviousCallback;
+  final bool withControlBtns;
   LocationFilter({
     Key? key,
-    this.onNext,
-    this.onPrevious,
-    this.withNext = false,
+    this.onNextCallback,
+    this.onPreviousCallback,
+    this.withControlBtns = false,
   }) : super(key: key);
 
   @override
@@ -88,7 +88,7 @@ class LocationFilter extends StatelessWidget {
           SizedBox(
             height: 16.h,
           ),
-          if (withNext) _buildNextPreviousBtn(context)
+          if (withControlBtns) _buildNextPreviousBtn(context)
         ],
       );
     });
@@ -144,14 +144,15 @@ class LocationFilter extends StatelessWidget {
   NextPreviousBtn _buildNextBtn(BuildContext context) {
     return NextPreviousBtn(
       nextOrPrevious: NextOrPrevious.next,
-      onPressed: onNext != null
+      onPressed: onNextCallback != null
           ? () {
               if (context.read<FilterSearchCubit>().state.filter.locationType ==
                   null) {
                 showSnackbar(
                     context, 'عليك الاختيار قبل الانتقال للخطوة التالية');
               } else {
-                onNext!();
+                print('on next ${context.read<FilterSearchCubit>().state.filter.lat}');
+                onNextCallback!();
               }
             }
           : () {},
@@ -159,11 +160,11 @@ class LocationFilter extends StatelessWidget {
   }
 
   Widget _buildBeforeBtn(BuildContext context) {
-    return onPrevious == null
+    return onPreviousCallback == null
         ? Container()
         : NextPreviousBtn(
             nextOrPrevious: NextOrPrevious.previous,
-            onPressed: onPrevious!,
+            onPressed: onPreviousCallback!,
           );
   }
 }

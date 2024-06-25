@@ -39,9 +39,8 @@ class SearchCoursesDataProviderWithDio extends SearchCoursesDataProvider {
     body['Teach_method'] = teachMethod;
     body['country_id'] = countryId ?? '';
     body['city_id'] = cityId ?? '';
-    //TODO: MISSING GENDER AND STAGE FROM API
-    // body['gender'] = gender ?? '';
-    // body['stage'] = stage ?? '';
+    body['gender'] = gender ?? '';
+    body['stage'] = stage ?? '';
     body['search_key_word'] = searchkeyword ?? '';
     body['category_id'] = categoryId ?? '';
 
@@ -54,7 +53,7 @@ class SearchCoursesDataProviderWithDio extends SearchCoursesDataProvider {
     int index = start;
     var jsonRes = res[0]['courses'];
     for (int i = 0; i < jsonRes.length; i++) {
-      CourseModel courseModel = CourseModel.fromJson(jsonRes[i], index);
+      CourseModel courseModel = CourseModel.fromJson(jsonRes[i], i);
       data.add(courseModel);
       index++;
     }

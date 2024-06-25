@@ -12,7 +12,7 @@ import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/domain/entities/course_entity.dart';
 
-import '../../../../courses_services_details/presentation/courses/screens/course_details_screen.dart';
+import '../../../../courses_services_portofolio_details/presentation/courses/screens/course_details_screen.dart';
 
 class CourseItem extends StatelessWidget {
   final CourseEntity courseEntity;

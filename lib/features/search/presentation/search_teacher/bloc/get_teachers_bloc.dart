@@ -16,8 +16,7 @@ class GetTeachersBloc extends Bloc<GetTeachersEvent, GetTeachersState> {
       : super(GetTeachersState()) {
     on<LoadTeachersEvent>(
       (event, emit) async {
-        
-        if (event.refresh) {
+       if (event.refresh) {
           await _refreshData(emit, event.filter);
         } else if (state.hasReachedMax)
           return;
@@ -51,6 +50,7 @@ class GetTeachersBloc extends Bloc<GetTeachersEvent, GetTeachersState> {
 
   Future<void> _loadingState(
       Emitter<GetTeachersState> emit, SearchFilterEntity filter) async {
+
     final data =
         await searchTeachersUseCase(start: state.start, filter: filter);
     await data.fold(

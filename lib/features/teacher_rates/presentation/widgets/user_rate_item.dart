@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
@@ -9,8 +11,14 @@ import 'package:khosousi_online/core/ui/widgets/custom_read_text.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_text_field.dart';
 import 'package:khosousi_online/core/utils/helpers/date_formatter.dart';
 
+import '../../domain/entities/teacher_review_entity.dart';
+
 class UserRateItem extends StatefulWidget {
-  const UserRateItem({super.key});
+  final TeacherReviewEntity review;
+  const UserRateItem({
+    Key? key,
+    required this.review,
+  }) : super(key: key);
 
   @override
   State<UserRateItem> createState() => _UserRateItemState();
@@ -26,7 +34,7 @@ class _UserRateItemState extends State<UserRateItem> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: _buildUserImage(),
+          child: _buildUserImage(widget.review, context),
         ),
         Expanded(
           child: Column(
@@ -34,7 +42,7 @@ class _UserRateItemState extends State<UserRateItem> {
               Container(
                 key: UniqueKey(),
                 width: double.infinity,
-                padding: const EdgeInsets.all(12).copyWith(top: 8,bottom: 4),
+                padding: const EdgeInsets.all(12).copyWith(top: 8, bottom: 4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: ColorManager.gray3.withOpacity(.5),
@@ -52,17 +60,15 @@ class _UserRateItemState extends State<UserRateItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                _buildUserInfo(),
+                                _buildUserInfo(widget.review),
                                 SizedBox(
                                   height: 8,
                                 ),
-                                _buildCommentText(context),
-
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  _buildAddReplyBtn()
-
+                                _buildCommentText(context, widget.review),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                              if(widget.review.teacherReply.isEmpty)  _buildAddReplyBtn()
                               ],
                             ),
                           ),
@@ -101,7 +107,8 @@ class _UserRateItemState extends State<UserRateItem> {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4) , color: Color(0xffE5E5E5)),
+                borderRadius: BorderRadius.circular(4),
+                color: Color(0xffE5E5E5)),
             padding: EdgeInsets.all(4),
             alignment: Alignment.center,
             child: FittedBox(
@@ -128,9 +135,8 @@ class _UserRateItemState extends State<UserRateItem> {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: TextButton.icon(
-
           icon: Icon(
-            !showTextFields? Icons.reply_rounded:Icons.close,
+            !showTextFields ? Icons.reply_rounded : Icons.close,
             size: 14,
           ),
           style: TextButton.styleFrom(
@@ -141,18 +147,18 @@ class _UserRateItemState extends State<UserRateItem> {
           ),
           onPressed: () {
             setState(() {
-               !showTextFields? showTextFields= true: showTextFields= false;
+              !showTextFields ? showTextFields = true : showTextFields = false;
             });
           },
           label: Text(
-           !showTextFields? 'اضف رد':'إغلاق',
+            !showTextFields ? 'اضف رد' : 'إغلاق',
           ),
         ),
       ),
     );
   }
 
-  Container _buildUserInfo() {
+  Container _buildUserInfo(TeacherReviewEntity review) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,20 +167,21 @@ class _UserRateItemState extends State<UserRateItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildUserName(),
+              _buildUserName(review),
               SizedBox(
                 width: 4,
               ),
-              _buildRating(),
+              if (review.rate != null) _buildRating(review),
             ],
           ),
-          _buildDate(),
+          _buildDate(review),
           Wrap(
             spacing: 4,
             runSpacing: 4,
             children: [
-              _buildWhatAppNotAuthenticated(),
-              _buildRejected(),
+              if (!review.isWhatsAppActive)
+                _buildWhatAppNotAuthenticated(review),
+              _buildRejected(review),
             ],
           )
         ],
@@ -182,20 +189,20 @@ class _UserRateItemState extends State<UserRateItem> {
     );
   }
 
-  Flexible _buildCommentText(BuildContext context) {
+  Flexible _buildCommentText(BuildContext context, TeacherReviewEntity review) {
     return Flexible(
       fit: FlexFit.loose,
       child: Container(
         width: (MediaQuery.of(context).size.width - 48 - 48) / 1.2,
-        child: CustomReadText(
-          text: 'الله يعطيك العافية بساعة اعطاء واحدة منك اختلف الوضع معي',
+        child: CustomReadMoreText(
+          text: review.comment,
           trimLines: 2,
         ),
       ),
     );
   }
 
-  Container _buildRejected() {
+  Container _buildRejected(TeacherReviewEntity review) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -210,7 +217,7 @@ class _UserRateItemState extends State<UserRateItem> {
     );
   }
 
-  Container _buildWhatAppNotAuthenticated() {
+  Container _buildWhatAppNotAuthenticated(TeacherReviewEntity review) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -225,17 +232,17 @@ class _UserRateItemState extends State<UserRateItem> {
     );
   }
 
-  Text _buildDate() {
+  Text _buildDate(TeacherReviewEntity review) {
     return Text(
-      DateFormatter.getFormatedDate(DateTime.now().toString()),
+      DateFormatter.getFormatedDate(review.date),
       style: TextStyle(fontSize: 12, color: Color(0xff74758F)),
     );
   }
 
-  Expanded _buildUserName() {
+  Expanded _buildUserName(TeacherReviewEntity review) {
     return Expanded(
       child: Text(
-        'نضال الشاطر',
+        review.userName,
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
@@ -244,19 +251,19 @@ class _UserRateItemState extends State<UserRateItem> {
     );
   }
 
-  CustomRating _buildRating() {
+  CustomRating _buildRating(TeacherReviewEntity review) {
     return CustomRating(
-      initRating: 5,
+      initRating: review.rate!,
       update: false,
       showRateText: false,
     );
   }
 
-  Container _buildUserImage() {
+  Container _buildUserImage(TeacherReviewEntity review, BuildContext context) {
     return Container(
       alignment: Alignment.topRight,
       child: CustomImage(
-        image: EndPointsManager.maleUserDefaultImageBaseUrl,
+        image: review.image,
         isCircle: true,
         radius: 20,
       ),

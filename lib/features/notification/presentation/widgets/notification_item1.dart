@@ -1,72 +1,76 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/ui/widgets/custom_html_widget.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 
+import '../../../../core/ui/widgets/custom_read_text.dart';
+import '../../../../core/utils/helpers/date_formatter.dart';
+import '../../../../core/utils/helpers/html_parser.dart';
+import '../../domain/entities/notification_entity.dart';
+
 class NotificationItem1 extends StatelessWidget {
-  const NotificationItem1({super.key});
+  final NotificationEntity notificationEntity;
+  const NotificationItem1({
+    Key? key,
+    required this.notificationEntity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      color: notificationEntity.isRead
+          ? Colors.white
+          : ColorManager.orange.withOpacity(0.2),
+      padding: const EdgeInsets.all(16),
       child: Stack(alignment: Alignment.centerRight, children: [
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomImage(
-              image:
-                  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww',
-              radius: 24,
-              isCircle: true,
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'عنوان الاشعار',
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    notificationEntity.type ,
                     textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 8,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Container(
+                  // color: Colors.blue,
+                  child: Text(
+                    DateFormatter.getFormatedDate(
+                        notificationEntity.date.toString()),
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
-                  Text(
-                    'تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل تفاصيل',
-                    textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 12, color: ColorManager.gray4),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            CustomReadMoreText(
+              text: CustomHtmlParser.parseHtml(notificationEntity.text),
+              trimLines: 2,
+              textStyle: TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],
         ),
-        Positioned(
-          left: 0,
-          top: 2,
-          child: Container(
-            // color: Colors.blue,
-            child: Text(
-              DateFormat('dd-MM-yyyy ').format(DateTime.now()).toString(),
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-          ),
-        )
+
       ]),
     );
   }

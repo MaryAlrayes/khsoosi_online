@@ -4,37 +4,40 @@ import 'package:khosousi_online/features/search/data/models/teacher_category_mod
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
 
 class TeacherModel extends TeacherEntity {
-  TeacherModel(
-      {
-    required   super.id,
-    required   super.name,
-    required   super.imagePath,
-    required   super.isVipAccount,
-    required   super.isSpecial,
-    required   super.address,
-    required   super.teachMethodInternet,
-    required   super.teachMethodStudentHouse,
-    required   super.teachMethodTeacherHouse,
-    required   super.hasBioVideo,
-    required   super.teachMethodOfflineByRoot,
-      super.average,
-    required  super.countryEn,
-    required  super.countryAr,
-    required  super.cityEn,
-    required  super.cityAr,
-     required super.countryCode,
-     required super.teacherSpecialityEntity
-      });
+  TeacherModel({
+    required super.id,
+    required super.name,
+    required super.imagePath,
+    required super.isVipAccount,
+    required super.isSpecial,
+    required super.address,
+    required super.teachMethodInternet,
+    required super.teachMethodStudentHouse,
+    required super.teachMethodTeacherHouse,
+    required super.hasBioVideo,
+    required super.teachMethodOfflineByRoot,
+    super.average,
+    required super.countryEn,
+    required super.countryAr,
+    required super.cityEn,
+    required super.cityAr,
+    required super.countryCode,
+    required super.teacherSpecialityEntity,
+    super.lat,
+    super.lng,
+  });
   factory TeacherModel.fromJson(Map<String, dynamic> json, int index) {
     dynamic data = json['teacher_info $index'];
     dynamic categories = json['teacher_categories $index'];
-      return TeacherModel(
-        id: data['Id'] ??'',
+    return TeacherModel(
+        id: data['Id'] ?? '',
         name: data['Name'] ?? '',
         imagePath:
-        data['Image_path']==null || (data['Image_path'] as String).isEmpty
-            ? data['Jender'] == '0' ?  EndPointsManager.maleUserDefaultImageBaseUrl: EndPointsManager.femaleUserDefaultImageBaseUrl
-            : EndPointsManager.userImageBaseUrl + data['Image_path'] ,
+            data['Image_path'] == null || (data['Image_path'] as String).isEmpty
+                ? data['Jender'] == '0'
+                    ? EndPointsManager.maleUserDefaultImageBaseUrl
+                    : EndPointsManager.femaleUserDefaultImageBaseUrl
+                : EndPointsManager.userImageBaseUrl + data['Image_path'],
         isVipAccount: data['Is_vip_account'] == '1' ? true : false,
         isSpecial: data['Is_special'] == '1' ? true : false,
         address: data['Address'] ?? '',
@@ -54,17 +57,18 @@ class TeacherModel extends TeacherEntity {
         average: data['average'] == null
             ? null
             : double.tryParse(data['average'] as String),
-        countryCode: data['Country_code']==null||(data['Country_code'] as String).isEmpty
+        lat: data['latitude'],
+        lng: data['longitude'],
+        countryCode: data['Country_code'] == null ||
+                (data['Country_code'] as String).isEmpty
             ? ''
             : EndPointsManager.countryImageBaseUrl +
                 data['Country_code'] +
                 EndPointsManager.countryImageExtension,
-        teacherSpecialityEntity:
-            (categories as List<dynamic>)
-                .map(
-                  (e) => TeacherCategoryModel.fromJson(e),
-                )
-                .toList()
-        );
+        teacherSpecialityEntity: (categories as List<dynamic>)
+            .map(
+              (e) => TeacherCategoryModel.fromJson(e),
+            )
+            .toList());
   }
 }

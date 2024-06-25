@@ -1,56 +1,38 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
+import 'package:khosousi_online/core/utils/helpers/number_fomatter.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
 import 'package:khosousi_online/features/teacher_balance/presentation/widgets/calls_chart.dart';
 
+import '../../domain/entities/teacher_balance_entity.dart';
+
 class ChargeScreen extends StatelessWidget {
   static const routeName = 'charge_screen';
-  const ChargeScreen({super.key});
+  final TeacherBalanceEntity balanceEntity;
+
+  const ChargeScreen({
+    Key? key,
+    required this.balanceEntity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('شحن رصيد / تسديد عمولة'),
-      ),
+      appBar: _buildAppbar(),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Card(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Text(
-                        'رقمك الخاص هو 19 اتصل بإدارة الموقع لشحن رصيدك او سداد العمولات المستحقة عليك مع إرسال رقمك الخاص',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      CustomElevatedButton(
-                        backgroundColor: ColorManager.black,
-                        label: 'تواصل مع خدمة العملاء',
-                        icon: Icon(Icons.headset_mic),
-                        onPressed: () {
-                          Navigator.pushNamed(context, ContactUsScreen.routeName);
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              _buildContactus(context),
               SizedBox(
                 height: 8,
               ),
@@ -59,46 +41,98 @@ class ChargeScreen extends StatelessWidget {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    _buildStatCard1(
-                      context: context,
-                      backgroundColor: Color(0xffFEF9EA),
-                      foregroundColor: Color(0xffF7C32E),
-                      icon: FontAwesomeIcons.wallet,
-                      label: 'الرصيد الكلي',
-                      number: '12',
-                    ),
-                    _buildStatCard1(
-                        context: context,
-                        backgroundColor: Color(0xffEAE3F6),
-                        foregroundColor: Color(0xff6F42C1),
-                        icon: FontAwesomeIcons.solidMoneyBill1,
-                        label: 'أخر رصيد مضاف',
-                        number: '40'),
-                    _buildStatCard1(
-                        context: context,
-                        backgroundColor: Color(0xffE7F6F8),
-                        foregroundColor: Color(0xff17A2B8),
-                        icon: FontAwesomeIcons.person,
-                        label: 'عدد طلبات الاتصال قبل أن أكون مميز',
-                        number: '24'),
-                    _buildStatCard1(
-                        context: context,
-                        backgroundColor: ColorManager.lightGreen,
-                        foregroundColor: ColorManager.green1,
-                        icon: FontAwesomeIcons.personChalkboard,
-                        label: 'عدد طلبات الاتصال بعد أن أصبحت مميز',
-                        number: '5'),
+                    _buildTotalCharge(context),
+                    _buildLastCharge(context),
+                    _buildNormalCalls(context),
+                    _buildSpecialCalls(context),
                   ],
                 ),
               ),
               SizedBox(
                 height: 8,
               ),
+              //Todo: update missing from Api
               CallsChart()
             ],
           ),
         ),
       )),
+    );
+  }
+
+  Widget _buildSpecialCalls(BuildContext context) {
+    return _buildStatCard1(
+        context: context,
+        backgroundColor: ColorManager.lightGreen,
+        foregroundColor: ColorManager.green1,
+        icon: FontAwesomeIcons.personChalkboard,
+        label: 'عدد طلبات الاتصال بعد أن أصبحت مميز',
+        number: balanceEntity.specialCallCount.toString());
+  }
+
+  Widget _buildNormalCalls(BuildContext context) {
+    return _buildStatCard1(
+        context: context,
+        backgroundColor: ColorManager.lightBlue,
+        foregroundColor: ColorManager.blue1,
+        icon: FontAwesomeIcons.person,
+        label: 'عدد طلبات الاتصال قبل أن أكون مميز',
+        number: balanceEntity.normalCallCount.toString());
+  }
+
+  Widget _buildLastCharge(BuildContext context) {
+    return _buildStatCard1(
+        context: context,
+        backgroundColor: ColorManager.lightPurple,
+        foregroundColor: ColorManager.darkPurple,
+        icon: FontAwesomeIcons.solidMoneyBill1,
+        label: 'أخر رصيد مضاف',
+        number: balanceEntity.lastCharge);
+  }
+
+  Widget _buildTotalCharge(BuildContext context) {
+    return _buildStatCard1(
+      context: context,
+      backgroundColor: ColorManager.lightYellow,
+      foregroundColor: ColorManager.darkYellow,
+      icon: FontAwesomeIcons.wallet,
+      label: 'الرصيد الكلي',
+      number: balanceEntity.totalCharge,
+    );
+  }
+
+  Card _buildContactus(BuildContext context) {
+    return Card(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              'رقمك الخاص هو ${context.read<AuthRepo>().getUserId()} اتصل بإدارة الموقع لشحن رصيدك او سداد العمولات المستحقة عليك مع إرسال رقمك الخاص',
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            CustomElevatedButton(
+              backgroundColor: ColorManager.black,
+              label: 'تواصل مع خدمة العملاء',
+              icon: Icon(Icons.headset_mic),
+              onPressed: () {
+                Navigator.pushNamed(context, ContactUsScreen.routeName);
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar _buildAppbar() {
+    return AppBar(
+      title: Text('شحن رصيد / تسديد عمولة'),
     );
   }
 
@@ -143,7 +177,7 @@ class ChargeScreen extends StatelessWidget {
                       children: [
                         FittedBox(
                           child: Text(
-                            number,
+                            formatNumber(int.parse(number)),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
@@ -153,7 +187,7 @@ class ChargeScreen extends StatelessWidget {
                           label,
                           style: TextStyle(
                               fontSize: 12, overflow: TextOverflow.ellipsis),
-                          maxLines: 2,
+                          maxLines: 3,
                         ),
                       ],
                     ),

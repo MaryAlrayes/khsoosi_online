@@ -8,11 +8,15 @@ import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
+import 'package:khosousi_online/features/search/presentation/search_institutes/bloc/get_institutes_bloc.dart';
+import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
 import 'package:khosousi_online/shared_features/presentation/bloc/get_categories_bloc.dart';
 import 'package:khosousi_online/features/location/presentation/blocs/get_cities_bloc.dart';
 import 'package:khosousi_online/features/location/presentation/blocs/get_countries_bloc.dart';
+
+import '../../search_courses/bloc/get_courses_bloc.dart';
 
 
 class SearchField extends StatelessWidget {
@@ -56,24 +60,33 @@ class SearchField extends StatelessWidget {
             context,
             screen: MultiBlocProvider(
               providers: [
+              BlocProvider.value(
+                value: context.read<FilterSearchCubit>(),
+              ),
+              BlocProvider.value(
+                value: context.read<GetCategoriesBloc>(),
+              ),
+              BlocProvider.value(
+                value: context.read<GetTeachersBloc>(),
+              ),
+              BlocProvider.value(
+                value: context.read<GetCoursesBloc>(),
+              ),
                 BlocProvider.value(
-                  value: context.read<FilterSearchCubit>(),
+                value: context.read<GetServicesBloc>(),
+              ),
+               BlocProvider.value(
+                  value: context.read<GetInstitutesBloc>(),
                 ),
-                BlocProvider.value(
-                  value: context.read<GetCategoriesBloc>(),
-                ),
-                BlocProvider.value(
-                  value: context.read<GetTeachersBloc>(),
-                ),
-                BlocProvider.value(
-                  value: context.read<GetCountriesBloc>(),
-                ),
-                BlocProvider.value(
-                  value: context.read<GetCitiesBloc>(),
-                ),
-                BlocProvider.value(
-                  value: context.read<CoordsCubit>(),
-                ),
+               BlocProvider.value(
+                value: context.read<GetCountriesBloc>(),
+              ),
+               BlocProvider.value(
+                value: context.read<GetCitiesBloc>(),
+              ),
+                 BlocProvider.value(
+                value: context.read<CoordsCubit>(),
+              ),
               ],
               child: FilterScreen(searchType: searchType),
             ),
@@ -83,21 +96,4 @@ class SearchField extends StatelessWidget {
     );
   }
 
-  // void _search(BuildContext context) {
-  //   switch (searchType) {
-  //     case SearchType.teachers:
-  //       BlocProvider.of<GetTeachersBloc>(context).add(
-  //         LoadTeachersEvent(
-  //           refresh: true,
-  //           filter: context.read<FilterSearchCubit>().state.filter,
-  //         ),
-  //       );
-  //     case SearchType.courses:
-  //     // TODO: Handle this case.
-  //     case SearchType.institutes:
-  //     // TODO: Handle this case.
-  //     case SearchType.services:
-  //     // TODO: Handle this case.
-  //   }
-  // }
 }

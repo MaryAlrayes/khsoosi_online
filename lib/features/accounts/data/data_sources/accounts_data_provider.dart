@@ -60,13 +60,17 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );
@@ -108,13 +112,18 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );
@@ -183,13 +192,17 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );
@@ -209,13 +222,17 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );
@@ -234,13 +251,17 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );
@@ -260,13 +281,18 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       return unit;
     } else {
       String errorMessage = '';
-      final errors = res['error messages'] as Map<String, dynamic>;
-      List<String> keys = (errors).keys.toList();
-      keys.forEach((e) {
-        if (errors[e].isNotEmpty) {
-          errorMessage += errors[e] + '\n';
-        }
-      });
+      final errors = res['error messages'];
+
+      if (errors is String) {
+        errorMessage = errors;
+      } else if (errors is Map<String, dynamic>) {
+        List<String> keys = (errors).keys.toList();
+        keys.forEach((e) {
+          if (errors[e].isNotEmpty) {
+            errorMessage += errors[e] + '\n';
+          }
+        });
+      }
       throw NetworkErrorFailure(
         message: errorMessage,
       );

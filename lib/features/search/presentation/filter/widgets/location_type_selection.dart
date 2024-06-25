@@ -14,7 +14,7 @@ class SelectLocationType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FilterSearchCubit, FilterSearchState>(
-      builder: (context, state) {
+      builder: (c, state) {
         return Row(
           children: [
             Expanded(
@@ -61,8 +61,8 @@ class SelectLocationType extends StatelessWidget {
           BlocProvider.value(
             value: context.read<CoordsCubit>(),
           ),
-          BlocProvider(
-            create: (context) => FilterSearchCubit(),
+          BlocProvider.value(
+         value:context.read<FilterSearchCubit> (),
           ),
         ],
         child: const Dialog(

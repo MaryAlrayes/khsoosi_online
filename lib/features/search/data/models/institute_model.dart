@@ -14,18 +14,19 @@ class InstituteModel extends InstituteEntity {
   });
 
   factory InstituteModel.fromJson(Map<String, dynamic> map, int index) {
-//Todo: parse the json
-    Map<String, dynamic> course = map['course_info $index'];
-    List<dynamic> categories = map['course_categories $index'];
+
+    Map<String, dynamic> institute = map['institute_info $index'];
+    List<dynamic> categories = map['institute_categories $index'];
     return InstituteModel(
-        id: course['Id'] ?? '',
-        title: course['Title'] ?? '',
-        countryAr: course['Country_Name_ar'] ?? '',
-        cityAr: course['City_Name_ar'] ?? '',
-        imagePath: course['Image_path'] == null ||
-                (course['Image_path'] as String).isEmpty
+        id: institute['Id'] ?? '',
+        title: institute['Name'] ?? '',
+        countryAr: institute['country_name_ar'] ?? '',
+        // cityAr: course['City_Name_ar'] ?? '',
+        cityAr: '',
+        imagePath: institute['Image_path'] == null ||
+                (institute['Image_path'] as String).isEmpty
             ? EndPointsManager.coursesDefaultImageBaseUrl
-            : EndPointsManager.coursesImageBaseUrl + course['Image_path'],
+            : EndPointsManager.coursesImageBaseUrl + institute['Image_path'],
         categories: List.generate(
           categories.length,
           (index) => InstituteCategoryModel.fromJson(

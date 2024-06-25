@@ -6,13 +6,17 @@ import 'package:khosousi_online/core/managers/color_manager.dart';
 
 class CustomExpansionTile extends StatelessWidget {
   final Icon? icon;
-  final String title;
+  final String? title;
   final List<Widget> children;
+  final TextStyle? titleStyle;
+  final Widget? titleWidget;
   const CustomExpansionTile({
     Key? key,
-     this.icon,
-    required this.title,
+    this.icon,
+     this.title,
     required this.children,
+    this.titleStyle,
+    this.titleWidget,
   }) : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class CustomExpansionTile extends StatelessWidget {
           iconColor: ColorManager.black,
           tilePadding: EdgeInsets.symmetric(horizontal: 4),
           childrenPadding: EdgeInsets.symmetric(vertical: 2),
-          title: Text(title,  style: TextStyle(fontSize: 14,
+          title:titleWidget!=null?titleWidget!: Text(title??'',  style:titleStyle!=null?titleStyle: TextStyle(fontSize: 14,
           fontWeight: FontWeight.bold
           ),
        ),

@@ -24,9 +24,13 @@ class FilterSearchState extends Equatable {
    SearchFilterEntity? filter,
     SearchFilterEntity? previous,
   }) {
-    return FilterSearchState(
+
+     FilterSearchState searchState= FilterSearchState(
       filter: filter?? this.filter,
       previousfilter: previous?? this.previousfilter
     );
+
+   
+    return searchState;
   }
 }

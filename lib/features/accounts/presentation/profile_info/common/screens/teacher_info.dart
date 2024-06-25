@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +13,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/teac
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/cubit/teacher_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step1.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step10.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step11.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step2.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step3.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/teacher/widgets/teacher_info_step4.dart';
@@ -35,6 +37,20 @@ class TeacherInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var stepsWidget = [
+      TeacherInfoStep1(countries: countries),
+      TeacherInfoStep2(countries: countries),
+      TeacherInfoStep3(),
+      TeacherInfoStep4(),
+      TeacherInfoStep5(),
+      TeacherInfoStep6(),
+      TeacherInfoStep7(),
+      TeacherInfoStep8(),
+      TeacherInfoStep9(),
+      TeacherInfoStep10(),
+      TeacherInfoStep11(),
+    ];
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -44,11 +60,12 @@ class TeacherInfo extends StatelessWidget {
         BlocProvider(
           create: (context) => sl.locator<TeacherInfoCubit>(),
         ),
-         BlocProvider(
+        BlocProvider(
           create: (context) => sl.locator<TeacherExtraInfoCubit>(),
         ),
-         BlocProvider(
-          create: (context) => sl.locator<GetCategoriesBloc>()..add(LoadCategoriesEvent()),
+        BlocProvider(
+          create: (context) =>
+              sl.locator<GetCategoriesBloc>()..add(LoadCategoriesEvent()),
         ),
       ],
       child: Builder(builder: (context) {
@@ -63,36 +80,8 @@ class TeacherInfo extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme:
-                              ColorScheme.light(primary: ColorManager.orange),
-                        ),
-                        child: Stepper(
-                          currentStep: state.currentIndex,
-                          onStepTapped: null,
-                          onStepContinue: null,
-                          onStepCancel: null,
-                          type: StepperType.horizontal,
-                          controlsBuilder: (context, details) {
-                            return Container();
-                          },
-                          steps: [
-                            _getStep1(state.currentStep, state.currentIndex),
-                            _getStep2(state.currentStep, state.currentIndex),
-                            _getStep3(state.currentStep, state.currentIndex),
-                            _getStep4(state.currentStep, state.currentIndex),
-                            _getStep5(state.currentStep, state.currentIndex),
-                            _getStep6(state.currentStep, state.currentIndex),
-                            _getStep7(state.currentStep, state.currentIndex),
-                            _getStep8(state.currentStep, state.currentIndex),
-                            _getStep9(state.currentStep, state.currentIndex),
-                         _getStep10(state.currentStep, state.currentIndex),
-                          ],
-                        ),
-                      ),
-                    ),
+                    _buildStepper(state),
+                    _buildMainContent(stepsWidget, state)
                   ],
                 );
               },
@@ -101,116 +90,73 @@ class TeacherInfo extends StatelessWidget {
     );
   }
 
-  Step _getStep1(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 0 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 0,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep1(
-        countries: countries,
+  Expanded _buildMainContent(
+      List<StatelessWidget> stepsWidget, TeacherInfoStepperState state) {
+    return Expanded(
+      child: ListView(children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: stepsWidget[state.currentIndex],
+        ),
+      ]),
+    );
+  }
+
+  Material _buildStepper(TeacherInfoStepperState state) {
+    return Material(
+      elevation: 2,
+      child: Container(
+          alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(0),
+        height: 80,
+        decoration: BoxDecoration(color: Colors.white),
+        child: EasyStepper(
+          activeStep: state.currentIndex,
+          internalPadding: 0,
+          showLoadingAnimation: false,
+          stepRadius: 24,
+          showStepBorder: false,
+          enableStepTapping: false,
+          padding: EdgeInsets.all(0),
+           fitWidth: true,
+          alignment: Alignment.centerRight,
+          stepAnimationDuration: Duration(milliseconds: 500),
+          steps: [
+            _getStep(state.currentIndex, 0),
+            _getStep(state.currentIndex, 1),
+            _getStep(state.currentIndex, 2),
+            _getStep(state.currentIndex, 3),
+            _getStep(state.currentIndex, 4),
+            _getStep(state.currentIndex, 5),
+            _getStep(state.currentIndex, 6),
+            _getStep(state.currentIndex, 7),
+            _getStep(state.currentIndex, 8),
+            _getStep(state.currentIndex, 9),
+            _getStep(state.currentIndex, 10),
+          ],
+          onStepReached: (index) {},
+        ),
       ),
     );
   }
 
-  Step _getStep2(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 1 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 1,
-      title: Text(
-        '',
+  EasyStep _getStep(int currentIndex, int supposedIndex) {
+    return EasyStep(
+      customStep: CircleAvatar(
+        radius: 30,
+        backgroundColor: currentIndex >= supposedIndex
+            ? ColorManager.orange
+            : ColorManager.gray1,
+        child: currentIndex <= supposedIndex
+            ? Text(
+                '${supposedIndex + 1}',
+                style: TextStyle(color: Colors.white),
+              )
+            : Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
       ),
-      content: TeacherInfoStep2(
-        countries: countries,
-      ),
-    );
-  }
-
-  Step _getStep3(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 2 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 2,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep3(),
-    );
-  }
-
-  Step _getStep4(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 3 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 3,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep4(),
-    );
-  }
-
-  Step _getStep5(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 4 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 4,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep5(),
-    );
-  }
-
-  Step _getStep6(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 5 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 5,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep6(),
-    );
-  }
-
-  Step _getStep7(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 6 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 6,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep7(),
-    );
-  }
-
-  Step _getStep8(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 7 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 7,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep8(),
-    );
-  }
-
-  Step _getStep9(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 8 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 8,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep9(),
-    );
-  }
-   Step _getStep10(TeacherInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 9 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 9,
-      title: Text(
-        '',
-      ),
-      content: TeacherInfoStep10(),
     );
   }
 }

@@ -10,6 +10,7 @@ List<TeacherInfoStepperSteps> steps = [
   TeacherInfoStepperSteps.categories,
   TeacherInfoStepperSteps.certificates,
   TeacherInfoStepperSteps.skills,
+  TeacherInfoStepperSteps.location,
   TeacherInfoStepperSteps.picture
 ];
 

@@ -16,12 +16,11 @@ class CustomImage extends StatelessWidget {
     this.height,
     this.isCircle,
     this.radius,
-    this.fit=BoxFit.cover,
+    this.fit = BoxFit.cover,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return isCircle == true
         ? PhysicalModel(
             color: Colors.grey.withOpacity(0.3),
@@ -39,21 +38,31 @@ class CustomImage extends StatelessWidget {
             fit: fit,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(
-              child: CircularProgressIndicator(
-                value: downloadProgress.progress,
+              child: SizedBox(
+                width: width,
+                height: height,
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                ),
               ),
             ),
-            errorWidget: (context, url, error) => Icon(
-              Icons.error,
+            errorWidget: (context, url, error) => SizedBox(
+              width: width,
+              height: height,
+              child: Icon(
+                Icons.error,
+              ),
             ),
             imageBuilder: (context, imageProvider) => Container(
               width: width,
               height: height,
               decoration: BoxDecoration(
-                shape: isCircle == null || isCircle==false ? BoxShape.rectangle : BoxShape.circle,
+                shape: isCircle == null || isCircle == false
+                    ? BoxShape.rectangle
+                    : BoxShape.circle,
                 image: DecorationImage(
                   image: imageProvider,
-                  fit:fit,
+                  fit: fit,
                 ),
               ),
             ),

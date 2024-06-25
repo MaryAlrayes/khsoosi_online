@@ -97,4 +97,11 @@ class AuthRepoImpl extends AuthRepo {
     UserInfoModel newData = currentData.copyWith(lat: lat, lng: lng);
     saveUserInfo(newData);
   }
+
+  @override
+  Future<void> updateConditionsState({required bool answer})async {
+ UserInfoModel currentData = getUserInfo() as UserInfoModel;
+    UserInfoModel newData = currentData.copyWith(isConditionAgreed: answer);
+    saveUserInfo(newData);
+  }
 }

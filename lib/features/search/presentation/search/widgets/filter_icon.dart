@@ -9,6 +9,7 @@ import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/search/presentation/filter/cubit/filter_search_cubit.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
 import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
+import 'package:khosousi_online/features/search/presentation/search_institutes/bloc/get_institutes_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_teacher/bloc/get_teachers_bloc.dart';
 import 'package:khosousi_online/features/location/presentation/blocs/coords_cubit.dart';
@@ -49,6 +50,9 @@ class FilterIconBtn extends StatelessWidget {
                 BlocProvider.value(
                 value: context.read<GetServicesBloc>(),
               ),
+               BlocProvider.value(
+                  value: context.read<GetInstitutesBloc>(),
+                ),
                BlocProvider.value(
                 value: context.read<GetCountriesBloc>(),
               ),

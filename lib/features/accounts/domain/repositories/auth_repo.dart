@@ -9,6 +9,7 @@ abstract class AuthRepo {
   Future<void> updateActiveState();
   Future<void> updateHasFinishedInfoState();
   Future<void> updateLocationState({required double lat,required double lng});
+ Future<void> updateConditionsState({required bool answer});
 
 
   String? getUserId();

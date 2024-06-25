@@ -127,7 +127,7 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
                   ? searchTeacherState.filter.speciality!.name_ar
                   : searchTeacherState.filter.speciality!.name_en
               : ''),
-              optionsViewOpenDirection: OptionsViewOpenDirection.up,
+              optionsViewOpenDirection: OptionsViewOpenDirection.down,
       displayStringForOption: (data) =>
           data.name_ar.isNotEmpty ? data.name_ar : data.name_en,
       fieldViewBuilder:
@@ -147,6 +147,7 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
               color: Colors.white,
               elevation: 4.0,
               child: Container(
+                
                   child: ListView.separated(
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(8.0),

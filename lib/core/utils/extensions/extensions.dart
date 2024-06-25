@@ -11,15 +11,15 @@ extension SignupTypeExtension on UserType {
         return 'معهد/ مركز تعليمي';
     }
   }
-   String getValueForApi() {
-    switch (this) {
 
+  String getValueForApi() {
+    switch (this) {
       case UserType.student:
-      return '0';
+        return '0';
       case UserType.teacher:
-       return '1';
+        return '1';
       case UserType.institute:
-         return '2';
+        return '2';
     }
   }
 }
@@ -63,7 +63,7 @@ extension GenderExtension on Gender {
       case Gender.female:
         return '1';
       case Gender.unspecified:
-       return '';
+        return '';
     }
   }
 }
@@ -83,7 +83,8 @@ extension EducationalLevelExtension on EducationalLevel {
         return 'الجامعية';
     }
   }
-   String getTextForDispalay() {
+
+  String getTextForDispalay() {
     switch (this) {
       case EducationalLevel.unspecified:
         return 'غير محدد';
@@ -110,6 +111,20 @@ extension EducationalLevelExtension on EducationalLevel {
         return 'secondary';
       case EducationalLevel.university:
         return 'university';
+    }
+  }
+}
+
+extension FAQUserTypeExtension on FAQUserType {
+  String getTextForDispalay() {
+    switch (this) {
+
+      case FAQUserType.student:
+       return 'طالب';
+      case FAQUserType.teacher:
+        return 'مدرس';
+      case FAQUserType.both:
+      return 'مدرس وطالب';
     }
   }
 }

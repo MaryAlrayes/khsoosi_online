@@ -13,7 +13,6 @@ import 'package:khosousi_online/features/search/presentation/search_teacher/bloc
 import 'package:khosousi_online/features/search/presentation/search_teacher/widgets/teacher_item.dart';
 
 class SearchTeachersResult extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetTeachersBloc, GetTeachersState>(
@@ -44,16 +43,10 @@ class SearchTeachersResult extends StatelessWidget {
       );
     }
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      child:
+             _buildTeachersGrid(state, context),
 
-          Container(
-            child: _buildTeachersGrid(state, context),
-          )
-        ],
-      ),
+
     );
   }
 
@@ -77,27 +70,36 @@ class SearchTeachersResult extends StatelessWidget {
   }
 
   Widget _buildLoadMoreBtn(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: TextButton(
-        onPressed: () {
-          context.read<GetTeachersBloc>().add(
-                LoadTeachersEvent(
-                  filter: _getCurrentFilter(context),
-                ),
-              );
-        },
-        child: Text(
-          'تحميل المزيد',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: TextButton(
+            onPressed: () {
+              context.read<GetTeachersBloc>().add(
+                    LoadTeachersEvent(
+                      filter: _getCurrentFilter(context),
+                    ),
+                  );
+            },
+            child: Text(
+              'تحميل المزيد',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
-      ),
+       SizedBox(
+          height:70,
+        )
+      ],
     );
   }
 
   Widget _buildTeachersGrid(GetTeachersState state, BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         MasonryGridView.builder(
           physics: NeverScrollableScrollPhysics(),
@@ -118,18 +120,16 @@ class SearchTeachersResult extends StatelessWidget {
                 ? _buildLoadMoreBtn(context)
                 : Center(
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const CircularProgressIndicator(),
-                  ))
+                      padding: const EdgeInsets.all(8.0),
+                      child: const CircularProgressIndicator(),
+                    ),
+                  )
             : Container()
       ],
     );
   }
 
-  
-
   SearchFilterEntity _getCurrentFilter(BuildContext context) {
     return context.read<FilterSearchCubit>().state.filter;
-
   }
 }

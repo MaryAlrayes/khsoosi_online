@@ -21,10 +21,13 @@ class TeacherEntity extends Equatable {
   final bool teachMethodOfflineByRoot;
   final double? average;
   final String countryCode;
+  final double? lat;
+  final double? lng;
+  final double? distance;
   final List<TeacherCategoryEntity> teacherSpecialityEntity;
 
   TeacherEntity({
-   required  this.id,
+    required this.id,
     required this.name,
     required this.imagePath,
     required this.isVipAccount,
@@ -40,7 +43,10 @@ class TeacherEntity extends Equatable {
     required this.hasBioVideo,
     required this.teachMethodOfflineByRoot,
     this.average,
-   required  this.countryCode,
+    required this.countryCode,
+    this.lat,
+    this.lng,
+     this.distance,
     required this.teacherSpecialityEntity,
   });
 
@@ -63,6 +69,57 @@ class TeacherEntity extends Equatable {
         cityEn,
         cityAr,
         teacherSpecialityEntity,
-        countryCode
+        countryCode,
+        lat,
+        lng,
+        distance
       ];
+
+  TeacherEntity copyWith({
+    String? id,
+    String? name,
+    String? imagePath,
+    bool? isVipAccount,
+    bool? isSpecial,
+    String? countryEn,
+    String? countryAr,
+    String? cityEn,
+    String? cityAr,
+    String? address,
+    bool? teachMethodInternet,
+    bool? teachMethodStudentHouse,
+    bool? teachMethodTeacherHouse,
+    bool? hasBioVideo,
+    bool? teachMethodOfflineByRoot,
+    double? average,
+    String? countryCode,
+    double? lat,
+    double? lng,
+    double? distance,
+    List<TeacherCategoryEntity>? teacherSpecialityEntity,
+  }) {
+    return TeacherEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      imagePath: imagePath ?? this.imagePath,
+      isVipAccount: isVipAccount ?? this.isVipAccount,
+      isSpecial: isSpecial ?? this.isSpecial,
+      countryEn: countryEn ?? this.countryEn,
+      countryAr: countryAr ?? this.countryAr,
+      cityEn: cityEn ?? this.cityEn,
+      cityAr: cityAr ?? this.cityAr,
+      address: address ?? this.address,
+      teachMethodInternet: teachMethodInternet ?? this.teachMethodInternet,
+      teachMethodStudentHouse: teachMethodStudentHouse ?? this.teachMethodStudentHouse,
+      teachMethodTeacherHouse: teachMethodTeacherHouse ?? this.teachMethodTeacherHouse,
+      hasBioVideo: hasBioVideo ?? this.hasBioVideo,
+      teachMethodOfflineByRoot: teachMethodOfflineByRoot ?? this.teachMethodOfflineByRoot,
+      average: average ?? this.average,
+      countryCode: countryCode ?? this.countryCode,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      distance: distance ?? this.distance,
+      teacherSpecialityEntity: teacherSpecialityEntity ?? this.teacherSpecialityEntity,
+    );
+  }
 }

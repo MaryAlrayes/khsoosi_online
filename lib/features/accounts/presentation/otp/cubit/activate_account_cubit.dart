@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 
-import 'package:khosousi_online/features/statistics/domain/entities/requests_series_data.dart';
+import 'package:khosousi_online/features/statistics/domain/entities/requests_series_data_entity.dart';
 
 import '../../../domain/use_cases/activate_account_use_case.dart';
 

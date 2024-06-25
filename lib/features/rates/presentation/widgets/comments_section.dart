@@ -139,7 +139,7 @@ class CommentsSection extends StatelessWidget {
                                         48 -
                                         48) /
                                     1.2,
-                                child: CustomReadText(
+                                child: CustomReadMoreText(
                                   text: review.comment,
                                   trimLines: 2,
                                 ),
@@ -202,7 +202,7 @@ class CommentsSection extends StatelessWidget {
                     child: Container(
                       width:
                           (MediaQuery.of(context).size.width - 48 - 48) / 1.2,
-                      child: CustomReadText(
+                      child: CustomReadMoreText(
                         text: review.teacherReply,
                         trimLines: 2,
                       ),

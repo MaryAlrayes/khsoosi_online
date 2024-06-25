@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,6 @@ import 'package:khosousi_online/features/accounts/presentation/common_widgets/pr
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/activate_account_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/resend_activation_code_cubit.dart';
 import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
-
 import '../../login/blocs/authentication_bloc.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -99,6 +97,7 @@ class OtpScreen extends StatelessWidget {
   void _buildActivateCodeListener(
       ActivateAccountState state, BuildContext context) {
     if (state.activateCodeStatus == ActivateCodeStatus.loading) {
+      //show loading dialog
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -107,13 +106,19 @@ class OtpScreen extends StatelessWidget {
         },
       );
     } else if (state.activateCodeStatus == ActivateCodeStatus.noInternet) {
+      //pop up the loading dialog
       Navigator.pop(context);
+      //show error snack bar
       showSnackbar(context, AppStrings.noInternetConnectionMessage);
     } else if (state.activateCodeStatus == ActivateCodeStatus.networkError) {
+        //pop up the loading dialog
       Navigator.pop(context);
+      //show error snack bar
       showSnackbar(context, state.errorMessage);
     } else if (state.activateCodeStatus == ActivateCodeStatus.done) {
+        //pop up the loading dialog
       Navigator.pop(context);
+      //show successful toast
       ToastUtils.showSusToastMessage('تم تفعيل الحساب بنجاح');
       BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
       Navigator.pushNamedAndRemoveUntil(

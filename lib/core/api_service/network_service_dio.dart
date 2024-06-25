@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
+
 import '../errors/dio_exceptions.dart';
 import 'base_api_service.dart';
 
@@ -46,13 +46,12 @@ class NetworkServiceDio implements BaseApiService {
 
   @override
   Future deleteRequest({required String url}) {
-    // TODO: implement deleteRequest
     throw UnimplementedError();
   }
 
   @override
   Future getRequest({required String url}) async {
-     print('API $url');
+    print('API $url');
     Dio _dio = await dio;
 
     try {
@@ -75,7 +74,7 @@ class NetworkServiceDio implements BaseApiService {
     String? filesAttributeName,
     List<File>? files,
   }) async {
-     print('API $url');
+    print('API $url');
     Dio _dio = await dio;
     try {
       if (filesAttributeName != null && files != null) {
@@ -93,7 +92,7 @@ class NetworkServiceDio implements BaseApiService {
       }
 
       FormData formData = FormData.fromMap(jsonBody);
-       print('body: ${formData.fields}');
+      print('body: ${formData.fields}');
       final response = await _dio.post(url, data: formData);
 
       print('status code ${response.statusCode}');
@@ -109,7 +108,7 @@ class NetworkServiceDio implements BaseApiService {
     required String url,
     required Map<String, dynamic> jsonBody,
   }) async {
-     print('API $url');
+    print('API $url');
     try {
       Dio _dio = await dio;
       var response = await _dio.post(url, data: jsonBody);

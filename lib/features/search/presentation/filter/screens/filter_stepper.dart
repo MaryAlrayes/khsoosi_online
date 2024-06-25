@@ -20,7 +20,7 @@ class FilterStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilterStepperCubit, FilterStepperState>(
+   return BlocBuilder<FilterStepperCubit, FilterStepperState>(
       builder: (context, state) {
         return Stepper(
           key: Key("mysuperkey-" + steps.length.toString()),
@@ -70,11 +70,12 @@ class FilterStepper extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       NextPreviousBtn(
-                          nextOrPrevious: NextOrPrevious.previous,
-                          onPressed: () {
-                            BlocProvider.of<FilterStepperCubit>(context)
-                                .previousStep();
-                          }),
+                        nextOrPrevious: NextOrPrevious.previous,
+                        onPressed: () {
+                          BlocProvider.of<FilterStepperCubit>(context)
+                              .previousStep();
+                        },
+                      ),
                       SizedBox(
                         width: 8,
                       ),
@@ -93,17 +94,19 @@ class FilterStepper extends StatelessWidget {
                               onPressed: () {
                                 BlocProvider.of<FilterStepperCubit>(context)
                                     .previousStep();
-                              })
+                              },
+                            )
                           : Container(),
                       SizedBox(
                         width: 8,
                       ),
                       NextPreviousBtn(
-                          nextOrPrevious: NextOrPrevious.next,
-                          onPressed: () {
-                            BlocProvider.of<FilterStepperCubit>(context)
-                                .nextStep();
-                          })
+                        nextOrPrevious: NextOrPrevious.next,
+                        onPressed: () {
+                          BlocProvider.of<FilterStepperCubit>(context)
+                              .nextStep();
+                        },
+                      )
                     ],
                   ),
           );

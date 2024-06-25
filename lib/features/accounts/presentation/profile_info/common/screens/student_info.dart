@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/stud
 import '../../../../../location/domain/entities/country_entity.dart';
 
 class StudentInfo extends StatelessWidget {
-final  List<CountryEntity> countries;
+  final List<CountryEntity> countries;
   const StudentInfo({
     Key? key,
     required this.countries,
@@ -24,6 +25,11 @@ final  List<CountryEntity> countries;
 
   @override
   Widget build(BuildContext context) {
+    var stepsWidget = [
+      StudentInfoStep1(countries: countries),
+      StudentInfoStep2(countries: countries),
+      StudentInfoStep3(),
+    ];
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -45,29 +51,8 @@ final  List<CountryEntity> countries;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme:
-                              ColorScheme.light(primary: ColorManager.orange),
-                        ),
-                        child: Stepper(
-                          currentStep: state.currentIndex,
-                          onStepTapped: null,
-                          onStepContinue: null,
-                          onStepCancel: null,
-                          type: StepperType.horizontal,
-                          controlsBuilder: (context, details) {
-                            return Container();
-                          },
-                          steps: [
-                            _getStep1(state.currentStep, state.currentIndex),
-                            _getStep2(state.currentStep, state.currentIndex),
-                            _getStep3(state.currentStep, state.currentIndex),
-                          ],
-                        ),
-                      ),
-                    ),
+                    _buildStepper(state, context),
+                    _buildMainContent(stepsWidget, state)
                   ],
                 );
               },
@@ -76,36 +61,66 @@ final  List<CountryEntity> countries;
     );
   }
 
-  Step _getStep1(StudentInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 0 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 0,
-      title: Text(
-        '',
-      ),
-      content: StudentInfoStep1(countries: countries,),
+  Expanded _buildMainContent(
+      List<StatelessWidget> stepsWidget, StudentInfoStepperState state) {
+    return Expanded(
+      child: ListView(children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: stepsWidget[state.currentIndex],
+        ),
+      ]),
     );
   }
 
-  Step _getStep2(StudentInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 1 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 1,
-      title: Text(
-        '',
+  Material _buildStepper(StudentInfoStepperState state, BuildContext context) {
+    return Material(
+      elevation: 2,
+      child: Container(
+        padding: EdgeInsets.all(0),
+        height: 80,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(color: Colors.white),
+        child: EasyStepper(
+          activeStep: state.currentIndex,
+          internalPadding: 0,
+          showLoadingAnimation: false,
+          stepRadius: 24,
+          showStepBorder: false,
+          enableStepTapping: false,
+          padding: EdgeInsets.all(0),
+          fitWidth: true,
+          alignment: Alignment.centerRight,
+          stepAnimationDuration: Duration(milliseconds: 500),
+          steps: [
+            _getStep(state.currentIndex, 0),
+            _getStep(state.currentIndex, 1),
+            _getStep(state.currentIndex, 2),
+          ],
+          onStepReached: (index) {},
+        ),
       ),
-      content: StudentInfoStep2(countries: countries,),
     );
   }
 
-  Step _getStep3(StudentInfoStepperSteps currentStep, int currentIndex) {
-    return Step(
-      state: currentIndex > 2 ? StepState.complete : StepState.indexed,
-      isActive: currentIndex >= 2,
-      title: Text(
-        '',
+  EasyStep _getStep(int currentIndex, int supposedIndex) {
+    return EasyStep(
+      customStep: CircleAvatar(
+        radius: 30,
+        backgroundColor: currentIndex >= supposedIndex
+            ? ColorManager.orange
+            : ColorManager.gray1,
+        child: currentIndex <= supposedIndex
+            ? Text(
+                '${supposedIndex + 1}',
+                style: TextStyle(color: Colors.white),
+              )
+            : Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
       ),
-      content: StudentInfoStep3(),
     );
   }
 }

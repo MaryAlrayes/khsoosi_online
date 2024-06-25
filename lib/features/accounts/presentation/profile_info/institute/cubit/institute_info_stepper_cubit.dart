@@ -20,7 +20,7 @@ class InstituteInfoStepperCubit extends Cubit<InstituteInfoStepperState> {
       InstituteInfoStepperState(
         currentStep: steps[step],
         currentIndex: step,
-        stepsStack: steps.getRange(0, step).toList(),
+        stepsStack: steps.getRange(0, step+1).toList(),
       ),
     );
   }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_app_bar.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
+import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/student_conditions.dart';
 import 'package:khosousi_online/features/edit_password/presentation/pages/edit_password_screen.dart';
 import 'package:khosousi_online/features/favorites/presentation/pages/favorites_screen.dart';
 import 'package:khosousi_online/features/settings/presentation/screens/settings_screen.dart';
@@ -16,14 +20,14 @@ class StudentAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getCustomAppBar(context:context),
+      appBar: getCustomAppBar(context: context),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 32),
             child: Column(
               children: [
-                _buildNameAndEmail(),
+                _buildNameAndEmail(context),
                 SizedBox(
                   height: 16,
                 ),
@@ -64,7 +68,10 @@ class StudentAccount extends StatelessWidget {
               FontAwesomeIcons.handshake,
               size: 18,
             ),
-            onPressed: () {}),
+            onPressed: () {
+                barPushScreen(context: context, screen: StudentConditions());
+
+            }),
         CustomAccountListTile(
             label: 'تغيير كلمة المرور',
             icon: Icon(
@@ -80,7 +87,10 @@ class StudentAccount extends StatelessWidget {
               FontAwesomeIcons.arrowRightFromBracket,
               size: 18,
             ),
-            onPressed: () {})
+            onPressed: () {
+              BlocProvider.of<AuthenticationBloc>(context)
+                  .add(LogOutUserEvent());
+            })
       ],
     );
   }
@@ -113,8 +123,8 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-                barPushScreen(context: context, screen: StudentStatisticsScreen());
-
+              barPushScreen(
+                  context: context, screen: StudentStatisticsScreen());
             }),
         CustomAccountListTile(
             label: 'المفضلة',
@@ -123,22 +133,20 @@ class StudentAccount extends StatelessWidget {
               size: 18,
             ),
             onPressed: () {
-                barPushScreen(context: context, screen: FavoritesScreen());
-
+              barPushScreen(context: context, screen: FavoritesScreen());
             }),
       ],
     );
   }
 
-  Widget _buildNameAndEmail() {
+  Widget _buildNameAndEmail(BuildContext context) {
     return CustomAccountCard(
       child: Row(
         children: [
           CustomImage(
             isCircle: true,
             radius: 25,
-            image:
-                'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww',
+            image: context.read<AuthRepo>().getUserInfo()!.image,
           ),
           SizedBox(
             width: 16,
@@ -148,11 +156,11 @@ class StudentAccount extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'عمرو عويس',
+                  context.read<AuthRepo>().getUserInfo()!.name,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 Text(
-                  'example@example.com',
+                  context.read<AuthRepo>().getUserInfo()!.email,
                   style: TextStyle(fontSize: 12),
                 )
               ],
@@ -161,5 +169,6 @@ class StudentAccount extends StatelessWidget {
         ],
       ),
     );
+
   }
 }

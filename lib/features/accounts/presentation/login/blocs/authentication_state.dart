@@ -25,6 +25,15 @@ class RegistrationInfoState extends AuthenticationState {
   });
 }
 
+
+//user but has not confirm conditions  -> show conditions screen
+class ConditionsState extends AuthenticationState {
+  final String type;
+  ConditionsState({
+    required this.type,
+  });
+}
+
 //user -> show homepage
 class AuthenticatedState extends AuthenticationState {
 }

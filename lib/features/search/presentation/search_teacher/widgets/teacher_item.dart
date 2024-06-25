@@ -88,7 +88,7 @@ class TeacherItem extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    _buildDistance()
+                 if(teacherEntity.distance!=null)   _buildDistance()
                   ],
                 ),
                 SizedBox(
@@ -251,7 +251,7 @@ class TeacherItem extends StatelessWidget {
             width: 4,
           ),
           Text(
-            '5.4 كم',
+            '${teacherEntity.distance!.toStringAsFixed(1)} كم',
             maxLines: 1,
             style: TextStyle(
               fontSize: 12,

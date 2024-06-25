@@ -46,7 +46,7 @@ class SearchServicesResult extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(child: _buildServicesGrid(state,context)),
+          Container(child: _buildServicesGrid(state, context)),
         ],
       ),
     );
@@ -72,27 +72,36 @@ class SearchServicesResult extends StatelessWidget {
   }
 
   Widget _buildLoadMoreBtn(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: TextButton(
-        onPressed: () {
-          context.read<GetServicesBloc>().add(
-                LoadServicesEvent(
-                  filter: _getCurrentFilter(context),
-                ),
-              );
-        },
-        child: Text(
-          'تحميل المزيد',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: TextButton(
+            onPressed: () {
+              context.read<GetServicesBloc>().add(
+                    LoadServicesEvent(
+                      filter: _getCurrentFilter(context),
+                    ),
+                  );
+            },
+            child: Text(
+              'تحميل المزيد',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
-      ),
+         SizedBox(
+          height:70,
+        )
+      ],
     );
   }
 
   Widget _buildServicesGrid(GetServicesState state, BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ListView.separated(
             physics: NeverScrollableScrollPhysics(),
@@ -103,9 +112,11 @@ class SearchServicesResult extends StatelessWidget {
                 ),
             itemCount: state.data.length,
             itemBuilder: (context, index) {
-              return ServiceItem(serviceEntity: state.data[index],);
+              return ServiceItem(
+                serviceEntity: state.data[index],
+              );
             }),
-            !state.hasReachedMax
+        !state.hasReachedMax
             ? state.status == GetServicesStatus.success
                 ? _buildLoadMoreBtn(context)
                 : Center(

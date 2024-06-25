@@ -13,6 +13,7 @@ import 'package:khosousi_online/features/search/presentation/search/widgets/filt
 import 'package:khosousi_online/features/search/presentation/search/widgets/search_field.dart';
 import 'package:khosousi_online/features/search/presentation/search_courses/bloc/get_courses_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_courses/screens/search_courses_result.dart';
+import 'package:khosousi_online/features/search/presentation/search_institutes/bloc/get_institutes_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_institutes/screens/search_instituts_result.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/bloc/get_services_bloc.dart';
 import 'package:khosousi_online/features/search/presentation/search_services/screens/search_services_result.dart';
@@ -41,6 +42,7 @@ class SearchScreen extends StatelessWidget {
         BlocProvider(create: (context) => _getCitiesBloc()),
         BlocProvider(create: (context) => _getCountriesBloc()),
         BlocProvider(create: (context) => _getTeachers(context)),
+        BlocProvider(create: (context) => _getInstitutes(context)),
         BlocProvider(create: (context) => _getCourses(context)),
         BlocProvider(create: (context) => _getServices(context)),
         BlocProvider(create: (context) => _getCoordsCubit()),
@@ -55,6 +57,7 @@ class SearchScreen extends StatelessWidget {
                 BlocBuilder<SearchCubit, SearchState>(
                   builder: (context, state) {
                     return Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -160,6 +163,16 @@ class SearchScreen extends StatelessWidget {
   }
 
   CoordsCubit _getCoordsCubit() => sl.locator<CoordsCubit>();
+
+  GetInstitutesBloc _getInstitutes(BuildContext context) {
+    return sl.locator<GetInstitutesBloc>()
+      ..add(
+        LoadInstitutesEvent(
+          refresh: true,
+          filter: context.read<FilterSearchCubit>().state.filter,
+        ),
+      );
+  }
 
   GetTeachersBloc _getTeachers(BuildContext context) {
     return sl.locator<GetTeachersBloc>()

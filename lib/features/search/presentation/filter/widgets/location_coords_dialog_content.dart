@@ -15,7 +15,6 @@ class LocationCoordsDialogContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CoordsCubit, CoordsState>(
       listener: (context, state) {
-        print('state $state');
         if (state is CoordsFetched) {
           _buildCloseDialog(context, state);
         }
@@ -42,6 +41,7 @@ class LocationCoordsDialogContent extends StatelessWidget {
     BlocProvider.of<FilterSearchCubit>(context)
         .setCoord(state.coords.lat, state.coords.lng);
     Future.delayed(const Duration(seconds: 1), () {
+
       Navigator.pop(context);
     });
   }

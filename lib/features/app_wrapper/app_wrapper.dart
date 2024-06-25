@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khosousi_online/core/utils/helpers/user_type_selection.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/conditions_screen.dart';
 import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/registeration_info_screen.dart';
 
@@ -37,6 +38,12 @@ class AppWrapper extends StatelessWidget {
          state.type
         ),
         hasFinishedFirstInfo: state.hasFinishedFirstInfo,
+      );
+    }else if (state is ConditionsState) {
+      return ConditionsScreen(
+        userType: UserTypeSelection.getUserType(
+         state.type
+        ),
       );
     } else if (state is AuthenticatedState) {
       return HomepageScreen(

@@ -36,6 +36,7 @@ class AuthenticationBloc
   }
 
   Future<void> _logOut(Emitter<AuthenticationState> emit) async {
+    emit(AuthenticatationLoading());
     //delete all data saved in shared preference
     await authRepository.deleteUserInfo();
     emit(UnauthenticatedState());
@@ -49,8 +50,8 @@ class AuthenticationBloc
 
   decideState(Emitter<AuthenticationState> emit) async {
     //check if the user logged in by reading shared preference data from auth repo
-
     final hasUser = await authRepository.hasUserInfo();
+
     if (!hasUser) {
       // no user
       emit(UnauthenticatedState());
@@ -64,7 +65,7 @@ class AuthenticationBloc
       );
 
       await res.fold((failure) {
-        //failure in getting user info so we rely on logged in info
+        //failure in getting user info so we rely on saved info
       }, (userData) async {
         //save new fetched data
         await authRepository.saveUserInfo(userData);
@@ -72,6 +73,7 @@ class AuthenticationBloc
 
       //get the data from repo
       final userInfo = authRepository.getUserInfo();
+
       //not enabled go to registeration info screen
       if (!userInfo!.isEnabled) {
         emit(
@@ -80,9 +82,16 @@ class AuthenticationBloc
             hasFinishedFirstInfo: userInfo.mobile.isNotEmpty,
           ),
         );
-      }
-//Todo:check if the user agreed on Terms
-      else {
+      } else if (!userInfo.isConditionAgreed) {
+
+        //the user has not agreed to terms
+        emit(
+          ConditionsState(
+            type: userInfo.type,
+          ),
+        );
+      } else {
+
         //otherwise the user is authenticated
         emit(AuthenticatedState());
       }

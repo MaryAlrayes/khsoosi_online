@@ -14,8 +14,9 @@ abstract class SearchTeacherDataProvider {
     required String? stage,
     required String? searchkeyword,
     required String teachMethod,
+    required double? lat,
+    required double? lng,
   });
-
 }
 
 class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
@@ -34,6 +35,8 @@ class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
     required String? stage,
     required String? searchkeyword,
     required String teachMethod,
+    required double? lat,
+    required double? lng,
   }) async {
     Map<String, dynamic> body = {};
     body['start'] = start;
@@ -44,6 +47,8 @@ class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
     body['stage'] = stage ?? '';
     body['search_key_word'] = searchkeyword ?? '';
     body['category_id'] = categoryId ?? '';
+    if (lat != null) body['latitude'] = lat;
+    if (lng != null) body['longitude'] = lng;
 
     final res = await client.multipartRequest(
       url: EndPointsManager.getTeachersbyFilter,
@@ -60,5 +65,4 @@ class SearchTeacherDataProviderWithDio extends SearchTeacherDataProvider {
 
     return data;
   }
-
- }
+}

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:khosousi_online/core/managers/string_manager.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/conditions_screen.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/institute_conditions.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/student_conditions.dart';
+import 'package:khosousi_online/features/conditions_terms/presentation/pages/teacher_conditions.dart';
+import 'package:khosousi_online/features/location/presentation/pages/location_map_screen.dart';
 import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
 import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/login_screen.dart';
@@ -10,7 +15,7 @@ import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/assistence_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/faq_screen.dart';
-import 'package:khosousi_online/features/courses_services_details/presentation/services/screens/service_details_screen.dart';
+import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/services/screens/service_details_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
 import 'package:khosousi_online/features/navigation/presentation/screens/teacher_screen.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
@@ -19,8 +24,9 @@ import 'package:khosousi_online/features/teacher_balance/presentation/pages/char
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_portofolio_details_screen.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_service_details_screen.dart';
-import '../../features/courses_services_details/presentation/courses/screens/course_details_screen.dart';
+import '../../features/courses_services_portofolio_details/presentation/courses/screens/course_details_screen.dart';
 import '../../features/search/presentation/search/screens/search_screen.dart';
+import '../../features/teacher_balance/presentation/pages/balance_screen.dart';
 import '../../features/teacher_details/presentation/screens/teacher_course_details_screen.dart';
 
 class AppRouter {
@@ -109,12 +115,7 @@ class AppRouter {
             return ContactUsScreen();
           },
         );
-      case ChargeScreen.routeName:
-        return MaterialPageRoute(
-          builder: (context) {
-            return ChargeScreen();
-          },
-        );
+
 
       case TeacherDetailsScreen.routeName:
         final arg = routeSettings.arguments as Map;
@@ -179,12 +180,56 @@ class AppRouter {
 
       case OtpScreen.routeName:
         final args = routeSettings.arguments as Map;
-        print('hiii ${args['onSkip']}');
         return MaterialPageRoute(
           builder: (context) {
             return OtpScreen(
               onSkipClicked: args['onSkip'] as Function,
             );
+          },
+        );
+
+      case LocationMapScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return LocationMapScreen();
+          },
+        );
+        case ConditionsScreen.routeName:
+          final args = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return ConditionsScreen(
+              userType: args['userType'],
+            );
+
+          },
+        );
+          case StudentConditions.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return StudentConditions();
+          },
+        );
+        case TeacherConditions.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return TeacherConditions();
+          },
+        );
+          case InstituteConditions.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return InstituteConditions();
+          },
+        );
+         case BalanceScreen.routeName:
+          final args = routeSettings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (context) {
+            return BalanceScreen(
+           balanceScreenType: args['type'],
+            );
+
           },
         );
       default:
