@@ -178,53 +178,55 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
           },
           child: Scaffold(
             appBar: _buildAppBar(context),
-            body: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Stack(children: [
-                    GoogleMap(
-                      zoomControlsEnabled: false,
-                      onMapCreated: ((controller) {
-                        _googleMapController = controller;
-                      }),
-                      initialCameraPosition: _initialCameraPosition,
-                      markers: _markers,
-                      circles: _circles,
-                      onTap: (position) async {
-                        if (_markers.contains(_markers.where((element) =>
-                            element.markerId == NEW_SELECTED_LOCATION))) {
-                          _markers.remove(_markers.where((element) =>
-                              element.markerId == NEW_SELECTED_LOCATION));
-                        }
-                        final Uint8List _selectedLocationMarkerIcon =
-                            await _createCustomMarkerBitmap("الموقع");
+            body: SafeArea(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Stack(children: [
+                      GoogleMap(
+                        zoomControlsEnabled: false,
+                        onMapCreated: ((controller) {
+                          _googleMapController = controller;
+                        }),
+                        initialCameraPosition: _initialCameraPosition,
+                        markers: _markers,
+                        circles: _circles,
+                        onTap: (position) async {
+                          if (_markers.contains(_markers.where((element) =>
+                              element.markerId == NEW_SELECTED_LOCATION))) {
+                            _markers.remove(_markers.where((element) =>
+                                element.markerId == NEW_SELECTED_LOCATION));
+                          }
+                          final Uint8List _selectedLocationMarkerIcon =
+                              await _createCustomMarkerBitmap("الموقع");
 
-                        Marker _selectedLocationMarker = Marker(
-                            markerId: MarkerId(NEW_SELECTED_LOCATION),
-                            draggable: true,
-                            icon: BitmapDescriptor.fromBytes(
-                                _selectedLocationMarkerIcon),
-                            position: position);
+                          Marker _selectedLocationMarker = Marker(
+                              markerId: MarkerId(NEW_SELECTED_LOCATION),
+                              draggable: true,
+                              icon: BitmapDescriptor.fromBytes(
+                                  _selectedLocationMarkerIcon),
+                              position: position);
 
-                        setState(() {
-                          _markers.add(_selectedLocationMarker);
-                          selectedLocation = CoordsEntity(
-                            lat: position.latitude,
-                            lng: position.longitude,
-                          );
+                          setState(() {
+                            _markers.add(_selectedLocationMarker);
+                            selectedLocation = CoordsEntity(
+                              lat: position.latitude,
+                              lng: position.longitude,
+                            );
 
-                          _googleMapController!.showMarkerInfoWindow(
-                              MarkerId(NEW_SELECTED_LOCATION));
-                        });
-                      },
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: _buildTopCard(),
-                    ),
-                    if (selectedLocation != null) _buildSubmitBtn(context),
-                  ]),
+                            _googleMapController!.showMarkerInfoWindow(
+                                MarkerId(NEW_SELECTED_LOCATION));
+                          });
+                        },
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: _buildTopCard(),
+                      ),
+                      if (selectedLocation != null) _buildSubmitBtn(context),
+                    ]),
+            ),
           ),
         );
       }),
