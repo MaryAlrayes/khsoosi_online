@@ -31,8 +31,8 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
   static final PREVIOUS_LOCATION = 'previous_location';
   static final NEW_SELECTED_LOCATION = 'new_selected_location';
 
-   LatLng? _userPreviousLocationCoords=null;
-   LatLng? _userCurrentLocationCoords=null;
+  LatLng? _userPreviousLocationCoords = null;
+  LatLng? _userCurrentLocationCoords = null;
 
   late CameraPosition _initialCameraPosition;
   GoogleMapController? _googleMapController;
@@ -44,10 +44,10 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
 
   CoordsEntity? selectedLocation;
 
-  Future<Uint8List> _createCustomMarkerBitmap(String text) async {
+  Future<Uint8List> _createCustomMarkerBitmap(String text, [Color? c]) async {
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint = Paint()..color = ColorManager.black;
+    final Paint paint = Paint()..color = c ?? ColorManager.black;
     final double fontSize = 50.0;
     final double padding = 10.0;
 
@@ -112,17 +112,17 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
         );
         //marker for the user current location
         final Uint8List _currentLocationMarkerIcon =
-            await _createCustomMarkerBitmap("أنت هنا حاليا");
+            await _createCustomMarkerBitmap("أنت متواجد هنا حاليا");
         _currentLocationMarker = Marker(
             markerId: MarkerId(CURRENT_LOCATION),
             icon: BitmapDescriptor.fromBytes(_currentLocationMarkerIcon),
             draggable: false,
             position: _userCurrentLocationCoords!);
       }
-        //marker for the user previous selected location
+      //marker for the user previous selected location
       if (_userPreviousLocationCoords != null) {
         final Uint8List _previousLocationMarkerIcon =
-            await _createCustomMarkerBitmap("موقعك المحدد مسبقا");
+            await _createCustomMarkerBitmap("موقعك المحدد مسبقا", Colors.blue);
         _previousLocationMarker = Marker(
             markerId: MarkerId(PREVIOUS_LOCATION),
             icon: BitmapDescriptor.fromBytes(_previousLocationMarkerIcon),
@@ -137,7 +137,7 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
               circleId: CircleId('maxRadiusCircle'),
               center: LatLng(_userCurrentLocationCoords!.latitude,
                   _userCurrentLocationCoords!.longitude),
-              radius: maxRadiusKM * 1000, // Radius in meters (10 kilometers)
+              radius: maxRadiusKM * 1000, // Radius in meters
               fillColor: Colors.orange.withOpacity(0.3),
               strokeColor: Colors.orange,
               strokeWidth: 1,
@@ -192,11 +192,14 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
                         onTap: (position) async {
                           if (_markers.contains(_markers.where((element) =>
                               element.markerId == NEW_SELECTED_LOCATION))) {
+                            //remove the pre selected location when the use click at a new place
                             _markers.remove(_markers.where((element) =>
                                 element.markerId == NEW_SELECTED_LOCATION));
                           }
+
                           final Uint8List _selectedLocationMarkerIcon =
-                              await _createCustomMarkerBitmap("الموقع");
+                              await _createCustomMarkerBitmap(
+                                  "الموقع الجديد الذي تريده", Colors.green);
 
                           Marker _selectedLocationMarker = Marker(
                               markerId: MarkerId(NEW_SELECTED_LOCATION),
@@ -204,16 +207,17 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
                               icon: BitmapDescriptor.fromBytes(
                                   _selectedLocationMarkerIcon),
                               position: position);
-
+                          _googleMapController!
+                              .animateCamera(CameraUpdate.newLatLng(LatLng(
+                            position.latitude,
+                            position.longitude,
+                          )));
                           setState(() {
                             _markers.add(_selectedLocationMarker);
                             selectedLocation = CoordsEntity(
                               lat: position.latitude,
                               lng: position.longitude,
                             );
-
-                            _googleMapController!.showMarkerInfoWindow(
-                                MarkerId(NEW_SELECTED_LOCATION));
                           });
                         },
                       ),
@@ -223,7 +227,7 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
                         right: 0,
                         child: _buildTopCard(),
                       ),
-                      if (selectedLocation != null) _buildSubmitBtn(context),
+                      _buildSubmitBtn(context),
                     ]),
             ),
           ),
@@ -243,22 +247,73 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
           backgroundColor: ColorManager.black,
           label: 'تثبيت الموقع',
           onPressed: () {
-            double distance = LocationService.calculateDistanceInKilo(
-              lat1: _userCurrentLocationCoords!.latitude,
-              lat2: selectedLocation!.lat,
-              lng1: _userCurrentLocationCoords!.longitude,
-              lng2: selectedLocation!.lng,
-            );
-            if (distance > maxRadiusKM) {
-              showSnackbar(context,
-                  'عليك تحديد موقعك في نطاق $maxRadiusKM كيلومتر كحد أقصى من موقعك الحالي');
+            if (selectedLocation == null) {
+              _showConfirmationDialog(context);
             } else {
-              BlocProvider.of<AddLocationCubit>(context).setLocation(
-                  selectedLocation!, context.read<AuthRepo>().getUserId()!);
+              double distance = LocationService.calculateDistanceInKilo(
+                lat1: _userCurrentLocationCoords!.latitude,
+                lat2: selectedLocation!.lat,
+                lng1: _userCurrentLocationCoords!.longitude,
+                lng2: selectedLocation!.lng,
+              );
+              if (distance > maxRadiusKM) {
+                showSnackbar(context,
+                    'عليك تحديد موقعك في نطاق $maxRadiusKM كيلومتر كحد أقصى من موقعك الحالي');
+              } else {
+                BlocProvider.of<AddLocationCubit>(context).setLocation(
+                    selectedLocation!, context.read<AuthRepo>().getUserId()!);
+              }
             }
           },
         ),
       ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (c) {
+        return BlocProvider.value(
+          value: context.read<AddLocationCubit>(),
+          child: AlertDialog(
+            title: Text(
+              'هل أنت متأكد من أنك تريد تثبيت موقعك على احداثيات موقعك الحالي؟',
+              style: TextStyle(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+            content: Text(
+              'اذا ضغطت على نعم سوف يتم تثبيت احداثيات موقعك على احداثيات موقعك الذي تتواجد فيه الان.',
+              style: TextStyle(fontSize: 12),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  BlocProvider.of<AddLocationCubit>(context).setLocation(
+                      CoordsEntity(
+                        lat: _userCurrentLocationCoords!.latitude,
+                        lng: _userCurrentLocationCoords!.longitude,
+                      ),
+                      context.read<AuthRepo>().getUserId()!);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'نعم',
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'لا',
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
