@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/style/common_styles.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/student/cubit/student_info_cubit.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/student_info.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/student/screens/student_info.dart';
 
 import '../../../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../../../../core/utils/helpers/show_custom_bottom_sheet.dart';

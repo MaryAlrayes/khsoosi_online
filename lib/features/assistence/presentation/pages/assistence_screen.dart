@@ -77,16 +77,16 @@ class AssistenceScreen extends StatelessWidget {
                               screen: FAQScreen(),
                             );
                           }),
-                      SizedBox(height: 8),
-                      _buildCard(
-                          icon: Icon(Icons.call, color: ColorManager.black),
-                          title: 'تواصل معنا',
-                          onPressed: () {
-                            barPushScreen(
-                              context: context,
-                              screen: ContactUsScreen(),
-                            );
-                          }),
+                      // SizedBox(height: 8),
+                      // _buildCard(
+                      //     icon: Icon(Icons.call, color: ColorManager.black),
+                      //     title: 'تواصل معنا',
+                      //     onPressed: () {
+                      //       barPushScreen(
+                      //         context: context,
+                      //         screen: ContactUsScreen(),
+                      //       );
+                      //     }),
                       SizedBox(height: 8),
                       _buildCard(
                           icon: Icon(Icons.message, color: ColorManager.black),

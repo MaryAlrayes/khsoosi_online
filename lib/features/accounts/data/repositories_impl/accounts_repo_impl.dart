@@ -14,7 +14,6 @@ import 'package:khosousi_online/features/accounts/data/models/teacher_contact_in
 import 'package:khosousi_online/features/accounts/data/models/teacher_extra_info_model.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/institute_contact_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/institute_extra_info_entity.dart';
-import 'package:khosousi_online/features/accounts/domain/entities/loggedin_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/login_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/signup_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/student_contact_info_entity.dart';
@@ -22,8 +21,10 @@ import 'package:khosousi_online/features/accounts/domain/entities/teacher_contac
 import 'package:khosousi_online/features/accounts/domain/entities/teacher_extra_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/user_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/accounts_repo.dart';
+import 'package:khosousi_online/shared_features/domain/entities/university_entity.dart';
 
 import '../../../../core/utils/services/ip_info_api.dart';
+import '../../../../shared_features/data/models/university_model.dart';
 import '../models/login_data_model.dart';
 
 class AccountsRepoImpl implements AccountsRepo {
@@ -284,6 +285,41 @@ class AccountsRepoImpl implements AccountsRepo {
           instituteExtraInfoModel: instituteExtraInfoModel,
           userId: userId,
         );
+      },
+    );
+    return data.fold((f) => Left(f), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<Failure, Unit>> uploadCertificates(
+      {required List<File> image, required String userId}) async {
+    final data = await BaseRepo.repoRequest(
+      request: () async {
+        return await accountsDataProvider.uploadCertificates(
+            image: image, userId: userId);
+      },
+    );
+    return data.fold((f) => Left(f), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<Failure, Unit>> uploadUniversities(
+      {required List<UniversityEntity> universities,
+      required String courses,
+      required String userId}) async {
+    List<UniversityModel> universitiesModel = [];
+    for (int i = 0; i < universities.length; i++) {
+      UniversityModel universityModel = UniversityModel(
+        id: universities[i].id,
+        name: universities[i].name,
+      );
+      universitiesModel.add(universityModel);
+    }
+
+    final data = await BaseRepo.repoRequest(
+      request: () async {
+        return await accountsDataProvider.uploadUniversities(
+            universities: universitiesModel, courses: courses, userId: userId);
       },
     );
     return data.fold((f) => Left(f), (data) => Right(data));

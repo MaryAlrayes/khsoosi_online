@@ -13,6 +13,7 @@ class UserInfoEntity extends Equatable {
   final String type;
   final String mobile;
   final String whatsapp;
+  final String countryOfResidenseId;
   final double lat;
   final double lng;
   //has verified his/her account (otp)
@@ -32,6 +33,7 @@ class UserInfoEntity extends Equatable {
     required this.type,
     required this.mobile,
     required this.whatsapp,
+    required this.countryOfResidenseId,
     required this.lat,
     required this.lng,
     required this.isActive,
@@ -49,6 +51,7 @@ class UserInfoEntity extends Equatable {
     type,
     mobile,
     whatsapp,
+    countryOfResidenseId,
     lat,
     lng,
     isActive,

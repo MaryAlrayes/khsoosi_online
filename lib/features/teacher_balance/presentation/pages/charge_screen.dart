@@ -11,6 +11,7 @@ import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
 import 'package:khosousi_online/features/teacher_balance/presentation/widgets/calls_chart.dart';
 
+import '../../../assistence/presentation/pages/personal_assistence.dart';
 import '../../domain/entities/teacher_balance_entity.dart';
 
 class ChargeScreen extends StatelessWidget {
@@ -121,7 +122,7 @@ class ChargeScreen extends StatelessWidget {
               label: 'تواصل مع خدمة العملاء',
               icon: Icon(Icons.headset_mic),
               onPressed: () {
-                Navigator.pushNamed(context, ContactUsScreen.routeName);
+                Navigator.pushNamed(context, PersonalAssistenceScreen.routeName);
               },
             )
           ],

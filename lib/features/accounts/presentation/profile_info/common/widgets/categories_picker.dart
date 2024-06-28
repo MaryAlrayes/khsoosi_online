@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/autocomplete_text_field.dart';
 import 'package:khosousi_online/core/ui/widgets/error_widget.dart';
@@ -109,7 +107,7 @@ class _CategoriesPickerState extends State<CategoriesPicker> {
   ) {
     return Autocomplete<CategoryEntity>(
       initialValue: TextEditingValue(text: ''),
-      optionsViewOpenDirection: OptionsViewOpenDirection.up,
+      optionsViewOpenDirection: OptionsViewOpenDirection.down,
       displayStringForOption: (data) =>
           data.name_ar.isNotEmpty ? data.name_ar : data.name_en,
       fieldViewBuilder:
@@ -119,6 +117,7 @@ class _CategoriesPickerState extends State<CategoriesPicker> {
         return _buildCategoriesSearchTextField(
             textEditingController, focusNode);
       },
+
       optionsViewBuilder: (context, onSelected, options) {
         List<CategoryEntity> _items = options.toList();
         return Align(

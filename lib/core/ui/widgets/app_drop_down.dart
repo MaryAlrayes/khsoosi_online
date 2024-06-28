@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class AppDropDown<T> extends StatefulWidget {
   final String hintText;
   final List<DropdownMenuItem<T>> items;
   final T? initSelectedValue;
   final Function(dynamic) onChanged;
+  final List<Widget> Function(BuildContext)? selectedItemBuilder;
   final Icon? icon;
   const AppDropDown({
     Key? key,
@@ -17,7 +17,8 @@ class AppDropDown<T> extends StatefulWidget {
     required this.items,
     required this.initSelectedValue,
     required this.onChanged,
-     this.icon,
+    this.selectedItemBuilder,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -35,7 +36,7 @@ class _AppDropDownState<T> extends State<AppDropDown<T>> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:  EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -48,24 +49,29 @@ class _AppDropDownState<T> extends State<AppDropDown<T>> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-           if(widget.icon!=null)...[  Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: widget.icon,
-             ),
-             SizedBox(width: 8,),
-           ],
+            if (widget.icon != null) ...[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: widget.icon,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+            ],
             Expanded(
               child: ButtonTheme(
                 child: DropdownButton<T>(
-
-
                   value: selectedValue,
-
                   hint: Text(
                     widget.hintText,
-                    style:  TextStyle(fontSize: 14, color: Color(0xff888888)),
+                    style: TextStyle(fontSize: 14, color: Color(0xff888888)),
                   ),
                   items: widget.items,
+                  selectedItemBuilder: widget.selectedItemBuilder != null
+                      ? (context) {
+                         return widget.selectedItemBuilder!(context);
+                        }
+                      : null,
                   isExpanded: true,
                   onChanged: (value) {
                     widget.onChanged(value);

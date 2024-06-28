@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_text_field.dart';
+import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
+import 'package:khosousi_online/core/utils/enums/enums.dart';
+import 'package:khosousi_online/core/utils/helpers/date_formatter.dart';
+import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
+import 'package:khosousi_online/features/assistence/presentation/bloc/get_support_messages_bloc.dart';
+
+import '../../../../core/ui/widgets/error_widget.dart';
+import '../../../../core/ui/widgets/no_connection_widget.dart';
+import '../widgets/send_message_support.dart';
+import '../widgets/support_message.dart';
 
 class PersonalAssistenceScreen extends StatelessWidget {
   static const routeName = 'personal_assistence_screen';
@@ -11,148 +22,145 @@ class PersonalAssistenceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('مساعدك الشخصي من خصوصي اونلاين'),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Expanded(
-                  child: Container(
-                padding: EdgeInsets.all(8),
-                child: ListView.separated(
+    return BlocProvider(
+      create: (context) => sl.locator<GetSupportMessagesBloc>()
+        ..add(FetchSupportMessagesEvent(
+            refresh: true, userId: context.read<AuthRepo>().getUserId()!)),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Text('مساعدك الشخصي من خصوصي اونلاين'),
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  BlocBuilder<GetSupportMessagesBloc, GetSupportMessagesState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case GetSupportMessagesStatus.loading:
+                      return _buildLoading();
+                    case GetSupportMessagesStatus.loadingMore:
+                    case GetSupportMessagesStatus.success:
+                      return _buildContent(state, context);
+                    case GetSupportMessagesStatus.offline:
+                      return _buildOffline(context);
+                    case GetSupportMessagesStatus.error:
+                      return _buildError(state, context);
+                  }
+                },
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildLoadMoreBtn(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: TextButton(
+            style: TextButton.styleFrom(foregroundColor: ColorManager.blue2),
+            onPressed: () {
+              context.read<GetSupportMessagesBloc>().add(
+                  FetchSupportMessagesEvent(
+                      userId: context.read<AuthRepo>().getUserId()!));
+            },
+            child: Text(
+              'اعرض رسائل أقدم',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildContent(GetSupportMessagesState state, BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+            child: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                !state.hasReachedMax
+                    ? state.status == GetSupportMessagesStatus.success
+                        ? _buildLoadMoreBtn(context)
+                        : Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: const CircularProgressIndicator(),
+                            ),
+                          )
+                    : Container(),
+                SizedBox(
+                  height: 8,
+                ),
+                ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: false,
                   reverse: true,
                   itemBuilder: (context, index) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: index % 2 == 0
-                          ? MainAxisAlignment.start
-                          : MainAxisAlignment.end,
-                      children: [
-                        if (index % 2 == 0) ...[
-                          CustomImage(
-                              isCircle: true,
-                              radius: 18,
-                              image:
-                                  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww'),
-                          SizedBox(width: 8),
-                        ],
-                        Container(
-                          constraints: BoxConstraints(
-                              maxWidth:
-                                  MediaQuery.of(context).size.width * 0.60),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: index % 2 == 0
-                                  ? Color(0xff17A2B8)
-                                  : Color(0xffF5F7F9)),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(index % 2 != 0 ? 'الدعم الفني' : 'أنا',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: index % 2 == 0
-                                              ? Colors.white
-                                              : Colors.black87)),
-                                  SizedBox(height: 4),
-                                  Text(
-                                      DateFormat('dd-MM-yyyy ')
-                                          .format(DateTime.now())
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Roboto',
-                                          color: index % 2 == 0
-                                              ? Colors.white
-                                              : Colors.black87))
-                                ],
-                              ),
-                              SizedBox(height: 12),
-                              Text(
-                                'هذا النص للتجربة هذا النص للتجربة هذا النص للتجربة هذا النص للتجربة هذا النص للتجربة هذا النص للتجربة هذا النص للتجربة',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: index % 2 == 0
-                                        ? Colors.white
-                                        : Colors.black87),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (index % 2 != 0) ...[
-                          SizedBox(width: 8),
-                          CustomImage(
-                            radius: 18,
-                            isCircle: true,
-                            image:
-                                'https://teacherprivate.com/assets/template_files/images/logo-khsoosi-60pxx.webp',
-                          ),
-                        ],
-                      ],
+                    return SupportMessage(
+                      supportMessageEntity: state.data[index],
+                      sendingNow: state.data[index].sendingNow,
+                      submitStatus: state.submitStatus,
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(
                     height: 16,
                   ),
-                  itemCount: 14,
+                  itemCount: state.data.length,
                 ),
-              )),
-              Divider(
-                height: 1,
-                color: ColorManager.gray4.withOpacity(0.2),
-              ),
-              _buildSendMessageField()
-            ],
+              ],
+            ),
           ),
+        )),
+        Divider(
+          height: 1,
+          color: ColorManager.gray4.withOpacity(0.2),
         ),
-      ),
+        SendMessageSupport()
+      ],
     );
   }
 
-  Container _buildSendMessageField() {
-    return Container(
-      height: 70,
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical:8),
-      child: Row(
-        children: [
-          Expanded(
-            child: CustomTextField(
-                textInputAction: TextInputAction.next,
-                textInputType: TextInputType.text,
-                validator: (value) {},
-                hintText: 'اكتب رسالتك هنا...',
-                isObscure: false),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ColorManager.black),
-            padding: EdgeInsets.all(4),
-            alignment: Alignment.center,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.send,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
+  Widget _buildLoading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  NetworkErrorWidget _buildError(
+      GetSupportMessagesState state, BuildContext context) {
+    return NetworkErrorWidget(
+      message: state.errorMessage,
+      onPressed: () {
+        BlocProvider.of<GetSupportMessagesBloc>(context).add(
+            FetchSupportMessagesEvent(
+                refresh: true, userId: context.read<AuthRepo>().getUserId()!));
+      },
+    );
+  }
+
+  NoConnectionWidget _buildOffline(BuildContext context) {
+    return NoConnectionWidget(
+      onPressed: () {
+        BlocProvider.of<GetSupportMessagesBloc>(context).add(
+            FetchSupportMessagesEvent(
+                refresh: true, userId: context.read<AuthRepo>().getUserId()!));
+      },
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:khosousi_online/core/errors/failures.dart';
 
+import '../../../../core/utils/enums/enums.dart';
 import '../../domain/entities/article_entity.dart';
 import '../../domain/use_cases/fetch_faq_use_case.dart';
 
@@ -12,108 +13,48 @@ part 'get_faq_state.dart';
 class GetFaqBloc extends Bloc<GetFaqEvent, GetFaqState> {
   final FetchFaqUseCase fetchFaqUseCase;
   GetFaqBloc({required this.fetchFaqUseCase}) : super(GetFaqState()) {
-    on<LoadFAQEvent>((event, emit)async {
-       if (event.refresh) {
-          await _refreshData(emit,);
-        } else if (state.hasReachedMax)
-          return;
-        else if (state.status == GetFaqStatus.loading) {
-          await _loadingState(emit, );
-        } else {
-          await _loadingMore(emit, );
-        }
-      },
-      transformer: droppable(),
-    );
-  }
-
-  Future<void> _loadingMore(
-      Emitter<GetFaqState> emit, ) async {
-    emit(state.copyWith(status: GetFaqStatus.loadingMore));
-    final data =
-        await fetchFaqUseCase(start: state.start, );
-    data.fold((failure) {
-      _mapFailureToState(failure, emit);
-    }, (data) {
-      data.isEmpty
-          ? emit(state.copyWith(hasReachedMax: true))
-          : emit(state.copyWith(
-              status: GetFaqStatus.success,
-              data: List.of(state.data)..addAll(data),
-              start: state.start + 10,
-              hasReachedMax: false));
+    on<LoadFAQEvent>((event, emit) async {
+      emit(state.copyWith(status: GetFaqStatus.loading));
+      final data = await fetchFaqUseCase();
+      data.fold((failure) {
+        _mapFailureToState(failure, emit);
+      }, (data) {
+        emit(state.copyWith(
+          status: GetFaqStatus.success,
+          filteredData: data,
+          data: data,
+        ));
+      });
     });
-  }
 
-  Future<void> _loadingState(
-      Emitter<GetFaqState> emit, ) async {
+    on<FilterQuestionBasedOnKeywordEvent>((event, emit) async {
 
-    final data =
-        await fetchFaqUseCase(start: state.start, );
-    await data.fold(
-      (failure) {
-        _mapFailureToState(failure, emit);
-        return;
-      },
-      (data) {
-        data.isEmpty
-            ? emit(
-                state.copyWith(
-                  status: GetFaqStatus.success,
-                  hasReachedMax: true,
-                ),
-              )
-            : emit(
-                state.copyWith(
-                  status: GetFaqStatus.success,
-                  data: data,
-                  start: state.start + 10,
-                  hasReachedMax: false,
-                ),
-              );
-      },
-    );
-  }
+      List<ArticleEntity> filteredData = state.data
+          .where(
+            (element) =>
+                element.type == state.selectedType &&
+                element.title.contains(event.keyword),
+          )
+          .toList();
+      emit(state.copyWith(
+        status: GetFaqStatus.success,
+        keyword: event.keyword,
+        filteredData: filteredData,
+      ));
+    });
 
-  Future<void> _refreshData(
-      Emitter<GetFaqState> emit,) async {
-    emit(
-      state.copyWith(
-        status: GetFaqStatus.loading,
-        hasReachedMax: false,
-        data: [],
-        errorMessage: '',
-        start: 0,
-      ),
-    );
-    final data = await fetchFaqUseCase(
-      start: 0,
-
-    );
-
-    await data.fold(
-      (failure) {
-        _mapFailureToState(failure, emit);
-        return;
-      },
-      (data) {
-        data.isEmpty
-            ? emit(
-                state.copyWith(
-                  status: GetFaqStatus.success,
-                  hasReachedMax: true,
-                ),
-              )
-            : emit(
-                state.copyWith(
-                  status: GetFaqStatus.success,
-                  data: data,
-                  start: state.start +10,
-                  hasReachedMax: false,
-                ),
-              );
-      },
-    );
+    on<FilterQuestionBasedOnTypeEvent>((event, emit) async {
+     List<ArticleEntity> filteredData = state.data
+          .where(
+            (element) => element.type == event.faqUserType,
+          )
+          .toList();
+      emit(state.copyWith(
+        status: GetFaqStatus.success,
+        selectedType: event.faqUserType,
+        filteredData: filteredData,
+      ));
+    });
   }
 
   _mapFailureToState(Failure f, Emitter emit) {

@@ -13,7 +13,7 @@ import 'package:khosousi_online/core/ui/widgets/error_widget.dart';
 import 'package:khosousi_online/core/ui/widgets/no_connection_widget.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
-import 'package:khosousi_online/features/edit_password/presentation/pages/edit_password_screen.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/pages/edit_password_screen.dart';
 import 'package:khosousi_online/features/settings/presentation/screens/settings_screen.dart';
 import 'package:khosousi_online/features/teacher_account/presentation/account/widgets/custom_account_card.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;

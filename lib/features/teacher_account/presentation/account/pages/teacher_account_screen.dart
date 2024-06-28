@@ -11,7 +11,7 @@ import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/conditions_screen.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/teacher_conditions.dart';
-import 'package:khosousi_online/features/edit_password/presentation/pages/edit_password_screen.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/pages/edit_password_screen.dart';
 import 'package:khosousi_online/features/location/presentation/pages/location_map_screen.dart';
 import 'package:khosousi_online/features/refresh/presentation/cubit/refresh_account_cubit.dart';
 import 'package:khosousi_online/features/refresh/presentation/dialog/show_refresh_account_dialog.dart';

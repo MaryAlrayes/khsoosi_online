@@ -1,6 +1,5 @@
 import 'package:khosousi_online/features/accounts/data/models/loggedin_data_model.dart';
 import 'package:khosousi_online/features/accounts/data/models/user_info_model.dart';
-import 'package:khosousi_online/features/accounts/domain/entities/loggedin_data_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/user_info_entity.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 

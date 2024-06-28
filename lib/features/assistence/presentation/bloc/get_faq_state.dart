@@ -1,42 +1,51 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'get_faq_bloc.dart';
 
-enum GetFaqStatus { loading,loadingMore, success, offline, error }
+enum GetFaqStatus { loading, success, offline, error }
 
- class GetFaqState extends Equatable {
+class GetFaqState extends Equatable {
   final GetFaqStatus status;
   final List<ArticleEntity> data;
-  final int start;
-  final bool hasReachedMax;
+  final List<ArticleEntity> filteredData;
+  final FAQUserType selectedType;
+  final String keyword;
   final String errorMessage;
 
-  const GetFaqState(
-      {this.status = GetFaqStatus.loading,
-      this.hasReachedMax = false,
-      this.data = const [],
-      this.start = 0,
-      this.errorMessage = ""});
+  const GetFaqState({
+    this.status = GetFaqStatus.loading,
+    this.data = const [],
+    this.filteredData = const [],
+    this.selectedType=FAQUserType.both,
+    this.keyword='',
+    this.errorMessage = ""
+  });
 
   @override
   List<Object> get props => [
         status,
-        hasReachedMax,
-        start,
+        filteredData,
         data,
         errorMessage,
+        selectedType,
+        keyword
       ];
+
+
 
   GetFaqState copyWith({
     GetFaqStatus? status,
     List<ArticleEntity>? data,
-    int? start,
-    bool? hasReachedMax,
+    List<ArticleEntity>? filteredData,
+    FAQUserType? selectedType,
+    String? keyword,
     String? errorMessage,
   }) {
     return GetFaqState(
       status: status ?? this.status,
       data: data ?? this.data,
-      start: start ?? this.start,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      filteredData: filteredData ?? this.filteredData,
+      selectedType: selectedType ?? this.selectedType,
+      keyword: keyword ?? this.keyword,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

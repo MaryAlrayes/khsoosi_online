@@ -23,6 +23,7 @@ import 'package:khosousi_online/features/accounts/presentation/login/blocs/authe
 import 'package:khosousi_online/features/accounts/presentation/login/cubit/login_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/activate_account_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/cubit/resend_activation_code_cubit.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/upload_certificates.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_extra_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/intitute_info_cubit.dart';
@@ -35,6 +36,8 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/comm
 import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/cubit/signup_stepper_cubit.dart';
 import 'package:khosousi_online/features/assistence/data/data_sources/assistence_data_source.dart';
+import 'package:khosousi_online/features/assistence/domain/use_cases/fetch_support_messages_use_case.dart';
+import 'package:khosousi_online/features/assistence/presentation/bloc/get_support_messages_bloc.dart';
 import 'package:khosousi_online/features/conditions_terms/data/data_sources/conditions_data_source.dart';
 import 'package:khosousi_online/features/conditions_terms/data/repositories_impl/conditions_repo_impl.dart';
 import 'package:khosousi_online/features/conditions_terms/domain/repositories/conditions_repo.dart';
@@ -52,10 +55,10 @@ import 'package:khosousi_online/features/courses_services_portofolio_details/dom
 import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/courses/bloc/get_course_details_bloc.dart';
 import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/portofolio/bloc/get_portofolio_details_bloc.dart';
 import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/services/bloc/get_services_details_bloc.dart';
-import 'package:khosousi_online/features/edit_password/data/data_sources/edit_password_data_source.dart';
-import 'package:khosousi_online/features/edit_password/data/repositories_impl/change_password_repo_impl.dart';
-import 'package:khosousi_online/features/edit_password/domain/use_cases/change_password_use_case.dart';
-import 'package:khosousi_online/features/edit_password/presentation/cubit/change_password_cubit.dart';
+import 'package:khosousi_online/features/edit_forget_password/data/data_sources/edit_password_data_source.dart';
+import 'package:khosousi_online/features/edit_forget_password/data/repositories_impl/change_password_repo_impl.dart';
+import 'package:khosousi_online/features/edit_forget_password/domain/use_cases/change_password_use_case.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/cubit/change_password_cubit.dart';
 import 'package:khosousi_online/features/institute_details/data/data_sources/institute_details_data_provider.dart';
 import 'package:khosousi_online/features/institute_details/data/repositories_impl/institute_details_repo_impl.dart';
 import 'package:khosousi_online/features/institute_details/domain/repositories/institute_details_repo.dart';
@@ -129,17 +132,25 @@ import 'package:khosousi_online/shared_features/data/repositories/categories_rep
 import 'package:khosousi_online/features/location/data/repositories_impl/location_repo_impl.dart';
 import 'package:khosousi_online/shared_features/domain/repositories/categories_repo.dart';
 import 'package:khosousi_online/features/location/domain/repositories/location_repo.dart';
+import 'package:khosousi_online/shared_features/domain/repositories/university_repo.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_categories_use_case.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_cities_use_case.dart';
 import 'package:khosousi_online/shared_features/domain/use_cases/get_countries_use_case.dart';
+import 'package:khosousi_online/shared_features/domain/use_cases/get_universities_use_case.dart';
+import 'package:khosousi_online/shared_features/presentation/bloc/get_universities_bloc.dart';
+import '../../features/accounts/domain/use_cases/upload_certificates_use_case.dart';
+import '../../features/accounts/domain/use_cases/upload_universities_use_case.dart';
+import '../../features/accounts/presentation/profile_info/teacher/cubit/upload_certificates_cubit.dart';
+import '../../features/accounts/presentation/profile_info/teacher/cubit/upload_universities_cubit.dart';
 import '../../features/assistence/data/repositories_impl/assistence_repo_impl.dart';
 import '../../features/assistence/domain/repositories/assistence_repo.dart';
 import '../../features/assistence/domain/use_cases/fetch_faq_use_case.dart';
+import '../../features/assistence/domain/use_cases/submit_message_use_case.dart';
 import '../../features/assistence/presentation/bloc/get_faq_bloc.dart';
 import '../../features/courses_services_portofolio_details/data/data providers/course_details_data_provider.dart';
 import '../../features/courses_services_portofolio_details/data/repositories/course_details_repo_impl.dart';
 import '../../features/courses_services_portofolio_details/domain/repositories/portofolio_details_repo.dart';
-import '../../features/edit_password/domain/repositories/change_password_repo.dart';
+import '../../features/edit_forget_password/domain/repositories/change_password_repo.dart';
 import '../../features/institute_details/presentation/bloc/get_institute_details_bloc.dart';
 import '../../features/notification/data/repositories_impl/notification_repo_impl.dart';
 import '../../features/notification/domain/repositories/notification_repo.dart';
@@ -153,6 +164,8 @@ import '../../features/teacher_portofolio/presentation/cubit/get_teacher_portofo
 import '../../features/teacher_rates/data/repositories_impl/teacher_reviews_repo_impl.dart';
 import '../../features/teacher_rates/domain/use_cases/fetch_reviews_use_case.dart';
 import '../../features/teacher_rates/presentation/cubit/get_teacher_reviews_cubit.dart';
+import '../../shared_features/data/data provider/universities_provider.dart';
+import '../../shared_features/data/repositories/universities_repo_impl.dart';
 import '../../shared_features/presentation/bloc/get_categories_bloc.dart';
 
 final locator = GetIt.I;
@@ -215,28 +228,43 @@ Future<void> setupLocator() async {
       () => AnswerConditionsCubit(answerConditionsUseCase: locator()));
   locator.registerFactory(
       () => GetInstitutesBloc(searchInstitutesUseCase: locator()));
-locator.registerFactory(
-      () => GetInstituteDetailsBloc(getInstituteDetailsUseCase : locator()));
-locator.registerFactory(
+  locator.registerFactory(
+      () => GetInstituteDetailsBloc(getInstituteDetailsUseCase: locator()));
+  locator.registerFactory(
       () => GetTeacherCoursesCubit(fetchTeacherCoursesUseCase: locator()));
-locator.registerFactory(
+  locator.registerFactory(
       () => GetTeacherServicesCubit(fetchTeacherServicesUseCase: locator()));
-locator.registerFactory(
-      () => GetTeacherPortofolioCubit(fetchTeacherPortofolioUseCase: locator()));
-locator.registerFactory(
-      () => GetBalanceCubit(fetchBalanceUseCase: locator()));
-locator.registerFactory(
-      () => GetTeacherStatCubit(fetchTeacherStatUseCase : locator()));
-locator.registerFactory(
-      () => GetPortofolioDetailsBloc(portofolioDetailsUseCase : locator()));
-locator.registerFactory(
-      () => GetStudentStatCubit(fetchStudentStatUseCase : locator()));
-locator.registerFactory(
-      () => GetNotificationCubit(getNotificationUseCase : locator()));
-locator.registerFactory(
-      () => GetTeacherReviewsCubit(fetchReviewsUseCase : locator()));
-locator.registerFactory(
-      () => GetFaqBloc(fetchFaqUseCase : locator()));
+  locator.registerFactory(() =>
+      GetTeacherPortofolioCubit(fetchTeacherPortofolioUseCase: locator()));
+  locator
+      .registerFactory(() => GetBalanceCubit(fetchBalanceUseCase: locator()));
+  locator.registerFactory(
+      () => GetTeacherStatCubit(fetchTeacherStatUseCase: locator()));
+  locator.registerFactory(
+      () => GetPortofolioDetailsBloc(portofolioDetailsUseCase: locator()));
+  locator.registerFactory(
+      () => GetStudentStatCubit(fetchStudentStatUseCase: locator()));
+  locator.registerFactory(
+      () => GetNotificationCubit(getNotificationUseCase: locator()));
+  locator.registerFactory(
+      () => GetTeacherReviewsCubit(fetchReviewsUseCase: locator()));
+  locator.registerFactory(() => GetFaqBloc(fetchFaqUseCase: locator()));
+  locator.registerFactory(
+    () => GetSupportMessagesBloc(
+      fetchSupportMessagesUseCase: locator(),
+      submitMessageUseCase: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => UploadCertificatesCubit(uploadCertificatesUseCase: locator()),
+  );
+ locator.registerFactory(
+    () => GetUniversitiesBloc(getUniversitiesUseCase : locator()),
+  );
+ locator.registerFactory(
+    () => UploadUniversitiesCubit(uploadUniversitiesUseCase : locator()),
+  );
+
 
 
   //use cases
@@ -304,43 +332,93 @@ locator.registerFactory(
     () => SubmitLocationUseCase(locationRepo: locator(), authRepo: locator()),
   );
   locator.registerLazySingleton(
-    () => AnswerConditionsUseCase(conditionsRepo: locator(),authRepo: locator()),
-  );
-   locator.registerLazySingleton(
-    () => SearchInstitutesUseCase(searchInstitutesRepo : locator(),),
-  );
-   locator.registerLazySingleton(
-    () => GetInstituteDetailsUseCase(instituteDetailsRepo  : locator(),),
-  );
-   locator.registerLazySingleton(
-    () => FetchTeacherCoursesUseCase(teacherCoursesRepo  : locator(),),
+    () =>
+        AnswerConditionsUseCase(conditionsRepo: locator(), authRepo: locator()),
   );
   locator.registerLazySingleton(
-    () => FetchTeacherServicesUseCase(teacherServicesRepo  : locator(),),
+    () => SearchInstitutesUseCase(
+      searchInstitutesRepo: locator(),
+    ),
   );
   locator.registerLazySingleton(
-    () => FetchTeacherPortofolioUseCase(teacherPortofolioRepo  : locator(),),
+    () => GetInstituteDetailsUseCase(
+      instituteDetailsRepo: locator(),
+    ),
   );
   locator.registerLazySingleton(
-    () => FetchBalanceUseCase(teacherBalanceRepo  : locator(),),
-  );
- locator.registerLazySingleton(
-    () => FetchTeacherStatUseCase(teacherStatRepo  : locator(),),
-  );
-locator.registerLazySingleton(
-    () => PortofolioDetailsUseCase(portofolioDetailsRepo  : locator(),),
-  );
-locator.registerLazySingleton(
-    () => FetchStudentStatUseCase(statRepo  : locator(),),
+    () => FetchTeacherCoursesUseCase(
+      teacherCoursesRepo: locator(),
+    ),
   );
   locator.registerLazySingleton(
-    () => GetNotificationUseCase(notificationRepo  : locator(),),
+    () => FetchTeacherServicesUseCase(
+      teacherServicesRepo: locator(),
+    ),
   );
-locator.registerLazySingleton(
-    () => FetchReviewsUseCase(teacherReviewsRepo  : locator(),),
+  locator.registerLazySingleton(
+    () => FetchTeacherPortofolioUseCase(
+      teacherPortofolioRepo: locator(),
+    ),
   );
-locator.registerLazySingleton(
-    () => FetchFaqUseCase(assistenceRepo  : locator(),),
+  locator.registerLazySingleton(
+    () => FetchBalanceUseCase(
+      teacherBalanceRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => FetchTeacherStatUseCase(
+      teacherStatRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => PortofolioDetailsUseCase(
+      portofolioDetailsRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => FetchStudentStatUseCase(
+      statRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => GetNotificationUseCase(
+      notificationRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => FetchReviewsUseCase(
+      teacherReviewsRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => FetchFaqUseCase(
+      assistenceRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => FetchSupportMessagesUseCase(
+      assistenceRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => SubmitMessageUseCase(
+      assistenceRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => UploadCertificatesUseCase(
+      accountsRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => GetUniversitiesUseCase(
+      universitiesRepo: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => UploadUniversitiesUseCase(
+     accountsRepo : locator(),
+    ),
   );
 
   //repositories
@@ -366,31 +444,32 @@ locator.registerLazySingleton(
   locator.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
   locator.registerLazySingleton<ChangePasswordRepo>(
       () => ChangePasswordRepoImpl(changePasswordProvider: locator()));
- locator.registerLazySingleton<ConditionsRepo>(
-      () => ConditionsRepoImpl(conditionsDataProvider : locator()));
-locator.registerLazySingleton<SearchInstitutesRepo>(
-      () => SearchInstitutesRepoImp(searchInstitutesDataProvider : locator()));
-locator.registerLazySingleton<InstituteDetailsRepo>(
-      () =>  InstituteDetailsRepoImpl(instituteDetailsDataProvider  : locator()));
-locator.registerLazySingleton<TeacherCoursesRepo>(
-      () =>  TeacherCoursesRepoImpl(teacherCoursesDataSource  : locator()));
-locator.registerLazySingleton<TeacherServicesRepo>(
-      () =>  TeacherServicesRepoImpl(teacherServicesDataSource  : locator()));
-locator.registerLazySingleton<TeacherPortofolioRepo>(
-      () =>  TeacherPortofolioRepoImpl(teacherPortofoliosDataSource  : locator()));
-locator.registerLazySingleton<TeacherBalanceRepo>(
-      () =>  TeacherBalanceRepoImp(teacherBalanceDataSource  : locator()));
-locator.registerLazySingleton<StatRepo>(
-      () =>  StatRepoImp(teacherStatDataSource  : locator()));
-locator.registerLazySingleton<PortofolioDetailsRepo>(
-      () =>  PortofolioDetailsRepoImpl(portofolioDetailsDataProvider  : locator()));
-locator.registerLazySingleton<NotificationRepo>(
-      () =>  NotificationRepoImpl(notificationDataProvider  : locator()));
-locator.registerLazySingleton<TeacherReviewsRepo>(
-      () =>  TeacherReviewsRepoImpl(teacherReviewDataSource  : locator()));
-locator.registerLazySingleton<AssistenceRepo>(
-      () =>  AssistenceRepoImpl(assistenceDataSource  : locator()));
-
+  locator.registerLazySingleton<ConditionsRepo>(
+      () => ConditionsRepoImpl(conditionsDataProvider: locator()));
+  locator.registerLazySingleton<SearchInstitutesRepo>(
+      () => SearchInstitutesRepoImp(searchInstitutesDataProvider: locator()));
+  locator.registerLazySingleton<InstituteDetailsRepo>(
+      () => InstituteDetailsRepoImpl(instituteDetailsDataProvider: locator()));
+  locator.registerLazySingleton<TeacherCoursesRepo>(
+      () => TeacherCoursesRepoImpl(teacherCoursesDataSource: locator()));
+  locator.registerLazySingleton<TeacherServicesRepo>(
+      () => TeacherServicesRepoImpl(teacherServicesDataSource: locator()));
+  locator.registerLazySingleton<TeacherPortofolioRepo>(
+      () => TeacherPortofolioRepoImpl(teacherPortofoliosDataSource: locator()));
+  locator.registerLazySingleton<TeacherBalanceRepo>(
+      () => TeacherBalanceRepoImp(teacherBalanceDataSource: locator()));
+  locator.registerLazySingleton<StatRepo>(
+      () => StatRepoImp(teacherStatDataSource: locator()));
+  locator.registerLazySingleton<PortofolioDetailsRepo>(() =>
+      PortofolioDetailsRepoImpl(portofolioDetailsDataProvider: locator()));
+  locator.registerLazySingleton<NotificationRepo>(
+      () => NotificationRepoImpl(notificationDataProvider: locator()));
+  locator.registerLazySingleton<TeacherReviewsRepo>(
+      () => TeacherReviewsRepoImpl(teacherReviewDataSource: locator()));
+  locator.registerLazySingleton<AssistenceRepo>(
+      () => AssistenceRepoImpl(assistenceDataSource: locator()));
+ locator.registerLazySingleton<UniversitiesRepo>(
+      () => UniversitiesRepoImpl(universitiesDataSource : locator()));
 
 
   //data sources
@@ -414,31 +493,32 @@ locator.registerLazySingleton<AssistenceRepo>(
       () => AccountsDataProviderWithDio(client: locator()));
   locator.registerLazySingleton<ChangePasswordProvider>(
       () => ChangePasswordProviderWithDio(client: locator()));
-locator.registerLazySingleton<ConditionsDataProvider>(
+  locator.registerLazySingleton<ConditionsDataProvider>(
       () => ConditionsDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<SearchInstitutesDataProvider>(
+  locator.registerLazySingleton<SearchInstitutesDataProvider>(
       () => SearchInstitutesDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<InstituteDetailsDataProvider>(
+  locator.registerLazySingleton<InstituteDetailsDataProvider>(
       () => InstituteDetailsDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<TeacherCoursesDataSource>(
+  locator.registerLazySingleton<TeacherCoursesDataSource>(
       () => TeacherCoursesDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<TeacherServicesDataSource>(
+  locator.registerLazySingleton<TeacherServicesDataSource>(
       () => TeacherServicesDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<TeacherPortofoliosDataSource>(
+  locator.registerLazySingleton<TeacherPortofoliosDataSource>(
       () => TeacherPortofoliosDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<TeacherBalanceDataSource>(
+  locator.registerLazySingleton<TeacherBalanceDataSource>(
       () => TeacherBalanceDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<TeacherStatDataSource>(
+  locator.registerLazySingleton<TeacherStatDataSource>(
       () => TeacherStatDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<PortofolioDetailsDataProvider>(
+  locator.registerLazySingleton<PortofolioDetailsDataProvider>(
       () => PortofolioDetailsDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<NotificationDataProvider>(
+  locator.registerLazySingleton<NotificationDataProvider>(
       () => NotificationDataProviderWithDio(client: locator()));
-locator.registerLazySingleton<TeacherReviewDataSource>(
+  locator.registerLazySingleton<TeacherReviewDataSource>(
       () => TeacherReviewDataSourceWithDio(client: locator()));
-locator.registerLazySingleton<AssistenceDataSource>(
+  locator.registerLazySingleton<AssistenceDataSource>(
       () => AssistenceDataSourceWithDio(client: locator()));
-
+ locator.registerLazySingleton<UniversitiesDataSource>(
+      () => UniversitiesDataSourceWithHttp(client: locator()));
 
   //core
   locator.registerLazySingleton<NetworkInfo>(

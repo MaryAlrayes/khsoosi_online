@@ -57,8 +57,8 @@ class TeacherModel extends TeacherEntity {
         average: data['average'] == null
             ? null
             : double.tryParse(data['average'] as String),
-        lat: data['latitude'],
-        lng: data['longitude'],
+        lat:data['latitude']!=null ? double.parse(data['latitude']):null,
+        lng:data['longitude']!=null? double.parse(data['longitude']):null,
         countryCode: data['Country_code'] == null ||
                 (data['Country_code'] as String).isEmpty
             ? ''

@@ -76,14 +76,13 @@ class AuthenticationBloc
 
       //not enabled go to registeration info screen
       if (!userInfo!.isEnabled) {
-        emit(
+         emit(
           RegistrationInfoState(
             type: userInfo.type,
-            hasFinishedFirstInfo: userInfo.mobile.isNotEmpty,
+            hasFinishedFirstInfo: userInfo.countryOfResidenseId!='0',
           ),
         );
       } else if (!userInfo.isConditionAgreed) {
-
         //the user has not agreed to terms
         emit(
           ConditionsState(
@@ -91,7 +90,6 @@ class AuthenticationBloc
           ),
         );
       } else {
-
         //otherwise the user is authenticated
         emit(AuthenticatedState());
       }

@@ -1,5 +1,12 @@
 class EndPointsManager {
+
+  static const String logoIcon ='https://teacherprivate.com/assets/template_files/images/logo-khsoosi-60pxx.webp';
   static const String baseAppUrl = "https://teacherprivate.com/";
+
+//universities
+  static const String universities=
+      "${baseAppUrl}universities/get_universities_tags";
+
 
 //countries
   static const String countryImageBaseUrl =
@@ -135,4 +142,9 @@ class EndPointsManager {
 
   // faq
   static const String faq = "API/FAQ_Articles/get_articles";
+
+  // support
+  static const String getSupportMessages = "API/Support/support_messages";
+   static const String submitMessage = "API/Support/submit_message";
+
 }

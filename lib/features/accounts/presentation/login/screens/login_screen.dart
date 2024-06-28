@@ -16,6 +16,8 @@ import 'package:khosousi_online/features/navigation/presentation/screens/student
 import '../../../../../core/managers/assets_manager.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 
+import '../../../../edit_forget_password/presentation/pages/forget_password_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   static const routeName = 'login_screen';
   LoginScreen({super.key});
@@ -117,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
- 
+
 
   Container _buildTop(BoxConstraints constraints) {
     return Container(
@@ -213,7 +215,10 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           alignment: Alignment.centerLeft,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
+
+            },
             child: Text(
               'نسيت كلمة المرور؟',
               style: TextStyle(

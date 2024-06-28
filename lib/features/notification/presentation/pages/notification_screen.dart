@@ -88,7 +88,7 @@ Widget _buildContent(
           .fetchNotification(userId: context.read<AuthRepo>().getUserId()!);
       _refreshController.loadComplete();
     },
-    child: ListView.separated(
+    child:notifications.isEmpty?Center(child: Text('لا يوجد اشعارات'),) :ListView.separated(
         itemBuilder: (context, index) {
           return NotificationItem1(
             notificationEntity: notifications[index],

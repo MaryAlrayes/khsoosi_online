@@ -131,8 +131,6 @@ class FilterScreen extends StatelessWidget {
               'content': LocationFilter(
                 withControlBtns: true,
                 onNextCallback: () {
-                  print('steppper');
-                  print(context.read<FilterSearchCubit>().state.filter.lat);
                   BlocProvider.of<FilterStepperCubit>(context).nextStep();
                 },
                 onPreviousCallback: () {

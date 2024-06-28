@@ -13,6 +13,8 @@ import 'package:khosousi_online/features/accounts/data/models/teacher_extra_info
 import 'package:khosousi_online/features/accounts/data/models/user_info_model.dart';
 import 'package:khosousi_online/features/accounts/domain/entities/signup_data_entity.dart';
 
+import '../../../../shared_features/data/models/university_model.dart';
+import '../../../../shared_features/domain/entities/university_entity.dart';
 import '../models/loggedin_data_model.dart';
 import '../models/teacher_contact_info_model.dart';
 
@@ -41,6 +43,11 @@ abstract class AccountsDataProvider {
   Future<Unit> submitExtraInstituteInfo(
       {required InstituteExtraInfoModel instituteExtraInfoModel,
       required String userId});
+
+  Future<Unit> uploadCertificates(
+      {required List<File> image, required String userId});
+  Future<Unit> uploadUniversities(
+      {required List<UniversityModel> universities,required String courses, required String userId});
 }
 
 class AccountsDataProviderWithDio implements AccountsDataProvider {
@@ -297,5 +304,28 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
         message: errorMessage,
       );
     }
+  }
+
+  @override
+  Future<Unit> uploadCertificates({
+    required List<File> image,
+    required String userId,
+  }) async {
+    return Future.delayed(
+      Duration(seconds: 5),
+      () {
+        return unit;
+      },
+    );
+  }
+
+  @override
+  Future<Unit> uploadUniversities({required List<UniversityModel> universities, required String courses, required String userId})async {
+   return Future.delayed(
+      Duration(seconds: 5),
+      () {
+        return unit;
+      },
+    );
   }
 }

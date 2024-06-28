@@ -5,6 +5,8 @@ import 'package:khosousi_online/features/conditions_terms/presentation/pages/con
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/institute_conditions.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/student_conditions.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/teacher_conditions.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/pages/forget_password_screen.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/pages/reset_password_screen.dart';
 import 'package:khosousi_online/features/location/presentation/pages/location_map_screen.dart';
 import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
 import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
@@ -24,7 +26,9 @@ import 'package:khosousi_online/features/teacher_balance/presentation/pages/char
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_portofolio_details_screen.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_details_screen.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/screens/teacher_service_details_screen.dart';
+import '../../features/assistence/presentation/pages/personal_assistence.dart';
 import '../../features/courses_services_portofolio_details/presentation/courses/screens/course_details_screen.dart';
+import '../../features/edit_forget_password/presentation/pages/otp_forget_password_screen.dart';
 import '../../features/search/presentation/search/screens/search_screen.dart';
 import '../../features/teacher_balance/presentation/pages/balance_screen.dart';
 import '../../features/teacher_details/presentation/screens/teacher_course_details_screen.dart';
@@ -103,6 +107,12 @@ class AppRouter {
             return AssistenceScreen();
           },
         );
+      case PersonalAssistenceScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return PersonalAssistenceScreen();
+          },
+        );
       case FAQScreen.routeName:
         return MaterialPageRoute(
           builder: (context) {
@@ -115,7 +125,6 @@ class AppRouter {
             return ContactUsScreen();
           },
         );
-
 
       case TeacherDetailsScreen.routeName:
         final arg = routeSettings.arguments as Map;
@@ -194,42 +203,58 @@ class AppRouter {
             return LocationMapScreen();
           },
         );
-        case ConditionsScreen.routeName:
-          final args = routeSettings.arguments as Map;
+      case ConditionsScreen.routeName:
+        final args = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
             return ConditionsScreen(
               userType: args['userType'],
             );
-
           },
         );
-          case StudentConditions.routeName:
+      case StudentConditions.routeName:
         return MaterialPageRoute(
           builder: (context) {
             return StudentConditions();
           },
         );
-        case TeacherConditions.routeName:
+      case TeacherConditions.routeName:
         return MaterialPageRoute(
           builder: (context) {
             return TeacherConditions();
           },
         );
-          case InstituteConditions.routeName:
+      case InstituteConditions.routeName:
         return MaterialPageRoute(
           builder: (context) {
             return InstituteConditions();
           },
         );
-         case BalanceScreen.routeName:
-          final args = routeSettings.arguments as Map;
+      case BalanceScreen.routeName:
+        final args = routeSettings.arguments as Map;
         return MaterialPageRoute(
           builder: (context) {
             return BalanceScreen(
-           balanceScreenType: args['type'],
+              balanceScreenType: args['type'],
             );
-
+          },
+        );
+      case ForgetPasswordScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ForgetPasswordScreen();
+          },
+        );
+          case OtpForgetPasswordScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return OtpForgetPasswordScreen();
+          },
+        );
+          case ResetPasswordScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ResetPasswordScreen();
           },
         );
       default:

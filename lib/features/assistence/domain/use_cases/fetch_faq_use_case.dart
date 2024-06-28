@@ -12,9 +12,9 @@ class FetchFaqUseCase {
     required this.assistenceRepo,
   });
   Future<Either<Failure, List<ArticleEntity>>> call(
-      {required int start}) async {
+      ) async {
     final res = await assistenceRepo.getArticles(
-      start: start,
+
     );
     return res.fold((f) => Left(f), (r) => Right(r));
   }

@@ -5,7 +5,7 @@ import 'package:khosousi_online/core/errors/failures.dart';
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 
 import 'package:khosousi_online/features/accounts/domain/entities/institute_contact_info_entity.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/institute_info.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/screens/institute_info.dart';
 import 'package:khosousi_online/features/location/domain/entities/city_entity.dart';
 import 'package:khosousi_online/features/location/domain/entities/country_entity.dart';
 

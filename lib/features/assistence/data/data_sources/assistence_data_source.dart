@@ -2,9 +2,13 @@ import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 import 'package:khosousi_online/features/assistence/data/models/article_model.dart';
 
 import '../../../../core/api_service/base_api_service.dart';
+import '../models/support_message_model.dart';
 
 abstract class AssistenceDataSource {
-  Future<List<ArticleModel>> getArticles({required int start});
+  Future<List<ArticleModel>> getArticles();
+  Future<List<SupportMessageModel>> getSupportMessages({required String id,required int start});
+    Future<String> sendMessage({required String id,required String message});
+
 }
 
 class AssistenceDataSourceWithDio implements AssistenceDataSource {
@@ -12,10 +16,10 @@ class AssistenceDataSourceWithDio implements AssistenceDataSource {
   AssistenceDataSourceWithDio({
     required this.client,
   });
-  Future<List<ArticleModel>> getArticles({required int start}) async {
+  Future<List<ArticleModel>> getArticles() async {
     final res = await client.multipartRequest(
       url: EndPointsManager.faq,
-      jsonBody: {'start': start},
+      jsonBody: {},
     );
 
     List<ArticleModel> data = [];
@@ -28,5 +32,36 @@ class AssistenceDataSourceWithDio implements AssistenceDataSource {
     }
 
     return data;
+  }
+
+  @override
+  Future<List<SupportMessageModel>> getSupportMessages({required String id, required int start})async {
+    final res = await client.multipartRequest(
+      url: EndPointsManager.getSupportMessages,
+      jsonBody: {'start':start,'user_id':id},
+    );
+
+    List<SupportMessageModel> data = [];
+
+    for (int i = 0; i < res.length; i++) {
+      SupportMessageModel supportMessageModel =
+          SupportMessageModel.fromJson(res[i], );
+      data.add(supportMessageModel);
+
+    }
+
+    return data;
+  }
+
+  @override
+  Future<String> sendMessage({required String id, required String message})async {
+   final res = await client.multipartRequest(
+      url: EndPointsManager.submitMessage,
+      jsonBody: {'Message':message,'user_id':id},
+    );
+
+
+
+    return (res as int).toString();
   }
 }

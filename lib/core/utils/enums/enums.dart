@@ -2,35 +2,6 @@ enum UserType { student, teacher, institute }
 
 enum SignupSteps { userType, name, emailPassword }
 
-enum StudentInfoStepperSteps {
-  phones,
-  general,
-  picture,
-}
-
-enum TeacherInfoStepperSteps {
-  phones,
-  general,
-  social_media,
-  teachingMethod,
-  educationalLevel,
-  address,
-  categories,
-  certificates,
-  skills,
-  location,
-  picture,
-}
-
-enum InstituteInfoStepperSteps {
-  phones,
-  general,
-  nameAboutAddress,
-  categories,
-  location,
-  picture,
-}
-
 enum SearchType { teachers, courses, institutes, services }
 
 enum SearchTeacherSteps {
@@ -82,7 +53,17 @@ enum SearchServicesSteps {
 }
 
 enum LocationType { nearestTeacher, chooseCountey }
-enum FAQUserType{
-  student,
-  teacher,both
+
+enum FAQUserType { student, teacher, both }
+
+enum SupportMessageUser{me,support}
+
+enum SocialMediaType{
+  facebook,
+  instagram,
+  x,
+  youtube,
+  tiktok,
+  threads,
+  linkedin
 }

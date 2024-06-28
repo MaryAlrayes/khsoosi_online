@@ -215,7 +215,7 @@ _mapFailureToState(emit, Failure f, TeacherInfoState state) {
     case NetworkErrorFailure f:
       emit(
         state.copyWith(
-          teacherinfoStatus: TeacherinfoStatus.noInternet,
+          teacherinfoStatus: TeacherinfoStatus.networkError,
           errorMessage: f.message,
         ),
       );

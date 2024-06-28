@@ -50,6 +50,7 @@ dependencies:
   animated_floating_buttons: ^0.0.2
   easy_stepper: ^0.8.5
   pull_to_refresh: ^2.0.0
+  mobkit_dashed_border: ^0.0.6
 
 
 
@@ -90,6 +91,7 @@ flutter:
     - assets/images/operator.svg
     - assets/images/otp.svg
     - assets/config/.env
+    - assets/images/forgot_password.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

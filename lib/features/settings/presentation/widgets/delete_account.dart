@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
+import 'package:khosousi_online/features/assistence/presentation/pages/personal_assistence.dart';
 
 class DeleteAccount extends StatelessWidget {
   const DeleteAccount({super.key});
@@ -46,7 +47,7 @@ class DeleteAccount extends StatelessWidget {
             onPressed: () {
               barPushScreen(
                 context: context,
-                screen: ContactUsScreen(),
+                screen: PersonalAssistenceScreen(),
               );
             },
             backgroundColor: Colors.red,

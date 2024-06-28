@@ -10,4 +10,5 @@ class AppAssetsManager {
   static const operator = 'assets/images/operator.svg';
     static const warning = 'assets/images/warning.json';
         static const otp = 'assets/images/otp.svg';
+          static const forgotPassword = 'assets/images/forgot_password.svg';
 }

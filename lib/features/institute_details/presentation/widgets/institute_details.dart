@@ -10,7 +10,7 @@ import 'package:khosousi_online/core/ui/widgets/custom_chip_item.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_elevated_btn.dart';
 import 'package:khosousi_online/core/ui/widgets/custom_image.dart';
 import 'package:khosousi_online/core/ui/widgets/sliver_tabbar.dart';
-import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/institute_info.dart';
+import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/screens/institute_info.dart';
 import 'package:khosousi_online/features/institute_details/domain/entities/institute_details_entity.dart';
 import 'package:khosousi_online/features/institute_details/presentation/widgets/indtitute_info_content.dart';
 import 'package:khosousi_online/features/institute_details/presentation/widgets/institute_certificates.dart';

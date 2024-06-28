@@ -7,7 +7,7 @@ import 'package:khosousi_online/core/utils/helpers/persistent_push.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/student_conditions.dart';
-import 'package:khosousi_online/features/edit_password/presentation/pages/edit_password_screen.dart';
+import 'package:khosousi_online/features/edit_forget_password/presentation/pages/edit_password_screen.dart';
 import 'package:khosousi_online/features/favorites/presentation/pages/favorites_screen.dart';
 import 'package:khosousi_online/features/settings/presentation/screens/settings_screen.dart';
 import 'package:khosousi_online/features/statistics/presentation/pages/student_statistics_screen.dart';

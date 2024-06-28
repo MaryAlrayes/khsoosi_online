@@ -119,8 +119,7 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
             draggable: false,
             position: _userCurrentLocationCoords!);
       }
-
-      //marker for the user previous selected location
+        //marker for the user previous selected location
       if (_userPreviousLocationCoords != null) {
         final Uint8List _previousLocationMarkerIcon =
             await _createCustomMarkerBitmap("موقعك المحدد مسبقا");

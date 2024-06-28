@@ -1,4 +1,4 @@
-import 'package:khosousi_online/features/accounts/domain/entities/loggedin_data_entity.dart';
+
 import 'package:khosousi_online/features/accounts/domain/entities/user_info_entity.dart';
 
 abstract class AuthRepo {
