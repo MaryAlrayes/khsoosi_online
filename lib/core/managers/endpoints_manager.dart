@@ -1,12 +1,11 @@
 class EndPointsManager {
-
-  static const String logoIcon ='https://teacherprivate.com/assets/template_files/images/logo-khsoosi-60pxx.webp';
+  static const String logoIcon =
+      'https://teacherprivate.com/assets/template_files/images/logo-khsoosi-60pxx.webp';
   static const String baseAppUrl = "https://teacherprivate.com/";
 
 //universities
-  static const String universities=
+  static const String universities =
       "${baseAppUrl}universities/get_universities_tags";
-
 
 //countries
   static const String countryImageBaseUrl =
@@ -57,15 +56,13 @@ class EndPointsManager {
   static const String serviceDetailsBaseUrl =
       "${baseAppUrl}API/Services/service_info?service_id=";
 
- //portofolio Details
+  //portofolio Details
   static const String portofolioDetailsBaseUrl =
       "${baseAppUrl}API/Portfolio/portfolio_info?portfolio_id=";
-
 
   //institute Details
   static const String instituteDetailsBaseUrl =
       "${baseAppUrl}API/Institutes/institute_info?user_id=";
-
 
 //institutes
   static const String instituteImageBaseUrl =
@@ -126,18 +123,19 @@ class EndPointsManager {
   static const String teacher_services = "API/Services/my_services";
 
   //teacher portofolio
-  static const String teacher_portofolio = "API/Portfolio/my_portfolio?user_id=";
+  static const String teacher_portofolio =
+      "API/Portfolio/my_portfolio?user_id=";
 
-   //teacher reviews
+  //teacher reviews
   static const String teacher_review = "API/Reviews/my_reviews?user_id=";
 
-   //teacher balance
+  //teacher balance
   static const String teacher_balance = "API/Users/my_balance?user_id=";
 
-   // statistics
+  // statistics
   static const String statistics = "API/Users/my_dashboard?user_id=";
 
-   // notification
+  // notification
   static const String notification = "API/Notifications/notifications";
 
   // faq
@@ -145,6 +143,8 @@ class EndPointsManager {
 
   // support
   static const String getSupportMessages = "API/Support/support_messages";
-   static const String submitMessage = "API/Support/submit_message";
+  static const String submitMessage = "API/Support/submit_message";
 
+//teacher phones
+  static const String teacherPhones = "API/Users/get_user_contact_by_id";
 }

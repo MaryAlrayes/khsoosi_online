@@ -12,7 +12,7 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthenticatationLoading extends AuthenticationState {}
 
-//no user --> show choose (login or search) screen
+//no user --> show start up (login or search) screen
 class UnauthenticatedState extends AuthenticationState {}
 
 //user but missing data -> show continue registration info screen
@@ -27,9 +27,9 @@ class RegistrationInfoState extends AuthenticationState {
 
 
 //user but has not confirm conditions  -> show conditions screen
-class ConditionsState extends AuthenticationState {
+class TermsAndConditionsState extends AuthenticationState {
   final String type;
-  ConditionsState({
+  TermsAndConditionsState({
     required this.type,
   });
 }

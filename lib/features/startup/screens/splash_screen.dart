@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
-import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/startup/screens/start_up_screen.dart';
 import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/features/startup/widgets/custome_footer.dart';
 

@@ -12,6 +12,7 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/comm
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/widgets/profile_image.dart';
 import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
+
 class InstituteUploadImageStep extends StatelessWidget {
   const InstituteUploadImageStep({super.key});
 
@@ -49,7 +50,7 @@ class InstituteUploadImageStep extends StatelessWidget {
   void _buildListener(UploadPictureState state, BuildContext context) {
     if (state.uploadPictureStatus == UploadPictureStatus.done) {
       ToastUtils.showSusToastMessage('تم رفع الصورة الشخصية بنجاح');
-       _goToOtpScreen(context);
+      _goToOtpScreen(context);
     } else if (state.uploadPictureStatus == UploadPictureStatus.noInternet) {
       showSnackbar(context, AppStrings.noInternetConnectionMessage);
     } else if (state.uploadPictureStatus == UploadPictureStatus.networkError) {
@@ -58,17 +59,19 @@ class InstituteUploadImageStep extends StatelessWidget {
   }
 
   void _goToOtpScreen(BuildContext context) {
-    BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+    BlocProvider.of<AuthenticationBloc>(context).add(UpdateEvent());
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => OtpScreen(onSkipClicked: (returnedContext) {
-          Navigator.pushNamedAndRemoveUntil(
-            returnedContext,
-            AppWrapper.routeName,
-            (route) => false,
-          );
-        }),
+        builder: (context) => OtpScreen(
+          onSkipClicked: (returnedContext) {
+            Navigator.pushNamedAndRemoveUntil(
+              returnedContext,
+              AppWrapper.routeName,
+              (route) => false,
+            );
+          },
+        ),
       ),
       (route) => false,
     );

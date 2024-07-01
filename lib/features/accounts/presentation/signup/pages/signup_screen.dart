@@ -15,7 +15,7 @@ import 'package:khosousi_online/features/accounts/presentation/signup/cubit/sign
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
 import 'package:khosousi_online/features/accounts/presentation/signup/widgets/email_password.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/widgets/select_user_type.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/teacher_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/teacher_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/ui/widgets/custom_elevated_btn.dart';
@@ -68,11 +68,11 @@ class SignupScreen extends StatelessWidget {
                             },
                             steps: [
                               _getSelectType(
-                                  state.currentStep, state.currentIndex),
+                                  state.currentIndex),
                               _getUserName(
-                                  state.currentStep, state.currentIndex),
+                                  state.currentIndex),
                               _getEmailPassword(
-                                  state.currentStep, state.currentIndex),
+                                  state.currentIndex),
                             ],
                           ),
                         ),
@@ -170,7 +170,7 @@ class SignupScreen extends StatelessWidget {
   }
 }
 
-Step _getEmailPassword(SignupSteps currentStep, int currentIndex) {
+Step _getEmailPassword( int currentIndex) {
   return Step(
     state: currentIndex >= 2 ? StepState.complete : StepState.indexed,
     isActive: currentIndex >= 2,
@@ -181,7 +181,7 @@ Step _getEmailPassword(SignupSteps currentStep, int currentIndex) {
   );
 }
 
-Step _getUserName(SignupSteps currentStep, int currentIndex) {
+Step _getUserName( int currentIndex) {
   return Step(
     state: currentIndex >= 1 ? StepState.complete : StepState.indexed,
     isActive: currentIndex >= 1,
@@ -192,7 +192,7 @@ Step _getUserName(SignupSteps currentStep, int currentIndex) {
   );
 }
 
-Step _getSelectType(SignupSteps currentStep, int currentIndex) {
+Step _getSelectType( int currentIndex) {
   return Step(
     state: currentIndex >= 0 ? StepState.complete : StepState.complete,
     isActive: currentIndex >= 0,

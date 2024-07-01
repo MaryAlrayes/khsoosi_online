@@ -7,7 +7,7 @@ import 'package:khosousi_online/features/accounts/presentation/otp/screens/otp_s
 import 'package:lottie/lottie.dart';
 
 PopupMenuButton<int> buildWarningMenu(
-    GlobalKey<PopupMenuButtonState<dynamic>> _popupMenu,BuildContext context) {
+    GlobalKey<PopupMenuButtonState<dynamic>> _popupMenu, BuildContext context) {
   return PopupMenuButton(
       position: PopupMenuPosition.under,
       color: Colors.white,
@@ -19,12 +19,10 @@ PopupMenuButton<int> buildWarningMenu(
                 padding: const EdgeInsets.all(8.0),
                 child: ListTile(
                   onTap: () {
-
                     barPushScreen(
                         context: context,
                         screen: OtpScreen(
                           onSkipClicked: (returnedContext) {
-
                             Navigator.pop(returnedContext);
                           },
                         ));
@@ -46,20 +44,18 @@ PopupMenuButton<int> buildWarningMenu(
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 barPushScreen(
-                        context: context,
-                        screen: OtpScreen(
-                          onSkipClicked: (returnedContext) {
-
-                            Navigator.pop(returnedContext);
-                          },
-                        ));
+                                    context: context,
+                                    screen: OtpScreen(
+                                      onSkipClicked: (returnedContext) {
+                                        Navigator.pop(returnedContext);
+                                      },
+                                    ));
                               },
                           ),
                         ]),
                   ),
                 ),
               ),
-
             ),
           ],
       child: InkWell(

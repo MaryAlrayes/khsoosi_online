@@ -14,15 +14,6 @@ import 'package:khosousi_online/features/search/presentation/search_teacher/widg
 import '../../../../../core/utils/enums/enums.dart';
 
 class EducationalLevelFilter extends StatelessWidget {
-  final VoidCallback? onNext;
-  final VoidCallback? onPrevious;
-  final bool withNext;
-  const EducationalLevelFilter({
-    Key? key,
-    this.onNext,
-    this.onPrevious,
-    this.withNext = true,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,40 +26,18 @@ class EducationalLevelFilter extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // _buildLabel(),
-                // SizedBox(
-                //   height: 8.h,
-                // ),
+
                 _buildEducationalLevelDropDown(state, context),
               ],
             ),
-            if (withNext)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildPreviousBtn(context),
-                  _buildNextBtn(context),
-                ],
-              )
+
           ],
         );
       },
     );
   }
 
-  NextPreviousBtn _buildPreviousBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.previous,
-      onPressed: onPrevious != null ? onPrevious! : () {},
-    );
-  }
 
-  NextPreviousBtn _buildNextBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.next,
-      onPressed: onNext != null ? onNext! : () {},
-    );
-  }
 
   AppDropDown<EducationalLevel> _buildEducationalLevelDropDown(
       FilterSearchState state, BuildContext context) {

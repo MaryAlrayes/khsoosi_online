@@ -67,3 +67,8 @@ enum SocialMediaType{
   threads,
   linkedin
 }
+
+enum TeacherPhones{
+  normal,
+  whatsapp
+}

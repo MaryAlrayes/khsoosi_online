@@ -59,7 +59,7 @@ class StudentUploadImageStep extends StatelessWidget {
   }
 
   void _goToOtpScreen(BuildContext context) {
-    BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+    BlocProvider.of<AuthenticationBloc>(context).add(UpdateEvent());
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

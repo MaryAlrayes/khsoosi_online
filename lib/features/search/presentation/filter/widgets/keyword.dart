@@ -12,15 +12,6 @@ import 'package:khosousi_online/features/search/presentation/search_teacher/bloc
 import 'package:khosousi_online/features/search/presentation/search_teacher/widgets/next_previous_btn.dart';
 
 class KeywordFilter extends StatelessWidget {
-      final VoidCallback? onNext;
-  final VoidCallback ?onPrevious;
-  final bool withNext;
-  const KeywordFilter({
-    Key? key,
-     this.onNext,
-     this.onPrevious,
-     this.withNext=true,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +31,7 @@ class KeywordFilter extends StatelessWidget {
                 _buildTextFieldKeyword(context),
               ],
             ),
-          if(withNext)  Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildBeforeBtn(context),
-                _buildNextBtn(context),
-              ],
-            )
+
           ],
         );
       },
@@ -67,24 +52,6 @@ class KeywordFilter extends StatelessWidget {
     );
   }
 
-  NextPreviousBtn _buildNextBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.next,
-      onPressed: onNext != null ? onNext! : () {},
-    );
-  }
 
-  NextPreviousBtn _buildBeforeBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.previous,
-      onPressed:  onPrevious != null ? onPrevious! : () {},
-    );
-  }
 
-  Text _buildLabel() {
-    return Text(
-      'ادخل كلمة مفتاحية',
-      style: kBlackBoldTextStyle,
-    );
-  }
 }

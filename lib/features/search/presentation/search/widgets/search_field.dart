@@ -45,14 +45,7 @@ class SearchField extends StatelessWidget {
             Icons.search,
           ),
         ),
-        // onSubmitted:  (value) {
-        //   BlocProvider.of<FilterSearchCubit>(context).setKeyword(value);
-        //   _search(context);
-        // },
-        // onChanged: (value) {
-        //   BlocProvider.of<FilterSearchCubit>(context).setKeyword(value);
-        //   _search(context);
-        // },
+       
         onTap: () {
           BlocProvider.of<FilterSearchCubit>(context).saveFilter();
          barPushScreen(

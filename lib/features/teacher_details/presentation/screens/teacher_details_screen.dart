@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart';
 import 'package:khosousi_online/features/search/domain/entities/teacher_entity.dart';
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/cubit/get_teacher_phones_cubit.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/widgets/teacher_details_main_content.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -40,7 +41,7 @@ class TeacherDetailsScreen extends StatefulWidget {
   const TeacherDetailsScreen({
     Key? key,
     required this.teacherId,
-    this.teacherName='',
+    this.teacherName = '',
   }) : super(key: key);
 
   @override
@@ -50,8 +51,15 @@ class TeacherDetailsScreen extends StatefulWidget {
 class _TeacherDetailsScreenState extends State<TeacherDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _getBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => _getBloc(),
+        ),
+        BlocProvider(
+          create: (context) => sl.locator<GetTeacherPhonesCubit>(),
+        ),
+      ],
       child: Builder(builder: (context) {
         return BlocBuilder<GetTeacherDetailsBloc, GetTeacherDetailsState>(
           builder: (context, state) {
@@ -126,6 +134,7 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen> {
   }
 
   Widget _buildMainContent(TeacherDetailsEntity teacherDetailsEntity) {
-    return TeacherDetailsMainContent(teacherDetailsEntity: teacherDetailsEntity);
+    return TeacherDetailsMainContent(
+        teacherDetailsEntity: teacherDetailsEntity);
   }
 }

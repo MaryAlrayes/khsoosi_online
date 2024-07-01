@@ -51,9 +51,6 @@ class SearchTeachersUseCase {
             double? userLng = filter.lng;
             double? teacherLat = element.lat;
             double? teacherLng = element.lng;
-print('hi teacher:(${teacherLat},${teacherLng})');
-print('hi user:(${userLat},${userLng})');
-
             if (userLat != null &&
                 userLng != null &&
                 teacherLat != null &&

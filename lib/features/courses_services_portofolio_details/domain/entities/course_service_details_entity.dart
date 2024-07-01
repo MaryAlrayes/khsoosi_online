@@ -7,6 +7,11 @@ import 'package:khosousi_online/features/courses_services_portofolio_details/dom
 import 'package:khosousi_online/features/courses_services_portofolio_details/domain/entities/course_service_details_teacher_entity.dart';
 import 'package:khosousi_online/features/courses_services_portofolio_details/domain/entities/course_service_rate_entity.dart';
 
+
+//NOTE:
+//entity for both the course and the service details
+//there is a model class for each the course and the service extending from this class
+//to fetch the details from the corresponding API
 class CourseServiceDetailsEntity extends Equatable {
   final String id;
   final String title;

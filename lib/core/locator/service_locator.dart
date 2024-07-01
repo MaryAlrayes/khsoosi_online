@@ -157,6 +157,8 @@ import '../../features/notification/domain/repositories/notification_repo.dart';
 import '../../features/notification/domain/use_cases/get_notification_use_case.dart';
 import '../../features/statistics/domain/use_cases/fetch_student_stat_use_case.dart';
 import '../../features/statistics/domain/use_cases/fetch_teacher_stat_use_case.dart';
+import '../../features/teacher_details/domain/use cases/get_teacher_phones_use_case.dart';
+import '../../features/teacher_details/presentation/cubit/get_teacher_phones_cubit.dart';
 import '../../features/teacher_portofolio/data/repositories_impl/teacher_portofolio_repo_impl.dart';
 import '../../features/teacher_portofolio/domain/repositories/teacher_portofolio_repo.dart';
 import '../../features/teacher_portofolio/domain/use_cases/fetch_teacher_portofolio_use_case.dart';
@@ -264,7 +266,9 @@ Future<void> setupLocator() async {
  locator.registerFactory(
     () => UploadUniversitiesCubit(uploadUniversitiesUseCase : locator()),
   );
-
+ locator.registerFactory(
+    () => GetTeacherPhonesCubit(getTeacherPhonesUseCase : locator()),
+  );
 
 
   //use cases
@@ -420,6 +424,14 @@ Future<void> setupLocator() async {
      accountsRepo : locator(),
     ),
   );
+  locator.registerLazySingleton(
+    () => GetTeacherPhonesUseCase(
+     teacherDetailsRepo : locator(),
+    ),
+  );
+
+
+
 
   //repositories
   locator.registerLazySingleton<CategoriesRepo>(

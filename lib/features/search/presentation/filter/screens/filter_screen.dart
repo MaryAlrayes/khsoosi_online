@@ -66,6 +66,7 @@ class FilterScreen extends StatelessWidget {
   TextButton _buildCancelBtn(BuildContext context) {
     return TextButton(
       onPressed: () {
+        //restore the previous filter
         BlocProvider.of<FilterSearchCubit>(context).restoreFilter();
         Navigator.pop(context);
       },
@@ -79,7 +80,7 @@ class FilterScreen extends StatelessWidget {
   void _search(BuildContext context) {
     switch (searchType) {
       case SearchType.teachers:
-       BlocProvider.of<GetTeachersBloc>(context).add(
+        BlocProvider.of<GetTeachersBloc>(context).add(
           LoadTeachersEvent(
             refresh: true,
             filter: context.read<FilterSearchCubit>().state.filter,
@@ -120,9 +121,7 @@ class FilterScreen extends StatelessWidget {
         return [
           {
             'title': 'طريقة التدريس',
-            'content': TeachingMethodFilter(
-              withNextBtn: false,
-            ),
+            'content': TeachingMethodFilter(),
           },
           if (context.read<FilterSearchCubit>().state.filter.teachingMethod ==
               TeachingMethod.presence)
@@ -141,36 +140,23 @@ class FilterScreen extends StatelessWidget {
             },
           {
             'title': 'المرحلة الدراسية',
-            'content': EducationalLevelFilter(
-              withNext: false,
-            ),
+            'content': EducationalLevelFilter(),
           },
           {
             'title': 'التخصص',
-            'content': CatefgoryFilter(
-              withNext: false,
-            ),
+            'content': CatefgoryFilter(),
           },
           {
             'title': 'جنس المدرس',
-            'content': GenderFilter(
-              withNext: false,
-            ),
+            'content': GenderFilter(),
           },
-          {
-            'title': 'كلمة البحث',
-            'content': KeywordFilter(
-              withNext: false,
-            )
-          },
+          {'title': 'كلمة البحث', 'content': KeywordFilter()},
         ];
       case SearchType.courses:
         return [
           {
             'title': 'حضوري أو عن بعد',
-            'content': TeachingMethodFilter(
-              withNextBtn: false,
-            ),
+            'content': TeachingMethodFilter(),
           },
           {
             'title': 'الموقع',
@@ -187,28 +173,17 @@ class FilterScreen extends StatelessWidget {
           },
           {
             'title': 'المرحلة',
-            'content': EducationalLevelFilter(
-              withNext: false,
-            ),
+            'content': EducationalLevelFilter(),
           },
           {
             'title': 'التخصص',
-            'content': CatefgoryFilter(
-              withNext: false,
-            ),
+            'content': CatefgoryFilter(),
           },
           {
             'title': 'الجنس',
-            'content': GenderFilter(
-              withNext: false,
-            ),
+            'content': GenderFilter(),
           },
-          {
-            'title': 'كلمة البحث',
-            'content': KeywordFilter(
-              withNext: false,
-            )
-          },
+          {'title': 'كلمة البحث', 'content': KeywordFilter()},
         ];
       case SearchType.institutes:
         return [
@@ -227,9 +202,7 @@ class FilterScreen extends StatelessWidget {
           },
           {
             'title': 'التخصص',
-            'content': CatefgoryFilter(
-              withNext: false,
-            ),
+            'content': CatefgoryFilter(),
           },
         ];
       case SearchType.services:
@@ -249,9 +222,7 @@ class FilterScreen extends StatelessWidget {
           },
           {
             'title': 'كلمة البحث',
-            'content': KeywordFilter(
-              withNext: false,
-            )
+            'content': KeywordFilter(),
           },
         ];
     }

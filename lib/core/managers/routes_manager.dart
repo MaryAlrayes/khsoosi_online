@@ -9,7 +9,7 @@ import 'package:khosousi_online/features/edit_forget_password/presentation/pages
 import 'package:khosousi_online/features/edit_forget_password/presentation/pages/reset_password_screen.dart';
 import 'package:khosousi_online/features/location/presentation/pages/location_map_screen.dart';
 import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
-import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/startup/screens/start_up_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/screens/login_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/otp/screens/otp_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/signup/pages/signup_screen.dart';
@@ -18,8 +18,8 @@ import 'package:khosousi_online/features/assistence/presentation/pages/assistenc
 import 'package:khosousi_online/features/assistence/presentation/pages/contact_us_screen.dart';
 import 'package:khosousi_online/features/assistence/presentation/pages/faq_screen.dart';
 import 'package:khosousi_online/features/courses_services_portofolio_details/presentation/services/screens/service_details_screen.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/teacher_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/student_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/teacher_screen.dart';
 import 'package:khosousi_online/features/search/presentation/filter/screens/filter_screen.dart';
 import 'package:khosousi_online/features/startup/screens/splash_screen.dart';
 import 'package:khosousi_online/features/teacher_balance/presentation/pages/charge_screen.dart';
@@ -77,10 +77,10 @@ class AppRouter {
             return LoginScreen();
           },
         );
-      case ChooseStateScreen.routeName:
+      case StartUpScreen.routeName:
         return MaterialPageRoute(
           builder: (context) {
-            return ChooseStateScreen();
+            return StartUpScreen();
           },
         );
       case StudentScreen.routeName:

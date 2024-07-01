@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/teacher_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/student_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/teacher_screen.dart';
 
 import '../../../notification/presentation/cubit/get_notification_cubit.dart';
 

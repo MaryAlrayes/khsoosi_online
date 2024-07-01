@@ -11,7 +11,7 @@ import 'package:khosousi_online/features/accounts/presentation/login/cubit/login
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/signup_btn.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/widgets/social_media.dart';
 import 'package:khosousi_online/features/app_wrapper/app_wrapper.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/student_screen.dart';
 
 import '../../../../../core/managers/assets_manager.dart';
 import 'package:khosousi_online/core/locator/service_locator.dart' as sl;
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _buildLoginListener(LoginState state, BuildContext context) {
     if (state.loginStatus == LoginStatus.done) {
-      BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+      BlocProvider.of<AuthenticationBloc>(context).add(UpdateEvent());
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppWrapper.routeName,

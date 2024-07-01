@@ -13,6 +13,8 @@ import 'package:khosousi_online/features/accounts/presentation/profile_info/comm
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_extra_info_cubit.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/institute/cubit/institute_info_stepper_cubit.dart';
 
+import '../../../../../../core/ui/widgets/custom_error_message.dart';
+
 class InstituteCaregoriesStep extends StatelessWidget {
   const InstituteCaregoriesStep({super.key});
 
@@ -63,6 +65,10 @@ class InstituteCaregoriesStep extends StatelessWidget {
             },
           ),
           SizedBox(
+            height: 8,
+          ),
+          _buildErrorMessages(),
+          SizedBox(
             height: 24,
           ),
           _buildBtns(
@@ -72,7 +78,17 @@ class InstituteCaregoriesStep extends StatelessWidget {
       ),
     );
   }
-
+BlocBuilder<InstituteExtraInfoCubit, InstituteExtraInfoState>
+      _buildErrorMessages() {
+    return BlocBuilder<InstituteExtraInfoCubit, InstituteExtraInfoState>(
+        builder: (context, state) {
+      return state.errorMessage.isEmpty
+          ? Container()
+          : CustomErrorMessage(
+              errorMessage: state.errorMessage,
+            );
+    });
+  }
   void _buildListener(InstituteExtraInfoState state, BuildContext context) {
     if (state.intituteExtraInfoStatus == IntituteExtraInfoStatus.done) {
       ToastUtils.showSusToastMessage('تم إضافة معلوماتك بنجاح');

@@ -167,3 +167,15 @@ extension SocialMediaExtension on SocialMediaType {
     }
   }
 }
+
+extension TeacherPhonesExtension on TeacherPhones {
+  String getValueForApi() {
+    switch (this) {
+
+      case TeacherPhones.normal:
+        return '1';
+      case TeacherPhones.whatsapp:
+         return '2';
+    }
+  }
+}

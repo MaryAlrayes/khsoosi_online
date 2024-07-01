@@ -116,11 +116,11 @@ class OtpScreen extends StatelessWidget {
       //show error snack bar
       showSnackbar(context, state.errorMessage);
     } else if (state.activateCodeStatus == ActivateCodeStatus.done) {
-        //pop up the loading dialog
+      //pop up the loading dialog
       Navigator.pop(context);
       //show successful toast
       ToastUtils.showSusToastMessage('تم تفعيل الحساب بنجاح');
-      BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+      BlocProvider.of<AuthenticationBloc>(context).add(UpdateEvent());
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppWrapper.routeName,

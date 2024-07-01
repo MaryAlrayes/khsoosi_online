@@ -14,14 +14,7 @@ import 'package:khosousi_online/features/search/presentation/search_teacher/widg
 import '../../../../../core/utils/enums/enums.dart';
 
 class TeachingMethodFilter extends StatelessWidget {
-  final VoidCallback? onNext;
-  final bool withNextBtn;
 
-  const TeachingMethodFilter({
-    Key? key,
-    this.onNext,
-    this.withNextBtn = true,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,30 +27,17 @@ class TeachingMethodFilter extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // _buildLabel(),
-                // SizedBox(
-                //   height: 8.h,
-                // ),
+
                 ..._buildRadioGroup(state, context),
               ],
             ),
-            if (withNextBtn)
-              Container(
-                alignment: Alignment.centerLeft,
-                child: _buildNextBtn(context),
-              )
+
           ],
         );
       },
     );
   }
 
-  NextPreviousBtn _buildNextBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.next,
-      onPressed: onNext != null ? onNext! : () {},
-    );
-  }
 
   List<Widget> _buildRadioGroup(FilterSearchState state, BuildContext context) {
 
@@ -89,10 +69,5 @@ class TeachingMethodFilter extends StatelessWidget {
         .toList();
   }
 
-  Text _buildLabel() {
-    return Text(
-      'اختر طريقة التدريس:',
-      style: kBlackBoldTextStyle,
-    );
-  }
+
 }

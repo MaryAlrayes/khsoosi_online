@@ -3,6 +3,7 @@ import 'package:animated_floating_buttons/widgets/animated_floating_action_butto
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khosousi_online/core/managers/color_manager.dart';
+import 'package:khosousi_online/core/utils/enums/enums.dart';
 
 import 'package:khosousi_online/features/teacher_details/domain/entities/teacher_details_entity.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_about_teacher.dart';
@@ -12,6 +13,7 @@ import 'package:khosousi_online/features/teacher_details/presentation/widgets/ta
 import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_rates.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/widgets/tab_portofolio.dart';
 import 'package:khosousi_online/features/teacher_details/presentation/widgets/teacher_details.dart';
+import 'package:khosousi_online/features/teacher_details/presentation/widgets/teacher_phones_floating_btns.dart';
 
 import '../../../../core/ui/widgets/sliver_tabbar.dart';
 
@@ -118,47 +120,7 @@ class _TeacherDetailsMainContentState extends State<TeacherDetailsMainContent>
   }
 
   Widget _buildContactUs() {
-    return Theme(
-      data: ThemeData(
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          foregroundColor: Colors.white,
-        ),
-      ),
-      child: AnimatedFloatingActionButton(
-          fabButtons: <Widget>[
-            Container(
-              child: FloatingActionButton(
-                onPressed: () {},
-                heroTag: "phone btn",
-                tooltip: 'Phone button',
-                child: Icon(Icons.phone_enabled_sharp, color: Colors.white),
-                backgroundColor: ColorManager.blue1,
-              ),
-            ),
-            Container(
-              child: FloatingActionButton(
-                onPressed: () {},
-                heroTag: "whatsapp btn",
-                tooltip: 'Whatsapp button',
-                child: Icon(FontAwesomeIcons.whatsapp, color: Colors.white),
-                backgroundColor: Colors.green,
-              ),
-            ),
-            Container(
-              child: FloatingActionButton(
-                onPressed: () {},
-                heroTag: "message btn",
-                tooltip: 'message button',
-                child: Icon(FontAwesomeIcons.solidMessage, color: Colors.white),
-                backgroundColor: ColorManager.black,
-              ),
-            ),
-          ],
-        
-          colorStartAnimation: ColorManager.blue2,
-          colorEndAnimation: Colors.red,
-          animatedIconData: AnimatedIcons.menu_close),
-    );
+    return TeacherPhonesFloatingBtns(teacherId:widget.teacherDetailsEntity.id ,);
   }
 
   AppBar _buildAppbar() {

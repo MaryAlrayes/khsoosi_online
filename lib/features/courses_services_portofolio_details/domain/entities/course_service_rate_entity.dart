@@ -1,4 +1,3 @@
-
 import 'package:khosousi_online/features/rates/domain/entities/rate_entity.dart';
 
 class CourseServiceRateEntity extends RateEntity {

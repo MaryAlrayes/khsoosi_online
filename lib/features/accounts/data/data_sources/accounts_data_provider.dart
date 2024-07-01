@@ -98,6 +98,7 @@ class AccountsDataProviderWithDio implements AccountsDataProvider {
       );
     }
   }
+  
 
   @override
   Future<UserInfoModel> fetchUserInfo({required String userId}) async {

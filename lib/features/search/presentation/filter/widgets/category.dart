@@ -21,15 +21,6 @@ import 'package:khosousi_online/shared_features/domain/entities/category_entity.
 import '../../../../../core/ui/widgets/error_widget.dart';
 
 class CatefgoryFilter extends StatefulWidget {
-  final VoidCallback? onNext;
-  final VoidCallback? onPrevious;
-  final bool withNext;
-  CatefgoryFilter({
-    Key? key,
-    this.onNext,
-    this.onPrevious,
-    this.withNext = true,
-  }) : super(key: key);
 
   @override
   State<CatefgoryFilter> createState() => _CatefgoryFilterState();
@@ -71,14 +62,7 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
                 _buildCategoriesAutocomplete(state, categories, context),
               ],
             ),
-            if (widget.withNext)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildBeforeBtn(context),
-                  _buildNextBtn(context),
-                ],
-              )
+
           ],
         );
       },
@@ -111,12 +95,6 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
 
   Widget _buildLoading() => Center(child: CircularProgressIndicator());
 
-  Text _buildLabel() {
-    return Text(
-      'ادخل التخصص:',
-      style: kBlackBoldTextStyle,
-    );
-  }
 
   Widget _buildCategoriesAutocomplete(FilterSearchState searchTeacherState,
       List<CategoryEntity> categories, BuildContext context) {
@@ -147,7 +125,7 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
               color: Colors.white,
               elevation: 4.0,
               child: Container(
-                
+
                   child: ListView.separated(
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(8.0),
@@ -221,17 +199,5 @@ class _CatefgoryFilterState extends State<CatefgoryFilter> {
     );
   }
 
-  NextPreviousBtn _buildNextBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.next,
-      onPressed: widget.onNext != null ? widget.onNext! : () {},
-    );
-  }
 
-  NextPreviousBtn _buildBeforeBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.previous,
-      onPressed: widget.onPrevious != null ? widget.onPrevious! : () {},
-    );
-  }
 }

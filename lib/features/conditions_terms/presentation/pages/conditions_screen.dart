@@ -5,7 +5,7 @@ import 'package:khosousi_online/core/utils/enums/enums.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/institute_conditions.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/student_conditions.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/teacher_conditions.dart';
-import 'package:khosousi_online/features/navigation/presentation/screens/student_screen.dart';
+import 'package:khosousi_online/features/homepage/presentation/screens/student_screen.dart';
 
 class ConditionsScreen extends StatelessWidget {
   static const routeName = 'conditions_screen';

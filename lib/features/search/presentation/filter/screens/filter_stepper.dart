@@ -20,7 +20,7 @@ class FilterStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return BlocBuilder<FilterStepperCubit, FilterStepperState>(
+    return BlocBuilder<FilterStepperCubit, FilterStepperState>(
       builder: (context, state) {
         return Stepper(
           key: Key("mysuperkey-" + steps.length.toString()),
@@ -66,50 +66,55 @@ class FilterStepper extends StatelessWidget {
         : Padding(
             padding: const EdgeInsets.all(8.0),
             child: currentStep == steps.length - 1
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      NextPreviousBtn(
-                        nextOrPrevious: NextOrPrevious.previous,
-                        onPressed: () {
-                          BlocProvider.of<FilterStepperCubit>(context)
-                              .previousStep();
-                        },
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      CustomElevatedButton(
-                        label: 'بحث',
-                        onPressed: search,
-                      ),
-                    ],
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      currentStep > 0
-                          ? NextPreviousBtn(
-                              nextOrPrevious: NextOrPrevious.previous,
-                              onPressed: () {
-                                BlocProvider.of<FilterStepperCubit>(context)
-                                    .previousStep();
-                              },
-                            )
-                          : Container(),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      NextPreviousBtn(
-                        nextOrPrevious: NextOrPrevious.next,
-                        onPressed: () {
-                          BlocProvider.of<FilterStepperCubit>(context)
-                              .nextStep();
-                        },
-                      )
-                    ],
-                  ),
+                ? _buildPreviousAndSearchBtns(context)
+                : _buildPreviousAndNextBtns(currentStep, context),
           );
+  }
+
+  Row _buildPreviousAndNextBtns(int currentStep, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        currentStep > 0
+            ? NextPreviousBtn(
+                nextOrPrevious: NextOrPrevious.previous,
+                onPressed: () {
+                  BlocProvider.of<FilterStepperCubit>(context).previousStep();
+                },
+              )
+            : Container(),
+        SizedBox(
+          width: 8,
+        ),
+        NextPreviousBtn(
+          nextOrPrevious: NextOrPrevious.next,
+          onPressed: () {
+            BlocProvider.of<FilterStepperCubit>(context).nextStep();
+          },
+        )
+      ],
+    );
+  }
+
+  Row _buildPreviousAndSearchBtns(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        NextPreviousBtn(
+          nextOrPrevious: NextOrPrevious.previous,
+          onPressed: () {
+            BlocProvider.of<FilterStepperCubit>(context).previousStep();
+          },
+        ),
+        SizedBox(
+          width: 8,
+        ),
+        CustomElevatedButton(
+          label: 'بحث',
+          onPressed: search,
+        ),
+      ],
+    );
   }
 
   CircleAvatar _buildStepNumber({

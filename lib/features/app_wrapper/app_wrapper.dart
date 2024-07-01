@@ -4,10 +4,10 @@ import 'package:khosousi_online/core/utils/helpers/user_type_selection.dart';
 import 'package:khosousi_online/features/accounts/domain/repositories/auth_repo.dart';
 import 'package:khosousi_online/features/accounts/presentation/login/blocs/authentication_bloc.dart';
 import 'package:khosousi_online/features/conditions_terms/presentation/pages/conditions_screen.dart';
-import 'package:khosousi_online/features/startup/screens/choose_state_screen.dart';
+import 'package:khosousi_online/features/startup/screens/start_up_screen.dart';
 import 'package:khosousi_online/features/accounts/presentation/profile_info/common/screens/registeration_info_screen.dart';
 
-import '../navigation/presentation/screens/homepage_screen.dart';
+import '../homepage/presentation/screens/homepage_screen.dart';
 import '../startup/screens/splash_screen.dart';
 
 class AppWrapper extends StatelessWidget {
@@ -25,13 +25,12 @@ class AppWrapper extends StatelessWidget {
   }
 
   Widget _buildAuthBuilder(AuthenticationState state, BuildContext context) {
-    print('the auth state ${state.runtimeType}');
-    if (state is AuthenticationInitial) {
-      return const SplashScreen();
+   if (state is AuthenticationInitial) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
     } else if (state is AuthenticatationLoading) {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
     } else if (state is UnauthenticatedState) {
-      return ChooseStateScreen();
+      return StartUpScreen();
     } else if (state is RegistrationInfoState) {
       return RegisterationInfoScreen(
         userType: UserTypeSelection.getUserType(
@@ -39,7 +38,7 @@ class AppWrapper extends StatelessWidget {
         ),
         hasFinishedFirstInfo: state.hasFinishedFirstInfo,
       );
-    }else if (state is ConditionsState) {
+    }else if (state is TermsAndConditionsState) {
       return ConditionsScreen(
         userType: UserTypeSelection.getUserType(
          state.type

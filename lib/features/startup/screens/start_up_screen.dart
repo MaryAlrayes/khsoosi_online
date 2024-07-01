@@ -11,9 +11,9 @@ import 'package:khosousi_online/features/search/presentation/search/screens/sear
 import 'package:khosousi_online/features/search_without_auth/presentation/pages/search_without_auth.dart';
 import 'package:lottie/lottie.dart';
 
-class ChooseStateScreen extends StatelessWidget {
-  static const routeName = 'choose_state_screen';
-  const ChooseStateScreen({super.key});
+class StartUpScreen extends StatelessWidget {
+  static const routeName = 'start_up_screen';
+  const StartUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -215,7 +215,7 @@ class MainConditionsScreen extends StatelessWidget {
         //delay a second then go to app wrapper to decide the state
         Future.delayed(const Duration(seconds: 1), () {
           Navigator.pop(context);
-          BlocProvider.of<AuthenticationBloc>(context).add(LogInUserEvent());
+          BlocProvider.of<AuthenticationBloc>(context).add(UpdateEvent());
           Navigator.pushNamedAndRemoveUntil(
             context,
             AppWrapper.routeName,

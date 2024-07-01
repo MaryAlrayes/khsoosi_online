@@ -72,12 +72,15 @@ class LocationFilter extends StatelessWidget {
               SizedBox(
                 height: 16.h,
               ),
+
+              //choose location
               if (context.read<FilterSearchCubit>().state.filter.locationType !=
                       null &&
                   context.read<FilterSearchCubit>().state.filter.locationType ==
                       LocationType.chooseCountey)
                 _buildChooseCountryContent(searchState, countries, context),
 
+               //bring me the nearest
               if (context.read<FilterSearchCubit>().state.filter.locationType !=
                       null &&
                   context.read<FilterSearchCubit>().state.filter.locationType ==
@@ -151,8 +154,7 @@ class LocationFilter extends StatelessWidget {
                 showSnackbar(
                     context, 'عليك الاختيار قبل الانتقال للخطوة التالية');
               } else {
-                print('on next ${context.read<FilterSearchCubit>().state.filter.lat}');
-                onNextCallback!();
+                 onNextCallback!();
               }
             }
           : () {},

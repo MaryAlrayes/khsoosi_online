@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:khosousi_online/core/managers/endpoints_manager.dart';
 
 import '../errors/dio_exceptions.dart';
+import '../utils/services/shared_preferences.dart';
 import 'base_api_service.dart';
 
 class NetworkServiceDio implements BaseApiService {
@@ -71,6 +72,9 @@ class NetworkServiceDio implements BaseApiService {
   Future multipartRequest({
     required String url,
     required Map<String, dynamic> jsonBody,
+    Map<String, dynamic>? headers,
+    bool saveCookies = false,
+    String? cookieName,
     String? filesAttributeName,
     List<File>? files,
   }) async {
@@ -93,10 +97,28 @@ class NetworkServiceDio implements BaseApiService {
 
       FormData formData = FormData.fromMap(jsonBody);
       print('body: ${formData.fields}');
-      final response = await _dio.post(url, data: formData);
+      if (headers != null) {
+        _dio.options.headers = headers;
+      }
+      final response = await _dio.post(
+        url,
+        data: formData,
+      );
+
+      //save specific cookie if the user send saveCookies as true
+      if (saveCookies) {
+        final setCookieHeader = response.headers['Set-Cookie'];
+        if (setCookieHeader != null) {
+          final cookieValue = extractSpecificCookieValue(
+              cookiesList: setCookieHeader, cookieName: cookieName!);
+          PreferenceUtils.setString(cookieName, cookieValue!);
+          print('Stored value: $cookieValue');
+        }
+      }
 
       print('status code ${response.statusCode}');
       print('response data ${response.data}');
+      print('cookies ${response.headers['Set-Cookie']}');
       return response.data;
     } catch (error) {
       throw DioExceptions.handle(error).failure;
@@ -119,5 +141,17 @@ class NetworkServiceDio implements BaseApiService {
     } catch (error) {
       throw DioExceptions.handle(error).failure;
     }
+  }
+
+  String? extractSpecificCookieValue(
+      {required List<String> cookiesList, required String cookieName}) {
+    for (String cookie in cookiesList) {
+      if (cookie.startsWith('$cookieName=')) {
+        final mobileQueriesValue =
+            RegExp('$cookieName=([^;]+)').firstMatch(cookie)?.group(1);
+        return mobileQueriesValue;
+      }
+    }
+    return null;
   }
 }

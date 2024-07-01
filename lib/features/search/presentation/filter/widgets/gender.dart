@@ -11,15 +11,6 @@ import 'package:khosousi_online/features/search/presentation/filter/cubit/filter
 import 'package:khosousi_online/features/search/presentation/search_teacher/widgets/next_previous_btn.dart';
 
 class GenderFilter extends StatelessWidget {
-  final VoidCallback? onNext;
-  final VoidCallback? onPrevious;
-  final bool withNext;
-  const GenderFilter({
-    Key? key,
-    this.onNext,
-    this.onPrevious,
-    this.withNext = true,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,40 +23,17 @@ class GenderFilter extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // _buildLabel(),
-                // SizedBox(
-                //   height: 8.h,
-                // ),
+
                 ..._buildRadioGroup(state, context),
               ],
             ),
-            if (withNext)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildBeforeBtn(context),
-                  _buildNextBtn(context),
-                ],
-              )
+
           ],
         );
       },
     );
   }
 
-  NextPreviousBtn _buildNextBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.next,
-      onPressed: onNext != null ? onNext! : () {},
-    );
-  }
-
-  NextPreviousBtn _buildBeforeBtn(BuildContext context) {
-    return NextPreviousBtn(
-      nextOrPrevious: NextOrPrevious.previous,
-      onPressed: onPrevious != null ? onPrevious! : () {},
-    );
-  }
 
   List<Widget> _buildRadioGroup(FilterSearchState state, BuildContext context) {
     return Gender.values
